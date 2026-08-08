@@ -150,7 +150,7 @@ function ProjectDetail() {
         <section className="card-surface rounded-3xl p-6">
           <h2 className="text-xl font-bold">Features</h2>
           <ul className="mt-4 grid gap-2.5">
-            {product.features.map((f) => (
+            {product.features.map((f: string) => (
               <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Sparkles className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden />
                 {f}
@@ -162,7 +162,7 @@ function ProjectDetail() {
         <section className="card-surface rounded-3xl p-6">
           <h2 className="text-xl font-bold">Perfect For</h2>
           <ul className="mt-4 grid gap-2.5">
-            {product.perfect_for.map((f) => (
+            {product.perfect_for.map((f: string) => (
               <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Heart className="mt-0.5 size-3.5 shrink-0 text-accent" aria-hidden />
                 {f}
