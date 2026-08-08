@@ -96,9 +96,9 @@ export const products: Product[] = [
     category: "birthday",
     occasion: "Birthday",
     thumbnail_url: thumbBirthday,
-    preview_url: `${DEMO_PREVIEW_BASE}/birthday-surprise`,
-    download_url: `${DEMO_DOWNLOAD_BASE}/birthday-surprise.zip`,
-    grab_code: "BM-BIRTHDAY-7X92",
+    preview_url: "https://bhopalimitra-birthday.lovable.app/",
+    download_url: "https://bhopalimitra-birthday.lovable.app/"
+    grab_code: "BM-BIRTHDAY",
     social_tag: "#GRABPROJECT",
     features: [
       "🎂 Birthday reveal animation",
@@ -110,7 +110,7 @@ export const products: Product[] = [
     ],
     perfect_for: ["Best friend's birthday", "Partner's birthday", "Long distance wishes"],
     tags: ["birthday", "surprise", "confetti", "interactive", "gift"],
-    is_free: true,
+    is_free: false,
     is_featured: false,
     is_trending: false,
     is_new: false,
