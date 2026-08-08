@@ -12,8 +12,8 @@ import thumbCelebration from "@/assets/thumb-celebration.jpg";
  * Real preview + download URLs are supplied per product by the admin/API.
  * These bases exist purely so the demo data has realistic external URLs.
  */
-const DEMO_PREVIEW_BASE = "https://preview.example.com";
-const DEMO_DOWNLOAD_BASE = "https://download.example.com";
+const DEMO_PREVIEW_BASE = "https://bhopalimitra.in/suprise";
+const DEMO_DOWNLOAD_BASE = "https://bhopalimitra.in/suprise";
 
 export const categories: Category[] = [
   {
@@ -287,9 +287,40 @@ export const products: Product[] = [
     category: "love",
     occasion: "Love",
     thumbnail_url: thumbLove,
-    preview_url: `${DEMO_PREVIEW_BASE}/digital-love-letter`,
-    download_url: `${DEMO_DOWNLOAD_BASE}/digital-love-letter.zip`,
-    grab_code: "BM-LOVE-1H58",
+    preview_url: `${DEMO_PREVIEW_BASE}/love-letter`,
+    download_url: `${DEMO_DOWNLOAD_BASE}/love-letter.html`,
+    grab_code: "BM-CODE",
+    social_tag: "#GRABPROJECT",
+    features: [
+      "💌 Envelope open animation",
+      "⌨️ Typewriter letter",
+      "🎵 Ambient music",
+      "✨ Soft glow visuals",
+    ],
+    perfect_for: ["Confessions", "Apologies", "Anniversaries"],
+    tags: ["love", "letter", "envelope", "romantic"],
+    is_free: true,
+    is_featured: false,
+    is_trending: false,
+    is_new: false,
+    status: "published",
+    sort_order: 7,
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "bm-008",
+    slug: "digital-kitty-proposal",
+    name: "Kitty Proposal",
+    short_description: "An envelope that opens into everything you never said out loud.",
+    description:
+      "A glowing envelope unseals into a typewriter letter with your words, your photo and a quiet soundtrack. Simple, slow and very personal.",
+    category: "love",
+    occasion: "Love",
+    thumbnail_url: thumbLove,
+    preview_url: `${DEMO_PREVIEW_BASE}/kitty-proposal`,
+    download_url: `${DEMO_DOWNLOAD_BASE}/kitty-proposal.html`,
+    grab_code: "BM-LOVE",
     social_tag: "#GRABPROJECT",
     features: [
       "💌 Envelope open animation",
