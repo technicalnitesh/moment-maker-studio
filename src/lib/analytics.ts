@@ -34,9 +34,17 @@ export function openExternal(url: string) {
   window.open(url, "_blank", "noopener,noreferrer");
 }
 
-export function deliverDownload(product: Product) {
-  track("download_click", { slug: product.slug, grab_code: product.grab_code });
+
+export async function deliverDownload(product: Product) {
+  track("download_click", {
+    slug: product.slug,
+    grab_code: product.grab_code,
+  });
+
   if (!product.download_url) return false;
+
+  await new Promise((resolve) => setTimeout(resolve, 30000));
+
   openExternal(product.download_url);
   return true;
 }
