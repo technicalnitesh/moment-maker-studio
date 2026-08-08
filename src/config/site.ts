@@ -8,10 +8,10 @@ export const BRAND_TAGLINE = "Don't Just Send a Wish. Create a Moment.";
 export const BRAND_SUB_TAGLINE =
   "Beautiful interactive digital experiences for birthdays, anniversaries, proposals, love, memories and special moments.";
 
-export const SITE_URL = "https://bhopalimitra.com";
+export const SITE_URL = "https://bhopalimitra.in";
 
 /** Primary call to action label used across the whole app. */
-export const GRAB_LABEL = "GRAB PROJECT";
+export const GRAB_LABEL = "GRAB CODE";
 export const PREVIEW_LABEL = "Live Preview";
 export const DOWNLOAD_LABEL = "Download Project";
 
@@ -28,7 +28,7 @@ export const SOCIAL_LINKS = {
 };
 
 export const CONTACT = {
-  email: "hello@bhopalimitra.com",
+  email: "bhopalimitra.in",
   city: "Bhopal, Madhya Pradesh, India",
 };
 
