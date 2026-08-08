@@ -319,7 +319,7 @@ export const products: Product[] = [
     occasion: "Proposal",
     thumbnail_url: thumbProposal,
     preview_url: `${DEMO_PREVIEW_BASE}/kitty-proposal`,
-    download_url: `${DEMO_DOWNLOAD_BASE}/kitty-proposal.html`,
+    download_url: `${DEMO_DOWNLOAD_BASE}/kitty-proposal`,
     grab_code: "BM-LOVE",
     social_tag: "#GRABPROJECT",
     features: [
