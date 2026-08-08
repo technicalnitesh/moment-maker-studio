@@ -332,7 +332,7 @@ export const products: Product[] = [
     tags: ["love", "letter", "envelope", "romantic"],
     is_free: true,
     is_featured: false,
-    is_trending: false,
+    is_trending: true,
     is_new: false,
     status: "published",
     sort_order: 7,
