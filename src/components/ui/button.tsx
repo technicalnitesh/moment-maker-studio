@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -16,12 +16,19 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        /* Bhopali Mitra design system variants */
+        hero: "bg-gradient-brand text-primary-foreground shadow-[var(--shadow-glow)] hover:scale-[1.03] active:scale-[0.99]",
+        grab: "bg-gradient-warm text-primary-foreground font-bold tracking-wide shadow-[var(--shadow-glow)] hover:scale-[1.03] active:scale-[0.99]",
+        glass: "glass text-foreground hover:bg-surface-2/80",
+        soft: "bg-secondary/70 text-secondary-foreground border border-border hover:bg-secondary",
       },
       size: {
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+        icon: "h-10 w-10",
+        pill: "h-11 rounded-full px-6",
+        xl: "h-13 rounded-full px-8 text-base",
       },
     },
     defaultVariants: {
@@ -30,6 +37,7 @@ const buttonVariants = cva(
     },
   },
 );
+
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
