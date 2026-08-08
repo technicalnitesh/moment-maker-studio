@@ -97,7 +97,7 @@ export const products: Product[] = [
     occasion: "Birthday",
     thumbnail_url: thumbBirthday,
     preview_url: "https://bhopalimitra-birthday.lovable.app/",
-    download_url: "https://bhopalimitra-birthday.lovable.app/"
+    download_url: "https://bhopalimitra-birthday.lovable.app/",
     grab_code: "BM-BIRTHDAY",
     social_tag: "#GRABPROJECT",
     features: [
