@@ -13,11 +13,11 @@ export function EmptyState({
 }: {
   icon?: ReactNode;
   title: string;
-  description?: string;
-  actionLabel?: string;
-  actionTo?: string;
-  onAction?: () => void;
-  className?: string;
+  description?: string | undefined;
+  actionLabel?: string | undefined;
+  actionTo?: string | undefined;
+  onAction?: (() => void) | undefined;
+  className?: string | undefined;
 }) {
   return (
     <div
@@ -64,7 +64,7 @@ export function ErrorState({
   icon = "🌙",
 }: {
   title: string;
-  description?: string;
+  description?: string | undefined;
   actionLabel?: string;
   actionTo?: string;
   icon?: ReactNode;
