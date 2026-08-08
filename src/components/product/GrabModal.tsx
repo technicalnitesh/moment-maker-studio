@@ -37,34 +37,51 @@ export function GrabModal({
   const [copied, setCopied] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  useEffect(() => {
+useEffect(() => {
+  timers.current.forEach(clearTimeout);
+  timers.current = [];
+
+  if (!product) return;
+
+  setPhase("preparing");
+  setProgress(8);
+  setCopied(false);
+
+  // 0.5 seconds
+  timers.current.push(
+    setTimeout(() => {
+      setProgress(20);
+    }, 500),
+  );
+
+  // 10 seconds
+  timers.current.push(
+    setTimeout(() => {
+      setPhase("getting-ready");
+      setProgress(45);
+    }, 10000),
+  );
+
+  // 20 seconds
+  timers.current.push(
+    setTimeout(() => {
+      setProgress(70);
+    }, 20000),
+  );
+
+  // 30 seconds
+  timers.current.push(
+    setTimeout(() => {
+      setPhase("ready");
+      setProgress(100);
+    }, 30000),
+  );
+
+  return () => {
     timers.current.forEach(clearTimeout);
     timers.current = [];
-    if (!product) return;
-
-    setPhase("preparing");
-    setProgress(8);
-    setCopied(false);
-
-    timers.current.push(setTimeout(() => setProgress(42), 120));
-    timers.current.push(
-      setTimeout(() => {
-        setPhase("getting-ready");
-        setProgress(76);
-      }, 1000),
-    );
-    timers.current.push(
-      setTimeout(() => {
-        setPhase("ready");
-        setProgress(100);
-      }, 2000),
-    );
-
-    return () => {
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
-    };
-  }, [product]);
+  };
+}, [product]);
 
   if (!product) return null;
   const copy = PHASE_COPY[phase];
