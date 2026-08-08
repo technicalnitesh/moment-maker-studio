@@ -158,10 +158,7 @@ useEffect(() => {
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <Button variant="soft" size="pill" onClick={handleCopy}>
-                  {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
-                  {copied ? "Copied!" : "Copy Code"}
-                </Button>
+               {/* <Button variant="soft" size="pill" onClick={handleCopy}> {copied ? <Check aria-hidden /> : <Copy aria-hidden />} {copied ? "Copied!" : "Copy Code"} </Button> */}
                 <Button variant="grab" size="xl" onClick={handleDownload}>
                   <Download aria-hidden />
                   {DOWNLOAD_LABEL}
