@@ -35,31 +35,14 @@ export function openExternal(url: string) {
 }
 
 
-export async function deliverDownload(product: Product) {
+
+export function deliverDownload(product: Product) {
   track("download_click", {
     slug: product.slug,
     grab_code: product.grab_code,
   });
 
   if (!product.download_url) return false;
-
-  await new Promise((resolve) => setTimeout(resolve, 30000));
-
-  openExternal(product.download_url);
-  return true;
-}
-
-
-export async function deliverDownload(product: Product) {
-  track("download_click", {
-    slug: product.slug,
-    grab_code: product.grab_code,
-  });
-
-  if (!product.download_url) return false;
-
-  // 30 seconds delay
-  await new Promise((resolve) => setTimeout(resolve, 30000));
 
   const link = document.createElement("a");
   link.href = product.download_url;
