@@ -109,16 +109,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
     scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: BRAND_NAME,
-          description: DEFAULT_META_DESCRIPTION,
-        }),
-      },
-    ],
+  // Google Analytics
+  {
+    async: true,
+    src: "https://www.googletagmanager.com/gtag/js?id=G-R57RMQKME9",
+  },
+  {
+    children: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R57RMQKME9');
+    `,
+  },
+
+  // Website structured data
+  {
+    type: "application/ld+json",
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: BRAND_NAME,
+      description: DEFAULT_META_DESCRIPTION,
+    }),
+  },
+],
+
+    
   }),
   shellComponent: RootShell,
   component: RootComponent,
