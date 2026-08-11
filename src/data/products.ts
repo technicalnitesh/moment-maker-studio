@@ -127,7 +127,7 @@ export const products: Product[] = [
     "custom birthday",
   ],
   is_free: false,
-  is_featured: true,
+  is_featured: false,
   is_trending: false,
   is_new: false,
   status: "published",
