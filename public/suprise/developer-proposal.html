@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Coded With Love ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0a0509;
+    --wine:#1f0812;
+    --wine-2:#3a0f1e;
+    --crimson:#b3193f;
+    --crimson-soft:#e0355f;
+    --pink:#ff8fb3;
+    --lilac:#7c4a7e;
+    --white:#f6ecef;
+    --white-dim:rgba(246,236,239,0.62);
+    --white-faint:rgba(246,236,239,0.34);
+    --glass:rgba(255,255,255,0.04);
+    --glass-border:rgba(255,255,255,0.09);
+    --mono:'JetBrains Mono', monospace;
+    --serif:'Cormorant Garamond', serif;
+    --sans:'Poppins', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--void);
+    color:var(--white);
+    font-family:var(--sans);
+    overflow-x:hidden;
+    min-height:100vh;
+    position:relative;
+  }
+
+  ::selection{background:var(--crimson);color:var(--white);}
+
+  /* ============ BACKGROUND ============ */
+  #bg-canvas{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(179,25,63,0.20), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 100%, rgba(124,74,126,0.16), transparent 60%),
+      linear-gradient(180deg, #0a0509 0%, #120610 40%, #1a0812 70%, #0a0509 100%);
+    background-size: 100% 220%;
+    animation: bgdrift 40s ease-in-out infinite alternate;
+  }
+  @keyframes bgdrift{
+    0%{background-position:50% 0%;}
+    100%{background-position:50% 100%;}
+  }
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  .star{
+    position:absolute;
+    width:2px;height:2px;
+    background:var(--white);
+    border-radius:50%;
+    opacity:0.5;
+    animation:twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:0.15;}50%{opacity:0.85;}}
+
+  .float-heart{
+    position:fixed;
+    z-index:0;
+    pointer-events:none;
+    color:var(--crimson-soft);
+    opacity:0.16;
+    filter:blur(0.3px);
+    animation:floatup linear infinite;
+  }
+  @keyframes floatup{
+    0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0;}
+    10%{opacity:0.22;}
+    90%{opacity:0.14;}
+    100%{transform:translateY(-110vh) translateX(20px) rotate(20deg);opacity:0;}
+  }
+
+  /* ============ UTILITY ============ */
+  .screen{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:8vh 6vw;
+    text-align:center;
+  }
+  .hidden{display:none !important;}
+  .fade-out{animation:fadeOut 0.6s ease forwards;}
+  @keyframes fadeOut{to{opacity:0;visibility:hidden;}}
+  .fade-in{animation:fadeIn 0.8s ease forwards;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .cursor{
+    display:inline-block;
+    width:0.5ch;
+    background:var(--crimson-soft);
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--pink);
+    opacity:0.8;
+    margin-bottom:1.1rem;
+  }
+
+  /* ============ LOCK SCREEN ============ */
+  #lock-screen{
+    background:radial-gradient(ellipse at 50% 30%, rgba(179,25,63,0.10), transparent 65%);
+  }
+  .lock-card{
+    max-width:420px;
+    width:100%;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(18px);
+    border-radius:20px;
+    padding:3rem 2rem;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(179,25,63,0.08) inset;
+  }
+  .lock-icon{
+    font-size:2.4rem;
+    margin-bottom:1.2rem;
+    filter:drop-shadow(0 0 18px rgba(224,53,95,0.55));
+  }
+  .lock-title{
+    font-family:var(--mono);
+    font-size:0.95rem;
+    letter-spacing:0.14em;
+    color:var(--white);
+    margin-bottom:1.4rem;
+  }
+  .lock-text{
+    font-family:var(--serif);
+    font-size:1.25rem;
+    font-style:italic;
+    color:var(--white-dim);
+    line-height:1.6;
+    margin-bottom:0.5rem;
+  }
+  .lock-text.strong{color:var(--pink);font-weight:500;margin-bottom:2rem;}
+  #secret-input{
+    width:100%;
+    background:rgba(0,0,0,0.35);
+    border:1px solid var(--glass-border);
+    color:var(--white);
+    font-family:var(--mono);
+    font-size:0.95rem;
+    padding:0.9rem 1rem;
+    border-radius:10px;
+    outline:none;
+    margin-bottom:1rem;
+    transition:border-color 0.3s, box-shadow 0.3s;
+  }
+  #secret-input:focus{
+    border-color:var(--crimson-soft);
+    box-shadow:0 0 0 3px rgba(224,53,95,0.15);
+  }
+  #secret-input::placeholder{color:var(--white-faint);}
+  .btn{
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+    color:var(--white);
+    background:linear-gradient(135deg, var(--crimson) 0%, var(--wine-2) 100%);
+    border:1px solid rgba(255,255,255,0.14);
+    padding:0.95rem 2.1rem;
+    border-radius:100px;
+    cursor:pointer;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow:0 10px 30px rgba(179,25,63,0.35);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(179,25,63,0.5);}
+  .btn:active{transform:translateY(0px) scale(0.98);}
+  .lock-error{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--pink);
+    height:1.2rem;
+    margin-top:0.9rem;
+    opacity:0;
+    transition:opacity 0.3s;
+  }
+  .lock-error.show{opacity:1;}
+  .shake{animation:shake 0.4s;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-8px);}
+    40%{transform:translateX(8px);}
+    60%{transform:translateX(-5px);}
+    80%{transform:translateX(5px);}
+  }
+
+  /* ============ TERMINAL BOOT ============ */
+  #terminal-screen{background:#050305;}
+  .terminal-box{
+    max-width:520px;
+    width:100%;
+    background:rgba(10,5,9,0.85);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    padding:1.8rem;
+    text-align:left;
+    font-family:var(--mono);
+    font-size:0.82rem;
+    line-height:2;
+    box-shadow:0 0 60px rgba(179,25,63,0.12);
+  }
+  .terminal-bar{
+    display:flex;
+    gap:6px;
+    margin-bottom:1rem;
+  }
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.r{background:#e05f6f;}
+  .dot.y{background:#e0c15f;}
+  .dot.g{background:#5fe08a;}
+  .term-line{
+    color:var(--white-dim);
+    opacity:0;
+  }
+  .term-line.show{opacity:1;animation:typeIn 0.4s ease;}
+  @keyframes typeIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);}}
+  .term-line .ok{color:#7be0a0;}
+  .term-line .heart{color:var(--crimson-soft);}
+  .build-success{
+    margin-top:0.6rem;
+    color:var(--pink);
+    font-weight:600;
+    opacity:0;
+  }
+
+  /* ============ MAIN INTRO ============ */
+  #main-intro .eyebrow{margin-bottom:0.6rem;}
+  .intro-hello{
+    font-family:var(--serif);
+    font-size:clamp(1.9rem, 6vw, 3.2rem);
+    font-style:italic;
+    color:var(--white);
+    margin-bottom:1.6rem;
+    text-shadow:0 0 40px rgba(224,53,95,0.25);
+  }
+  .typing-line{
+    font-family:var(--mono);
+    font-size:clamp(0.95rem, 3vw, 1.15rem);
+    color:var(--pink);
+    min-height:1.6em;
+    margin-bottom:0.6rem;
+  }
+  .intro-sub{
+    font-family:var(--mono);
+    font-size:clamp(0.9rem, 2.8vw, 1.05rem);
+    color:var(--white-dim);
+    min-height:1.6em;
+    margin-bottom:2.2rem;
+  }
+  .intro-quote{
+    max-width:480px;
+    font-family:var(--serif);
+    font-size:clamp(1.1rem, 3.4vw, 1.4rem);
+    font-style:italic;
+    color:var(--white-dim);
+    line-height:1.75;
+    margin-bottom:2.6rem;
+    opacity:0;
+  }
+  .opening-block{opacity:0;}
+  .opening-block.reveal{animation:fadeIn 1s ease forwards;}
+
+  /* ============ SECTIONS / MODULES ============ */
+  .module{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10vh 6vw;
+  }
+  .module-card{
+    max-width:560px;
+    width:100%;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(16px);
+    border-radius:22px;
+    padding:clamp(2rem, 5vw, 3.2rem);
+    box-shadow:0 30px 90px rgba(0,0,0,0.45);
+    opacity:0;
+    transform:translateY(40px) scale(0.98);
+    filter:blur(6px);
+    transition:opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1), filter 0.9s cubic-bezier(.22,1,.36,1);
+  }
+  .module-card.in-view{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:blur(0);
+  }
+  .module-num{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    color:var(--pink);
+    opacity:0.75;
+    margin-bottom:0.4rem;
+  }
+  .module-title{
+    font-family:var(--serif);
+    font-size:clamp(1.5rem, 4.4vw, 2.1rem);
+    font-style:italic;
+    color:var(--white);
+    margin-bottom:1.4rem;
+  }
+  .module-body{
+    font-family:var(--serif);
+    font-size:clamp(1.08rem, 3.2vw, 1.3rem);
+    line-height:1.95;
+    color:var(--white-dim);
+    margin-bottom:1.6rem;
+    text-align:left;
+  }
+  .code-snippet{
+    font-family:var(--mono);
+    font-size:clamp(0.78rem, 2.6vw, 0.92rem);
+    color:var(--crimson-soft);
+    background:rgba(0,0,0,0.4);
+    border:1px solid var(--glass-border);
+    border-left:3px solid var(--crimson);
+    border-radius:8px;
+    padding:1rem 1.1rem;
+    text-align:left;
+    overflow-x:auto;
+    white-space:pre;
+    line-height:1.8;
+    box-shadow:0 0 30px rgba(179,25,63,0.08) inset;
+  }
+  .module-card::before{
+    content:'';
+    position:absolute;
+    inset:-1px;
+    border-radius:22px;
+    padding:1px;
+    background:linear-gradient(135deg, rgba(224,53,95,0.35), transparent 40%, transparent 60%, rgba(124,74,126,0.3));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+    opacity:0.7;
+  }
+  .module-card{position:relative;}
+
+  /* connective decorative code blocks between modules */
+  .decor{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:5vh 6vw;
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.9s ease, transform 0.9s ease;
+  }
+  .decor.in-view{opacity:1;transform:translateY(0);}
+  .decor pre{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--white-faint);
+    background:rgba(255,255,255,0.02);
+    border:1px dashed var(--glass-border);
+    border-radius:10px;
+    padding:1rem 1.4rem;
+    line-height:1.7;
+  }
+  .decor .accent{color:var(--pink);}
+  .decor .accent2{color:var(--lilac);}
+
+  /* ============ CTA ============ */
+  .cta-wrap{margin-top:1rem;opacity:0;}
+
+  /* ============ FINAL SURPRISE ============ */
+  #final-surprise{
+    background:radial-gradient(ellipse at 50% 40%, rgba(179,25,63,0.14), transparent 70%);
+  }
+  .final-heart{
+    font-size:3rem;
+    margin-bottom:2rem;
+    filter:drop-shadow(0 0 30px rgba(224,53,95,0.7));
+    animation:pulseHeart 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseHeart{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  .final-lines{
+    max-width:480px;
+    font-family:var(--serif);
+    font-size:clamp(1.15rem, 3.6vw, 1.5rem);
+    font-style:italic;
+    line-height:2;
+    color:var(--white-dim);
+    min-height:8em;
+  }
+  .final-lines .line{
+    opacity:0;
+    display:block;
+  }
+  .final-lines .line.show{animation:fadeIn 1s ease forwards;}
+  .final-list{
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--pink);
+    margin:2rem 0;
+    line-height:2.1;
+    opacity:0;
+  }
+  .deploy-status{
+    font-family:var(--mono);
+    font-size:0.85rem;
+    text-align:left;
+    background:rgba(0,0,0,0.35);
+    border:1px solid var(--glass-border);
+    border-radius:12px;
+    padding:1.6rem 1.8rem;
+    line-height:2.1;
+    max-width:420px;
+    width:100%;
+    opacity:0;
+    box-shadow:0 0 40px rgba(179,25,63,0.1) inset;
+  }
+
+  /* ============ SIGNATURE ============ */
+  .signature-box{
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--white-faint);
+    text-align:left;
+    line-height:2;
+    margin:0 auto 1.6rem;
+    max-width:340px;
+  }
+  .signature-box .comment{color:var(--white-faint);opacity:0.55;}
+  .signature-box .kw{color:var(--lilac);}
+  .signature-box .str{color:var(--pink);}
+  .signature-note{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--white-dim);
+    max-width:420px;
+    line-height:1.8;
+  }
+
+  /* ============ FLOATING BUTTONS ============ */
+  .float-btn{
+    position:fixed;
+    z-index:50;
+    width:52px;height:52px;
+    border-radius:50%;
+    background:rgba(20,8,14,0.6);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(10px);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.25rem;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    transition:transform 0.25s ease;
+  }
+  .float-btn:hover{transform:scale(1.08);}
+  .float-btn:active{transform:scale(0.94);}
+  #music-btn{bottom:22px; left:20px;}
+  #heart-btn{bottom:22px; right:20px;}
+
+  .heart-msg{
+    position:fixed;
+    bottom:84px;
+    right:20px;
+    z-index:50;
+    font-family:var(--mono);
+    font-size:0.78rem;
+    background:rgba(20,8,14,0.85);
+    border:1px solid var(--glass-border);
+    color:var(--pink);
+    padding:0.6rem 1rem;
+    border-radius:10px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.4s ease, transform 0.4s ease;
+    transform:translateY(6px);
+    max-width:220px;
+  }
+  .heart-msg.show{opacity:1;transform:translateY(0);}
+
+  .heart-particle{
+    position:fixed;
+    z-index:49;
+    pointer-events:none;
+    font-size:1rem;
+    color:var(--crimson-soft);
+    animation:burstUp 1.1s ease-out forwards;
+  }
+  @keyframes burstUp{
+    0%{opacity:1;transform:translateY(0) scale(1);}
+    100%{opacity:0;transform:translateY(-90px) scale(0.6);}
+  }
+
+  /* ============ RESTART ============ */
+  .restart-wrap{
+    margin-top:3.5rem;
+  }
+  .restart-btn{
+    font-family:var(--mono);
+    font-size:0.85rem;
+    color:var(--white-dim);
+    background:transparent;
+    border:1px solid var(--glass-border);
+    padding:0.8rem 1.6rem;
+    border-radius:100px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+  }
+  .restart-btn:hover{
+    color:var(--pink);
+    border-color:var(--crimson-soft);
+    box-shadow:0 0 24px rgba(224,53,95,0.2);
+  }
+
+  /* scroll hint */
+  .scroll-hint{
+    margin-top:2.4rem;
+    font-family:var(--mono);
+    font-size:0.7rem;
+    letter-spacing:0.2em;
+    color:var(--white-faint);
+    text-transform:uppercase;
+    animation:bobble 2s ease-in-out infinite;
+  }
+  @keyframes bobble{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+  @media (max-width:480px){
+    .lock-card{padding:2.2rem 1.4rem;}
+    .module-card{padding:1.8rem 1.4rem;}
+    .code-snippet{font-size:0.72rem;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="bg-canvas"></div>
+<div class="stars" id="stars"></div>
+<div id="hearts-bg"></div>
+
+<!-- ============ LOCK SCREEN ============ -->
+<div id="lock-screen" class="screen">
+  <div class="lock-card">
+    <div class="lock-icon">🔐</div>
+    <div class="lock-title">ACCESS REQUIRED</div>
+    <p class="lock-text">This little project wasn't made for everyone...</p>
+    <p class="lock-text strong">Only one person has access. ❤️</p>
+    <input type="password" id="secret-input" placeholder="Enter the secret..." autocomplete="off">
+    <br>
+    <button class="btn" id="unlock-btn">Unlock My Heart ❤️</button>
+    <div class="lock-error" id="lock-error">access denied. try again 🥺</div>
+  </div>
+</div>
+
+<!-- ============ TERMINAL BOOT ============ -->
+<div id="terminal-screen" class="screen hidden">
+  <div class="terminal-box">
+    <div class="terminal-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+    </div>
+    <div id="term-lines">
+      <div class="term-line" data-text="Initializing love.exe...">Initializing love.exe...</div>
+      <div class="term-line" data-text="Loading memories...">Loading memories...</div>
+      <div class="term-line" data-text="Compiling feelings...">Compiling feelings...</div>
+      <div class="term-line" data-text="Checking heart dependencies...">Checking heart dependencies...</div>
+      <div class="term-line"><span class="ok">✓</span> No errors found <span class="heart">❤️</span></div>
+      <div class="term-line">Deployment ready...</div>
+    </div>
+    <div class="build-success" id="build-success">✓ Build successful<br><span style="color:var(--white-faint);font-weight:400;">// A developer's love letter</span></div>
+  </div>
+</div>
+
+<!-- ============ MAIN INTRO ============ -->
+<div id="main-intro" class="screen hidden">
+  <div class="opening-block" id="opening-block">
+    <div class="eyebrow">// hello.js</div>
+    <div class="intro-hello">Hello, My Favorite Person ❤️</div>
+    <div class="typing-line" id="typing-line-1"></div>
+    <div class="intro-sub" id="typing-line-2"></div>
+    <p class="intro-quote" id="intro-quote">"Code mein logic hota hai...<br>par aapke liye jo likha hai,<br>usmein sirf dil hai."</p>
+    <div class="cta-wrap" id="cta-wrap">
+      <button class="btn" id="open-code-btn">Open My Code ❤️</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODULES ============ -->
+<div id="modules-wrap" class="hidden">
+
+  <section class="module">
+    <div class="module-card" data-index="1">
+      <div class="module-num">01 / 10 — BUG</div>
+      <div class="module-title">My Favorite Bug 🐛❤️</div>
+      <div class="module-body">तुम मेरी जिंदगी का वो bug हो, जिसे fix करने का कभी मन नहीं करता… क्योंकि तुम्हारे आने के बाद मेरी जिंदगी का हर error beautiful लगने लगा है। ❤️</div>
+      <div class="code-snippet">console.log("You are my favorite"); 🫶🏻</div>
+    </div>
+  </section>
+
+  <div class="decor"><pre>&lt;love&gt;
+  &lt;person&gt;<span class="accent">My Favorite</span>&lt;/person&gt;
+  &lt;status&gt;<span class="accent2">Forever</span>&lt;/status&gt;
+&lt;/love&gt;</pre></div>
+
+  <section class="module">
+    <div class="module-card" data-index="2">
+      <div class="module-num">02 / 10 — INFINITE LOOP</div>
+      <div class="module-title">Infinite Loop ♾️</div>
+      <div class="module-body">तुमसे प्यार भी कुछ ऐसा हुआ, ना कोई start point मिला, ना कोई end…<br><br>बस दिल ने एक infinite loop चला दिया— "while(true) { Love.You(); }" ❤️♾️<br><br>और सच कहूँ… इस loop से बाहर निकलना भी नहीं चाहता। 🫠</div>
+    </div>
+  </section>
+
+  <section class="module">
+    <div class="module-card" data-index="3">
+      <div class="module-num">03 / 10 — PRODUCTION</div>
+      <div class="module-title">Production Ready ❤️‍🔥</div>
+      <div class="module-body">बहुत सारे लोग आए और चले गए मेरी life से…<br><br>पर तुम वो production-ready code हो जिसे देखकर दिल ने कहा—<br>"बस भाई, अब इसे deploy कर दे… यही है lifetime version." ❤️</div>
+      <div class="code-snippet">Status: Permanently Deployed 🚀❤️</div>
+    </div>
+  </section>
+
+  <div class="decor"><pre>BUILD STATUS
+<span class="accent">✓</span> Feelings compiled
+<span class="accent">✓</span> Heart connected
+<span class="accent">✓</span> Love deployed</pre></div>
+
+  <section class="module">
+    <div class="module-card" data-index="4">
+      <div class="module-num">04 / 10 — 404</div>
+      <div class="module-title">404 Without You 🥹</div>
+      <div class="module-body">दुनिया में सब कुछ मिल जाता है, बस तुम्हारे बिना मेरी खुशी का page नहीं खुलता…<br><br>क्योंकि तुम नहीं हो तो—<br>"404: Happiness Not Found" 💔<br><br>और तुम साथ हो तो हर दिन 200 OK है। ❤️‍🩹</div>
+    </div>
+  </section>
+
+  <section class="module">
+    <div class="module-card" data-index="5">
+      <div class="module-num">05 / 10 — GIT</div>
+      <div class="module-title">Git Commit 💻❤️</div>
+      <div class="module-body">हर दिन जिंदगी में कुछ ना कुछ बदलता रहता है…<br><br>लेकिन तुम्हारे लिए मेरा प्यार हर commit के बाद और मजबूत होता जाता है। ❤️</div>
+      <div class="code-snippet">git add .
+git commit -m "Forever with you"
+git push origin lifetime ♾️🫶🏻</div>
+    </div>
+  </section>
+
+  <div class="decor"><pre>const <span class="accent">myHeart</span> = {
+  owner: <span class="accent2">"You"</span>,
+  status: <span class="accent2">"Forever"</span>,
+  expiry: null
+};</pre></div>
+
+  <section class="module">
+    <div class="module-card" data-index="6">
+      <div class="module-num">06 / 10 — CONSTANT</div>
+      <div class="module-title">My Constant 🫀</div>
+      <div class="module-body">तुम ना कोई variable हो, ना कोई temporary memory…<br><br>तुम मेरी जिंदगी का वो constant हो जिसकी value कभी change नहीं होगी। ❤️<br><br>दुनिया चाहे जितनी बार update हो जाए, मेरे दिल का code तुम्हारे लिए हमेशा same रहेगा। 🫶🏻</div>
+    </div>
+  </section>
+
+  <section class="module">
+    <div class="module-card" data-index="7">
+      <div class="module-num">07 / 10 — API</div>
+      <div class="module-title">You're My API ❤️</div>
+      <div class="module-body">तुमसे बात किए बिना दिन अधूरा सा लगता है…<br><br>शायद इसलिए क्योंकि मेरी सारी happiness की API तुमसे ही connected है। 🥹❤️<br><br>और तुम्हारा एक "Heyy" पूरे दिन का 200 OK बना देता है। 😭🫶🏻</div>
+      <div class="code-snippet">GET /love
+Response: Infinite ❤️</div>
+    </div>
+  </section>
+
+  <section class="module">
+    <div class="module-card" data-index="8">
+      <div class="module-num">08 / 10 — AUTHENTICATION</div>
+      <div class="module-title">No Logout 🚪❤️</div>
+      <div class="module-body">लोग कहते हैं हर चीज़ का एक end होता है…<br><br>पर मैंने तुम्हारे साथ कोई logout button ही नहीं रखा। 😌<br><br>ना session expire होगा, ना token खत्म होगा…<br>तुम्हारा access मेरे दिल में permanently granted है। 🔐❤️</div>
+      <div class="code-snippet">Authorization: Forever</div>
+    </div>
+  </section>
+
+  <div class="decor"><pre>// <span class="accent">git log --author="him" --grep="you"</span>
+commit 7f3a9d2
+  Date: everyday
+  <span class="accent2">Forever with you</span></pre></div>
+
+  <section class="module">
+    <div class="module-card" data-index="9">
+      <div class="module-num">09 / 10 — SOURCE CODE</div>
+      <div class="module-title">Source Code of My Heart 🫀💻</div>
+      <div class="module-body">लोग मेरा चेहरा पढ़ते हैं, कुछ मेरी बातें समझते हैं…<br><br>पर तुमने तो मेरे दिल का source code पढ़ लिया। ❤️<br><br>और शायद इसलिए तुम्हें पता है—<br>कितने भी errors हों जिंदगी में, मेरी सबसे important dependency तुम ही हो। 🫶🏻</div>
+    </div>
+  </section>
+
+  <section class="module">
+    <div class="module-card" data-index="10">
+      <div class="module-num">10 / 10 — LIFETIME SUBSCRIPTION</div>
+      <div class="module-title">Lifetime Subscription ♾️❤️</div>
+      <div class="module-body">मुझे तुम्हारे साथ कोई trial version नहीं चाहिए…<br><br>ना 7 days, ना 30 days, ना कोई premium plan।<br><br>बस एक छोटी सी wish है—<br>तुम और मैं, एक lifetime subscription। ❤️‍🔥<br><br>No cancellation. No refund. Just love. ❤️</div>
+      <div class="code-snippet">Plan: YOU + ME
+Duration: ∞
+Auto-Renewal: Forever 🫶🏻♾️</div>
+    </div>
+  </section>
+
+  <!-- Developer Signature -->
+  <section class="module">
+    <div class="module-card" data-index="sig">
+      <div class="eyebrow">// signature</div>
+      <div class="signature-box">
+        <span class="comment">// Written with logic</span><br>
+        <span class="comment">// Delivered with feelings</span><br><br>
+        <span class="kw">const</span> sender = <span class="str">"Your Developer ❤️"</span>;<br>
+        <span class="kw">const</span> intention = <span class="str">"Forever"</span>;<br>
+        <span class="kw">const</span> love = <span class="accent2" style="color:var(--pink)">Infinity</span>;
+      </div>
+      <p class="signature-note">— From the developer who usually writes code... but today wrote his heart. ❤️</p>
+      <div class="cta-wrap" style="opacity:1;margin-top:2.2rem;">
+        <button class="btn" id="last-thing-btn">One Last Thing... 💌</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ FINAL SURPRISE ============ -->
+<div id="final-surprise" class="screen hidden">
+  <div class="final-heart">❤️</div>
+  <div class="final-lines" id="final-lines">
+    <span class="line" data-text="इतने सालों में बहुत सा code लिखा है..."></span>
+    <span class="line" data-text="बहुत सारे projects बनाए हैं..."></span>
+    <span class="line" data-text="लेकिन अगर कोई चीज़ है जिसे मैं lifetime तक maintain करना चाहता हूँ..."></span>
+    <span class="line strong" data-text="वो तुम हो। ❤️"></span>
+  </div>
+  <div class="final-list" id="final-list">
+    No bugs.<br>No errors.<br>No logout.<br>Just us. ♾️
+  </div>
+  <div class="deploy-status" id="deploy-status">
+    ❤️ LOVE — SUCCESSFULLY DEPLOYED<br>
+    🚀 Version — FOREVER<br>
+    🔐 Access — ONLY YOU<br>
+    ♾️ Expiry — NEVER
+  </div>
+  <div class="restart-wrap">
+    <button class="restart-btn" id="restart-btn">Restart Our Love Story ❤️</button>
+  </div>
+</div>
+
+<!-- ============ FLOATING BUTTONS ============ -->
+<button class="float-btn hidden" id="music-btn" title="Play our little soundtrack">🎵</button>
+<button class="float-btn hidden" id="heart-btn" title="Send a heart">🤍</button>
+<div class="heart-msg" id="heart-msg">One more reason to love you. ❤️</div>
+<audio id="bg-audio" loop></audio>
+
+<script>
+/* ================= CONFIG ================= */
+const SECRET_PASSWORD = "love"; // change this to your own secret
+const MUSIC_URL = ""; // paste a music URL here if you have one
+
+/* ================= BACKGROUND: STARS + HEARTS ================= */
+const starsEl = document.getElementById('stars');
+const starCount = window.innerWidth < 600 ? 40 : 80;
+for(let i=0;i<starCount;i++){
+  const s = document.createElement('div');
+  s.className='star';
+  s.style.left = Math.random()*100+'vw';
+  s.style.top = Math.random()*100+'vh';
+  s.style.animationDelay = (Math.random()*4)+'s';
+  s.style.animationDuration = (3+Math.random()*3)+'s';
+  starsEl.appendChild(s);
+}
+
+const heartsBg = document.getElementById('hearts-bg');
+const bgHeartCount = window.innerWidth < 600 ? 6 : 10;
+for(let i=0;i<bgHeartCount;i++){
+  const h = document.createElement('div');
+  h.className='float-heart';
+  h.textContent='❤';
+  h.style.left = Math.random()*100+'vw';
+  h.style.bottom = '-10vh';
+  h.style.fontSize = (0.7+Math.random()*1.4)+'rem';
+  h.style.animationDuration = (14+Math.random()*14)+'s';
+  h.style.animationDelay = (Math.random()*10)+'s';
+  heartsBg.appendChild(h);
+}
+
+/* ================= LOCK SCREEN ================= */
+const lockScreen = document.getElementById('lock-screen');
+const secretInput = document.getElementById('secret-input');
+const unlockBtn = document.getElementById('unlock-btn');
+const lockError = document.getElementById('lock-error');
+const lockCard = document.querySelector('.lock-card');
+
+function tryUnlock(){
+  if(secretInput.value.trim().toLowerCase() === SECRET_PASSWORD.toLowerCase()){
+    lockScreen.classList.add('fade-out');
+    setTimeout(()=>{
+      lockScreen.classList.add('hidden');
+      startTerminal();
+    }, 550);
+  } else {
+    lockError.classList.add('show');
+    lockCard.classList.remove('shake');
+    void lockCard.offsetWidth;
+    lockCard.classList.add('shake');
+  }
+}
+unlockBtn.addEventListener('click', tryUnlock);
+secretInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryUnlock(); });
+
+/* ================= TERMINAL BOOT ================= */
+function startTerminal(){
+  const termScreen = document.getElementById('terminal-screen');
+  termScreen.classList.remove('hidden');
+  const lines = document.querySelectorAll('.term-line');
+  lines.forEach((line, i)=>{
+    setTimeout(()=>{ line.classList.add('show'); }, i*550);
+  });
+  const totalDelay = lines.length*550 + 400;
+  setTimeout(()=>{
+    document.getElementById('build-success').style.transition='opacity 0.6s ease';
+    document.getElementById('build-success').style.opacity='1';
+  }, totalDelay);
+  setTimeout(()=>{
+    termScreen.classList.add('fade-out');
+    setTimeout(()=>{
+      termScreen.classList.add('hidden');
+      startMainIntro();
+    }, 600);
+  }, totalDelay + 1600);
+}
+
+/* ================= MAIN INTRO ================= */
+function typeText(el, text, speed, cb){
+  let i=0;
+  el.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className='cursor';
+  cursor.textContent='|';
+  function step(){
+    if(i<=text.length){
+      el.textContent = text.slice(0,i);
+      el.appendChild(cursor);
+      i++;
+      setTimeout(step, speed);
+    } else {
+      if(cb) cb();
+    }
+  }
+  step();
+}
+
+function startMainIntro(){
+  const mainIntro = document.getElementById('main-intro');
+  mainIntro.classList.remove('hidden');
+  const block = document.getElementById('opening-block');
+  block.classList.add('reveal');
+
+  const line1 = document.getElementById('typing-line-1');
+  const line2 = document.getElementById('typing-line-2');
+  const quote = document.getElementById('intro-quote');
+  const cta = document.getElementById('cta-wrap');
+
+  setTimeout(()=>{
+    typeText(line1, 'Roz code likhta hoon...', 55, ()=>{
+      setTimeout(()=>{
+        typeText(line2, 'Aaj aapke liye kuchh likha hai. 🫶🏻', 45, ()=>{
+          setTimeout(()=>{
+            quote.style.transition='opacity 1s ease';
+            quote.style.opacity='1';
+            setTimeout(()=>{
+              cta.style.transition='opacity 1s ease';
+              cta.style.opacity='1';
+              document.getElementById('music-btn').classList.remove('hidden');
+              document.getElementById('heart-btn').classList.remove('hidden');
+            }, 500);
+          }, 300);
+        });
+      }, 400);
+    });
+  }, 500);
+}
+
+/* ================= OPEN CODE -> MODULES ================= */
+document.getElementById('open-code-btn').addEventListener('click', ()=>{
+  document.getElementById('main-intro').classList.add('fade-out');
+  setTimeout(()=>{
+    document.getElementById('main-intro').classList.add('hidden');
+    document.getElementById('modules-wrap').classList.remove('hidden');
+    window.scrollTo({top: document.getElementById('modules-wrap').offsetTop, behavior:'smooth'});
+    setupScrollReveal();
+  }, 500);
+});
+
+/* ================= SCROLL REVEAL ================= */
+function setupScrollReveal(){
+  const targets = document.querySelectorAll('.module-card, .decor');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {threshold:0.2});
+  targets.forEach(t=>obs.observe(t));
+}
+
+/* ================= LAST THING -> FINAL SURPRISE ================= */
+document.getElementById('last-thing-btn').addEventListener('click', ()=>{
+  document.getElementById('final-surprise').classList.remove('hidden');
+  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+  setTimeout(runFinalSequence, 700);
+});
+
+function runFinalSequence(){
+  const lines = document.querySelectorAll('#final-lines .line');
+  lines.forEach((line, i)=>{
+    setTimeout(()=>{
+      line.textContent = line.dataset.text;
+      line.classList.add('show');
+    }, i*1600);
+  });
+  const afterLines = lines.length*1600 + 600;
+  setTimeout(()=>{
+    const list = document.getElementById('final-list');
+    list.style.transition='opacity 1s ease';
+    list.style.opacity='1';
+  }, afterLines);
+  setTimeout(()=>{
+    const status = document.getElementById('deploy-status');
+    status.style.transition='opacity 1s ease';
+    status.style.opacity='1';
+  }, afterLines + 1200);
+}
+
+/* ================= RESTART ================= */
+document.getElementById('restart-btn').addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'auto'});
+  document.getElementById('final-surprise').classList.add('hidden');
+  document.getElementById('modules-wrap').classList.add('hidden');
+  document.querySelectorAll('.module-card, .decor').forEach(el=>el.classList.remove('in-view'));
+  document.querySelectorAll('#final-lines .line').forEach(l=>{l.classList.remove('show'); l.textContent='';});
+  document.getElementById('final-list').style.opacity='0';
+  document.getElementById('deploy-status').style.opacity='0';
+  document.getElementById('main-intro').classList.remove('hidden');
+  document.getElementById('main-intro').classList.remove('fade-out');
+  document.getElementById('opening-block').classList.remove('reveal');
+  document.getElementById('typing-line-1').textContent='';
+  document.getElementById('typing-line-2').textContent='';
+  document.getElementById('intro-quote').style.opacity='0';
+  document.getElementById('cta-wrap').style.opacity='0';
+  setTimeout(()=>{
+    document.getElementById('opening-block').classList.add('reveal');
+    startMainIntro();
+  }, 200);
+});
+
+/* ================= HEART BUTTON ================= */
+const heartBtn = document.getElementById('heart-btn');
+const heartMsg = document.getElementById('heart-msg');
+let heartMsgTimeout;
+heartBtn.addEventListener('click', ()=>{
+  heartBtn.textContent='❤️';
+  for(let i=0;i<8;i++){
+    const p = document.createElement('div');
+    p.className='heart-particle';
+    p.textContent='❤';
+    const rect = heartBtn.getBoundingClientRect();
+    p.style.left = (rect.left + rect.width/2 + (Math.random()*60-30)) + 'px';
+    p.style.top = (rect.top) + 'px';
+    p.style.fontSize = (0.8+Math.random()*0.8)+'rem';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 1200);
+  }
+  heartMsg.classList.add('show');
+  clearTimeout(heartMsgTimeout);
+  heartMsgTimeout = setTimeout(()=>heartMsg.classList.remove('show'), 2200);
+  setTimeout(()=>{ heartBtn.textContent='🤍'; }, 600);
+});
+
+/* ================= MUSIC BUTTON ================= */
+const musicBtn = document.getElementById('music-btn');
+const audio = document.getElementById('bg-audio');
+let musicPlaying = false;
+if(MUSIC_URL){ audio.src = MUSIC_URL; }
+musicBtn.addEventListener('click', ()=>{
+  if(!MUSIC_URL){
+    musicBtn.textContent='🔇';
+    setTimeout(()=>{ musicBtn.textContent='🎵'; }, 900);
+    return;
+  }
+  if(musicPlaying){
+    audio.pause();
+    musicBtn.textContent='🎵';
+  } else {
+    audio.play().catch(()=>{});
+    musicBtn.textContent='⏸️';
+  }
+  musicPlaying = !musicPlaying;
+});
+</script>
+</body>
+</html>
