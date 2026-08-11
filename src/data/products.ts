@@ -3,6 +3,7 @@ import type { Category, Product } from "./types";
 import thumbBirthday from "@/assets/thumb-birthday.jpg";
 import thumbAnniversary from "@/assets/thumb-anniversary.jpg";
 import thumbProposal from "@/assets/thumb-proposal.jpg";
+import lockProposal from "@/assets/lock-proposal.png";
 import thumbLove from "@/assets/thumb-love.jpg";
 import thumbMemories from "@/assets/thumb-memories.jpg";
 import thumbCelebration from "@/assets/thumb-celebration.jpg";
@@ -238,7 +239,7 @@ export const products: Product[] = [
       "A glowing envelope unseals into a typewriter letter with your words, your photo and a quiet soundtrack. Simple, slow and very personal.",
     category: "proposal",
     occasion: "Proposal",
-    thumbnail_url: thumbProposal,
+    thumbnail_url: lockProposal,
     preview_url: `${DEMO_PREVIEW_BASE}/lock-proposal`,
     download_url: `${DEMO_DOWNLOAD_BASE}/lock-proposal`,
     grab_code: "BM-143",
