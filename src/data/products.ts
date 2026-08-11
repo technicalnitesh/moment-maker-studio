@@ -3,6 +3,7 @@ import type { Category, Product } from "./types";
 import thumbBirthday from "@/assets/thumb-birthday.jpg";
 import thumbAnniversary from "@/assets/thumb-anniversary.jpg";
 import thumbProposal from "@/assets/thumb-proposal.jpg";
+import digiProposal from "@/assets/digi-love-letter.png";
 import lockProposal from "@/assets/lock-proposal.png";
 import thumbLove from "@/assets/thumb-love.jpg";
 import thumbMemories from "@/assets/thumb-memories.jpg";
@@ -145,7 +146,7 @@ export const products: Product[] = [
       "A glowing envelope unseals into a typewriter letter with your words, your photo and a quiet soundtrack. Simple, slow and very personal.",
     category: "proposal",
     occasion: "Proposal",
-    thumbnail_url: thumbProposal,
+    thumbnail_url: digiProposal,
     preview_url: `${DEMO_PREVIEW_BASE}/love-letter`,
     download_url: `${DEMO_DOWNLOAD_BASE}/love-letter.html`,
     grab_code: "BM-CODE",
@@ -234,7 +235,7 @@ export const products: Product[] = [
     id: "bm-009",
     slug: "lock-proposal",
     name: "Memory Lock Proposal",
-    short_description: "An envelope that opens into everything you never said out loud.",
+    short_description: "An envelope that opens into everything you never said out loud. - PASSWORD - 143 ",
     description:
       "A glowing envelope unseals into a typewriter letter with your words, your photo and a quiet soundtrack. Simple, slow and very personal.",
     category: "proposal",
