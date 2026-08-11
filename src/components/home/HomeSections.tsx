@@ -51,7 +51,7 @@ export function InstagramSection() {
             </Button>
           </div>
 
-          <Reveal className="mx-auto w-full max-w-xs">
+          {/* <Reveal className="mx-auto w-full max-w-xs">
             <div className="card-surface overflow-hidden rounded-3xl">
               <div className="flex items-center gap-2.5 p-3.5">
                 <span className="bg-gradient-brand grid size-8 place-items-center rounded-full text-[11px] font-bold text-primary-foreground">
@@ -74,7 +74,7 @@ export function InstagramSection() {
                 </p>
               </div>
             </div>
-          </Reveal>
+          </Reveal> */}
         </div>
       </div>
     </section>
