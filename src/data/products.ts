@@ -246,8 +246,8 @@ export const products: Product[] = [
     thumbnail_url: lockProposal,
     preview_url: `${DEMO_PREVIEW_BASE}/lock-proposal`,
     download_url: `${DEMO_DOWNLOAD_BASE}/lock-proposal`,
-    grab_code: "BM-143",
-    social_tag: "#GRABPROJECT",
+    grab_code: "Password - 143",
+    social_tag: "#GRABPROJECT-143",
     features: [
       "💌 Envelope open animation",
       "⌨️ Typewriter letter",
@@ -278,8 +278,8 @@ export const products: Product[] = [
   thumbnail_url: codeShayri,
   preview_url: `${DEMO_PREVIEW_BASE}/developer-proposal`,
   download_url: `${DEMO_DOWNLOAD_BASE}/developer-proposal.html`,
-  grab_code: "LOVE",
-  social_tag: "#GRABPROJECT",
+  grab_code: "Password - love",
+  social_tag: "#LOVE",
   passcode: "lock-love",
 
   features: [
