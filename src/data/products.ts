@@ -168,6 +168,7 @@ export const products: Product[] = [
     created_at: now,
     updated_at: now,
   },
+  
   {
     id: "bm-008",
     slug: "digital-kitty-proposal",
@@ -201,7 +202,7 @@ export const products: Product[] = [
   },
 
   {
-    id: "bm-008",
+    id: "bm-009",
     slug: "matrix-proposal",
     name: "Matrix Proposal",
     short_description: "An envelope that opens into everything you never said out loud.",
@@ -232,7 +233,7 @@ export const products: Product[] = [
     updated_at: now,
   },
    {
-    id: "bm-009",
+    id: "bm-010",
     slug: "lock-proposal",
     name: "Memory Lock Proposal",
     short_description: "An envelope that opens into everything you never said out loud. - PASSWORD - 143 ",
@@ -262,6 +263,59 @@ export const products: Product[] = [
     created_at: now,
     updated_at: now,
   },
+  {
+  id: "bm-011",
+  slug: "when-coder-falls-in-love",
+  name: "When Coder Falls in Love",
+  short_description:
+    "Jab code ke beech kisi ka naam likhne lage dil, tab ek coder bhi shayar ban jaata hai.",
+  description:
+    "A romantic digital experience made for the coder who fell in love. Beautiful shayari, glowing code-inspired visuals, heartfelt messages and a soft romantic atmosphere come together to tell a story that feels like love written in code.",
+  category: "proposal",
+  occasion: "Proposal",
+  thumbnail_url: thumbProposal,
+  preview_url: `${DEMO_PREVIEW_BASE}/developer-proposal`,
+  download_url: `${DEMO_DOWNLOAD_BASE}/developer-proposal.html`,
+  grab_code: "LOVE",
+  social_tag: "#GRABPROJECT",
+  passcode: "lock-love",
+
+  features: [
+    "💻 PassCode - love ",
+    "💻 Coder-themed romantic visuals",
+    "❤️ Shayari-based love experience",
+    "⌨️ Romantic typing animation",
+    "✨ Glowing code & heart effects",
+    "🎵 Soft romantic soundtrack",
+    "💌 Personal love message",
+  ],
+
+  perfect_for: [
+    "Proposals",
+    "Confessions",
+    "First Love",
+    "Anniversaries",
+  ],
+
+  tags: [
+    "coder",
+    "developer",
+    "love",
+    "shayari",
+    "romantic",
+    "proposal",
+    "programmer",
+  ],
+
+  is_free: true,
+  is_featured: true,
+  is_trending: true,
+  is_new: true,
+  status: "published",
+  sort_order: 7,
+  created_at: now,
+  updated_at: now,
+},
   // {
   //   id: "bm-008",
   //   slug: "valentine-surprise",
