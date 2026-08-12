@@ -8,6 +8,8 @@ import lockProposal from "@/assets/lock-proposal.png";
 import thumbLove from "@/assets/thumb-love.jpg";
 import thumbMemories from "@/assets/thumb-memories.jpg";
 import thumbCelebration from "@/assets/thumb-celebration.jpg";
+import codeShayri from "@/assets/code-shayri.png";
+
 
 /**
  * DEMO / MOCK configuration only.
@@ -268,12 +270,12 @@ export const products: Product[] = [
   slug: "when-coder-falls-in-love",
   name: "When Coder Falls in Love",
   short_description:
-    "Jab code ke beech kisi ka naam likhne lage dil, tab ek coder bhi shayar ban jaata hai.",
+    "When a coder’s heart starts writing someone’s name between the lines of code, even a coder becomes a poet.” ❤️💻",
   description:
     "A romantic digital experience made for the coder who fell in love. Beautiful shayari, glowing code-inspired visuals, heartfelt messages and a soft romantic atmosphere come together to tell a story that feels like love written in code.",
   category: "proposal",
   occasion: "Proposal",
-  thumbnail_url: thumbProposal,
+  thumbnail_url: codeShayri,
   preview_url: `${DEMO_PREVIEW_BASE}/developer-proposal`,
   download_url: `${DEMO_DOWNLOAD_BASE}/developer-proposal.html`,
   grab_code: "LOVE",
