@@ -9,6 +9,7 @@ import thumbLove from "@/assets/thumb-love.jpg";
 import thumbMemories from "@/assets/thumb-memories.jpg";
 import thumbCelebration from "@/assets/thumb-celebration.jpg";
 import codeShayri from "@/assets/code-shayri.png";
+import kuchhooPoochooProposal from "@/assets/kuchhoopoochoo.png";
 
 
 /**
