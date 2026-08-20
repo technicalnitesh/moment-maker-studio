@@ -318,6 +318,65 @@ export const products: Product[] = [
   created_at: now,
   updated_at: now,
 },
+  {
+  id: "bm-012",
+  slug: "kuchhoo-poochoo-proposal",
+  name: "Kuchhoo Poochoo Proposal",
+  short_description:
+    "A cute, playful and interactive way to propose your special someone with fun questions, adorable moments and a heart-touching final proposal. 💕✨",
+
+  description:
+    "A cute and playful digital proposal experience designed to make your special someone smile, blush and finally say yes. From sweet questions and fun interactions to romantic surprises and an emotional proposal moment, Kuchhoo Poochoo turns a simple proposal into a memorable love story.",
+
+  category: "proposal",
+  occasion: "Proposal",
+
+  thumbnail_url: kuchhooPoochooProposal,
+  preview_url: `${DEMO_PREVIEW_BASE}/kuchhoo-poochoo-proposal`,
+  download_url: `${DEMO_DOWNLOAD_BASE}/kuchhoo-poochoo-proposal.html`,
+
+  grab_code: "Password - love",
+  social_tag: "#LOVE",
+  passcode: "lock-love",
+
+  features: [
+    "💕 Cute & playful proposal experience",
+    "🥰 Interactive love questions",
+    "💖 Romantic surprise moments",
+    "✨ Cute animated visuals & effects",
+    "💌 Personalized proposal message",
+    "🎵 Soft romantic soundtrack",
+    "💍 Heart-touching final proposal",
+  ],
+
+  perfect_for: [
+    "Proposals",
+    "Crush",
+    "Confessions",
+    "First Love",
+    "Anniversaries",
+  ],
+
+  tags: [
+    "kuchhoo-poochoo",
+    "cute",
+    "love",
+    "romantic",
+    "proposal",
+    "crush",
+    "confession",
+    "interactive",
+  ],
+
+  is_free: true,
+  is_featured: true,
+  is_trending: true,
+  is_new: true,
+  status: "published",
+  sort_order: 8,
+  created_at: now,
+  updated_at: now,
+},
   // {
   //   id: "bm-008",
   //   slug: "valentine-surprise",
