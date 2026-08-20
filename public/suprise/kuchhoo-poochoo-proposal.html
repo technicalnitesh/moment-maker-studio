@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Kuchh Poochoo? 🥺</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-0:#12060d;
+    --bg-1:#1c0a15;
+    --bg-2:#25101c;
+    --pink:#ff5c8a;
+    --pink-soft:#ffb3c6;
+    --red:#ff3d68;
+    --white:#fff6f8;
+    --muted:#c9a3ae;
+    --line: rgba(255,255,255,0.10);
+    --glass: rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; width:100%; height:100%; background:var(--bg-0); overflow:hidden;
+    font-family:'Poppins',sans-serif; color:var(--white); -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+  button{font-family:inherit; -webkit-appearance:none; appearance:none; cursor:pointer; border:none; background:none; color:inherit;}
+  #app{position:fixed; inset:0; width:100%; height:100%; overflow:hidden;}
+  #bgGlow{position:fixed; inset:0; z-index:0; transition:background 1.6s ease;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(255,92,138,0.14), transparent 55%),
+      radial-gradient(circle at 80% 75%, rgba(255,61,104,0.10), transparent 55%),
+      linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
+  }
+  #bgGlow.warm{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,92,138,0.28), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(255,61,104,0.24), transparent 55%),
+      radial-gradient(circle at 50% 100%, rgba(255,179,198,0.14), transparent 60%),
+      linear-gradient(160deg, #200712 0%, #2b0c1a 55%, #1a0710 100%);
+  }
+  canvas#fx{position:fixed; inset:0; z-index:2; pointer-events:none; width:100%; height:100%;}
+  #flash{position:fixed; inset:0; background:#fff; opacity:0; z-index:45; pointer-events:none;}
+
+  #progress{position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:50;
+    font-size:10.5px; letter-spacing:.22em; color:var(--muted); opacity:0; transition:opacity .6s ease;
+    display:flex; align-items:center; gap:8px; font-weight:400;}
+  #progress.show{opacity:.75;}
+  #progress .dots{display:flex; gap:4px;}
+  #progress .dot{width:4px; height:4px; border-radius:50%; background:var(--line);}
+  #progress .dot.on{background:var(--pink-soft);}
+
+  .scene{position:fixed; inset:0; z-index:5; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; padding:8vh 6vw; text-align:center; opacity:0; visibility:hidden;
+    filter:blur(8px); transform:scale(1.04);
+    transition:opacity .8s cubic-bezier(.22,.61,.36,1), filter .8s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1), visibility 0s linear .8s;
+    pointer-events:none;}
+  .scene.active{opacity:1; visibility:visible; filter:blur(0); transform:scale(1); pointer-events:auto;
+    transition:opacity .8s cubic-bezier(.22,.61,.36,1), filter .8s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1), visibility 0s linear 0s;}
+
+  .card{background:var(--glass); border:1px solid var(--line); backdrop-filter:blur(20px) saturate(150%);
+    -webkit-backdrop-filter:blur(20px) saturate(150%); border-radius:22px; padding:44px 32px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    max-width:420px; width:100%; transition:transform .25s ease;}
+
+  .eyebrow{font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--pink-soft); opacity:.7;
+    margin-bottom:14px; font-weight:500;}
+  .script{font-family:'Dancing Script',cursive; font-weight:600;}
+  .q-text{font-family:'Dancing Script',cursive; font-weight:600; font-size:clamp(23px,5vw,32px); line-height:1.5;
+    margin:0 0 30px; color:var(--white);}
+  .sub-text{font-size:14px; color:var(--muted); font-weight:300; margin:-16px 0 26px;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:15px 28px; border-radius:50px; border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.05); color:var(--white); font-size:14px; font-weight:500;
+    transition:transform .15s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+    min-height:48px; will-change:transform;
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--pink),var(--red)); border-color:transparent;
+    box-shadow:0 8px 24px rgba(255,61,104,0.35);}
+  .btn:active{transform:scale(0.96);}
+  .btn-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .btn:disabled{opacity:.5; pointer-events:none;}
+
+  /* ===== opening ===== */
+  #sceneOpen .q-text{font-size:clamp(28px,7vw,42px);}
+
+  /* ===== question scenes ===== */
+  .q-progress-mark{font-size:22px; color:var(--pink-soft); margin-bottom:8px; opacity:.8;}
+
+  /* ===== secret reveal ===== */
+  .reveal-text{font-family:'Dancing Script',cursive; font-weight:600; font-size:clamp(20px,4.4vw,27px);
+    line-height:1.6; color:var(--pink-soft); opacity:0; max-height:0; overflow:hidden;
+    transition:opacity 1s ease, max-height 1s ease; margin-top:0;}
+  .reveal-text.show{opacity:1; max-height:200px; margin-top:22px;}
+
+  /* ===== final proposal ===== */
+  #sceneFinal .card{max-width:460px;}
+  .final-pre{font-family:'Dancing Script',cursive; font-size:clamp(19px,4vw,25px); line-height:1.6; min-height:60px;}
+  .final-line{opacity:0; transform:translateY(8px); transition:opacity .8s ease, transform .8s ease; margin:0 0 8px;}
+  .final-line.show{opacity:1; transform:translateY(0);}
+  .final-q{font-family:'Great Vibes',cursive; font-size:clamp(34px,8vw,54px); color:var(--white); margin:14px 0 4px;
+    text-shadow:0 0 40px rgba(255,92,138,.4); opacity:0; transition:opacity 1s ease;}
+  .final-q.show{opacity:1;}
+  .final-sub{font-family:'Dancing Script',cursive; font-size:clamp(22px,5vw,30px); color:var(--pink-soft);
+    margin:0 0 26px; opacity:0; transition:opacity 1s ease;}
+  .final-sub.show{opacity:1;}
+  .heartbeat{animation:hb 1.5s ease-in-out infinite;}
+  @keyframes hb{0%,100%{transform:scale(1);}15%{transform:scale(1.08);}30%{transform:scale(1);}45%{transform:scale(1.05);}60%{transform:scale(1);}}
+
+  .no-msg{font-size:13px; color:var(--muted); margin-top:14px; min-height:18px; opacity:0; transition:opacity .5s ease;}
+  .no-msg.show{opacity:1;}
+
+  /* ===== celebration ===== */
+  #sceneCelebrate .q-text{font-size:clamp(22px,5vw,30px);}
+  .cel-lines{min-height:120px; display:flex; flex-direction:column; gap:8px;}
+  .cel-line{font-family:'Dancing Script',cursive; font-size:clamp(19px,4.4vw,26px); opacity:0; transform:translateY(8px);
+    transition:opacity .8s ease, transform .8s ease; color:var(--white);}
+  .cel-line.show{opacity:1; transform:translateY(0);}
+  .music-toggle{margin-top:26px; display:inline-flex; align-items:center; gap:8px; padding:10px 18px;
+    border-radius:50px; border:1px solid var(--line); background:rgba(255,255,255,0.05); font-size:12px;
+    color:var(--muted); opacity:0; transition:opacity .8s ease;}
+  .music-toggle.show{opacity:1;}
+  .music-toggle.on{color:var(--pink-soft); border-color:var(--pink-soft);}
+  .note-icon{display:inline-block; transition:transform .3s ease;}
+  .music-toggle.on .note-icon{animation:sway 1s ease-in-out infinite;}
+  @keyframes sway{0%,100%{transform:rotate(-8deg);}50%{transform:rotate(8deg);}}
+</style>
+</head>
+<body>
+<div id="app">
+    <!-- MADE BY BHOPALIMITRA -->
+<a href="https://www.bhopalimitra.in"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="made-by-bhopal-mitra">
+  <span>Developed ❤️ by</span>
+  <strong>Bhopali Mitra</strong>
+</a>
+
+<style>
+  .made-by-bhopal-mitra {
+    position: fixed;
+    right: 18px;
+    bottom: 16px;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 13px;
+    border-radius: 50px;
+
+    color: #fff;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: .3px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 126, 179, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.18),
+      0 0 18px rgba(255, 126, 179, 0.08);
+
+    transition: all .3s ease;
+  }
+
+  .made-by-bhopal-mitra span {
+    opacity: .72;
+  }
+
+  .made-by-bhopal-mitra strong {
+    color: #ff9fc4;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .made-by-bhopal-mitra:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 126, 179, 0.7);
+    box-shadow:
+      0 8px 28px rgba(0, 0, 0, 0.25),
+      0 0 22px rgba(255, 126, 179, 0.22);
+  }
+
+  @media (max-width: 600px) {
+    .made-by-bhopal-mitra {
+      right: 10px;
+      bottom: 10px;
+      padding: 7px 10px;
+      font-size: 9px;
+    }
+
+    .made-by-bhopal-mitra strong {
+      font-size: 10px;
+    }
+  }
+</style>
+  <div id="bgGlow"></div>
+  <canvas id="fx"></canvas>
+  <div id="flash"></div>
+
+  <div id="progress">
+    <span id="progressLabel">01 / 06</span>
+    <span class="dots" id="progressDots">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </span>
+  </div>
+
+  <!-- OPENING -->
+  <section class="scene active" id="sceneOpen">
+    <div class="card">
+      <div class="q-text">Kuchh Poochoo? 🥺</div>
+      <div class="sub-text">Bas honestly answer karna… ❤️</div>
+      <button class="btn primary" id="startBtn"><span>Haan, poocho 💕</span></button>
+    </div>
+  </section>
+
+  <!-- Q1 -->
+  <section class="scene" id="sceneQ1">
+    <div class="card">
+      <div class="q-text">Meri ek baat batao… tumhe mere saath baat karna achha lagta hai? 👀</div>
+      <div class="btn-row">
+        <button class="btn primary" data-next="sceneQ2"><span>Haan ❤️</span></button>
+        <button class="btn" data-next="sceneQ2"><span>Thoda sa 😏</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q2 -->
+  <section class="scene" id="sceneQ2">
+    <div class="card">
+      <div class="q-text">Agar main ek din tumse baat na karu… yaad karogi? 🥺</div>
+      <div class="btn-row">
+        <button class="btn primary" data-next="sceneQ3"><span>Bahut 😭</span></button>
+        <button class="btn" data-next="sceneQ3"><span>Bilkul nahi 😌</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q3 -->
+  <section class="scene" id="sceneQ3">
+    <div class="card">
+      <div class="q-text">Tumhare smile ka reason banne ka chance mile… dogi? 🫶</div>
+      <div class="btn-row">
+        <button class="btn primary" data-next="sceneQ4"><span>Maybe ❤️</span></button>
+        <button class="btn" data-next="sceneQ4"><span>Sochungi 🙈</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q4 : secret -->
+  <section class="scene" id="sceneQ4">
+    <div class="card">
+      <div class="q-text">Ek secret bataun? 🤫</div>
+      <button class="btn primary" id="secretBtn"><span>Batao 👀</span></button>
+      <div class="reveal-text" id="secretReveal">Tumse baat karte-karte pata hi nahi chala… kab tum special ban gayi. ❤️</div>
+      <div id="secretContinueWrap" style="margin-top:24px; display:none;">
+        <button class="btn" data-next="sceneQ5"><span>Aage badhein →</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q5 : ready -->
+  <section class="scene" id="sceneQ5">
+    <div class="card">
+      <div class="q-text">Ab ek important question… ready ho? 👀</div>
+      <button class="btn primary" id="readyBtn"><span>I'm Ready 💗</span></button>
+    </div>
+  </section>
+
+  <!-- FINAL PROPOSAL -->
+  <section class="scene" id="sceneFinal">
+    <div class="card">
+      <div class="final-pre" id="finalPre"></div>
+      <div class="final-q" id="finalQ">Kya tum meri life ka sabse<br>beautiful part banogi? ❤️</div>
+      <div class="final-sub" id="finalSub">Will You Be Mine? 💍</div>
+      <div class="btn-row" id="finalBtns" style="display:none;">
+        <button class="btn primary" id="yesBtn1"><span>YES ❤️</span></button>
+        <button class="btn primary" id="yesBtn2"><span>Of Course 🥺</span></button>
+      </div>
+      <div style="margin-top:14px; display:none;" id="noWrap">
+        <button class="btn" id="noBtn" style="font-size:12px; padding:10px 20px; opacity:.6;"><span>No 🙊</span></button>
+      </div>
+      <div class="no-msg" id="noMsg"></div>
+    </div>
+  </section>
+
+  <!-- CELEBRATION -->
+  <section class="scene" id="sceneCelebrate">
+    <div class="card heartbeat">
+      <div class="eyebrow">✦ ✦ ✦</div>
+      <div class="cel-lines" id="celLines"></div>
+      <div class="music-toggle" id="musicToggle"><span class="note-icon">♪</span> <span id="musicLabel">Play our song</span></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rand = (a,b) => a + Math.random()*(b-a);
+  const $ = id => document.getElementById(id);
+
+  /* ================= particle canvas ================= */
+  const canvas = $('fx'), ctx = canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  resize(); addEventListener('resize', resize);
+
+  function drawHeart(x,y,size,color,alpha,rot){
+    ctx.save(); ctx.translate(x,y); ctx.rotate(rot||0);
+    ctx.globalAlpha = alpha; ctx.fillStyle = color;
+    const s = size/16;
+    ctx.beginPath();
+    ctx.moveTo(0,4*s);
+    ctx.bezierCurveTo(0,-2*s,-8*s,-2*s,-8*s,4*s);
+    ctx.bezierCurveTo(-8*s,9*s,0,12*s,0,16*s);
+    ctx.bezierCurveTo(0,12*s,8*s,9*s,8*s,4*s);
+    ctx.bezierCurveTo(8*s,-2*s,0,-2*s,0,4*s);
+    ctx.fill(); ctx.restore();
+  }
+
+  let ambientOn = false;
+  function spawnAmbient(){
+    if(!ambientOn) return;
+    if(particles.filter(p=>p.amb).length < 34){
+      particles.push({x:rand(0,W), y:H+20, vx:rand(-0.15,0.15), vy:rand(-0.45,-0.2),
+        r:rand(5,11), a:rand(0.12,0.32), life:Infinity, rot:rand(-0.3,0.3), amb:true,
+        color: Math.random()<0.5? '#ff5c8a':'#ffb3c6'});
+    }
+  }
+  setInterval(spawnAmbient, 550);
+
+  function burst(x,y,count,opts={}){
+    for(let i=0;i<count;i++){
+      const ang = rand(0,Math.PI*2), spd = rand(1,5);
+      particles.push({x,y, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd-1.2,
+        r:rand(2,6), a:1, life:rand(45,85), grav:0.06,
+        type: opts.type||'heart', color: opts.color || (Math.random()<0.5?'#ff5c8a':'#ffb3c6')});
+    }
+  }
+  function confetti(count){
+    for(let i=0;i<count;i++){
+      particles.push({x:rand(0,W), y:-20, vx:rand(-1,1), vy:rand(2,4.5),
+        r:rand(3,6), a:1, life:rand(90,160), grav:0.02, type:'confetti',
+        color:['#ff5c8a','#ffb3c6','#ff3d68','#ffffff'][Math.floor(rand(0,4))], rot:rand(0,6.28), vrot:rand(-0.2,0.2)});
+    }
+  }
+  function tinyTouchHearts(x,y){ burst(x,y,5,{type:'heart'}); }
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x += p.vx; p.y += p.vy;
+      if(p.grav) p.vy += p.grav*0.05;
+      if(p.vrot) p.rot = (p.rot||0)+p.vrot;
+      if(p.life !== Infinity){ p.life--; p.a *= 0.965; }
+      if(p.amb && p.y < -20) p.y = H+20;
+      if(p.type==='confetti'){
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot||0);
+        ctx.globalAlpha=p.a; ctx.fillStyle=p.color; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);
+        ctx.restore();
+      } else {
+        drawHeart(p.x,p.y,p.r*2, p.color, p.a, p.rot||0);
+      }
+    });
+    ctx.globalAlpha=1;
+    particles = particles.filter(p => p.life===Infinity || p.life>0);
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  /* cursor-follow hearts (desktop) */
+  let lastMove = 0;
+  addEventListener('mousemove', (e)=>{
+    if(!ambientOn) return;
+    const now = Date.now();
+    if(now - lastMove < 90) return;
+    lastMove = now;
+    if(Math.random() < 0.5) burst(e.clientX, e.clientY, 1, {type:'heart'});
+  });
+  /* touch creates tiny hearts */
+  addEventListener('touchstart', (e)=>{
+    if(!ambientOn) return;
+    const t = e.touches[0]; if(!t) return;
+    tinyTouchHearts(t.clientX, t.clientY);
+  }, {passive:true});
+
+  /* ================= magnetic buttons + card tilt ================= */
+  function attachMagnetic(el){
+    el.addEventListener('mousemove', (e)=>{
+      const r = el.getBoundingClientRect();
+      const mx = e.clientX - r.left - r.width/2, my = e.clientY - r.top - r.height/2;
+      el.style.transform = `translate(${mx*0.12}px, ${my*0.25}px)`;
+    });
+    el.addEventListener('mouseleave', ()=> el.style.transform = 'translate(0,0)');
+  }
+  function attachCardTilt(card){
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const mx = (e.clientX - r.left)/r.width - 0.5, my = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = `rotateX(${my*-4}deg) rotateY(${mx*4}deg)`;
+    });
+    card.addEventListener('mouseleave', ()=> card.style.transform = 'rotateX(0) rotateY(0)');
+  }
+  document.querySelectorAll('.btn').forEach(attachMagnetic);
+  document.querySelectorAll('.card').forEach(attachCardTilt);
+
+  /* ================= scene control ================= */
+  const order = ['sceneOpen','sceneQ1','sceneQ2','sceneQ3','sceneQ4','sceneQ5','sceneFinal','sceneCelebrate'];
+  const progressOrder = ['sceneOpen','sceneQ1','sceneQ2','sceneQ3','sceneQ4','sceneQ5']; // 01/06 .. counts opening as part of flow
+  let navigating = false;
+  function goTo(id){
+    if(navigating) return; navigating = true;
+    document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+    $(id).classList.add('active');
+    const idx = progressOrder.indexOf(id);
+    if(idx >= 0){
+      $('progressLabel').textContent = String(idx+1).padStart(2,'0')+' / 06';
+      [...$('progressDots').children].forEach((d,i)=> d.classList.toggle('on', i<=idx));
+      $('progress').classList.add('show');
+    }
+    setTimeout(()=> navigating = false, 500);
+  }
+
+  document.querySelectorAll('[data-next]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const r = btn.getBoundingClientRect();
+      burst(r.left+r.width/2, r.top+r.height/2, 8, {type:'heart'});
+      goTo(btn.getAttribute('data-next'));
+    });
+  });
+
+  $('startBtn').addEventListener('click', ()=>{
+    ambientOn = true;
+    $('bgGlow').classList.add('warm');
+    const r = $('startBtn').getBoundingClientRect();
+    burst(r.left+r.width/2, r.top+r.height/2, 14, {type:'heart'});
+    goTo('sceneQ1');
+  });
+
+  $('secretBtn').addEventListener('click', ()=>{
+    $('secretBtn').style.display = 'none';
+    $('secretReveal').classList.add('show');
+    burst(innerWidth/2, innerHeight*0.45, 10, {type:'heart'});
+    setTimeout(()=> $('secretContinueWrap').style.display = 'block', 700);
+  });
+
+  $('readyBtn').addEventListener('click', ()=>{
+    goTo('sceneFinal');
+    runFinal();
+  });
+
+  /* ================= final proposal ================= */
+  const finalPreLines = ['Actually… main kuch aur poochna chahta tha…'];
+  let finalStarted = false;
+  async function runFinal(){
+    if(finalStarted) return; finalStarted = true;
+    document.body.style.filter = 'blur(0px)';
+    const preWrap = $('finalPre');
+    for(const t of finalPreLines){
+      const div = document.createElement('div'); div.className='final-line';
+      div.textContent = t; preWrap.appendChild(div);
+      requestAnimationFrame(()=> div.classList.add('show'));
+      await wait(900);
+    }
+    await wait(700);
+    $('finalQ').classList.add('show');
+    await wait(1000);
+    $('finalSub').classList.add('show');
+    await wait(700);
+    $('finalBtns').style.display = 'flex';
+    $('noWrap').style.display = 'block';
+  }
+
+  async function onYes(){
+    [$('yesBtn1'),$('yesBtn2'),$('noBtn')].forEach(b=>b.disabled=true);
+    const r1 = document.body.getBoundingClientRect();
+    $('flash').style.transition = 'opacity .2s ease';
+    $('flash').style.opacity = '0.45';
+    await wait(140);
+    $('flash').style.opacity = '0';
+    burst(innerWidth*0.5, innerHeight*0.5, 45, {type:'heart'});
+    burst(innerWidth*0.2, innerHeight*0.35, 24, {type:'heart'});
+    burst(innerWidth*0.8, innerHeight*0.35, 24, {type:'heart'});
+    confetti(70);
+    await wait(1000);
+    goTo('sceneCelebrate');
+    runCelebrate();
+  }
+  $('yesBtn1').addEventListener('click', onYes);
+  $('yesBtn2').addEventListener('click', onYes);
+
+  const noMsgs = ['Are you sure? 🥺', 'Ek baar aur soch lo… ❤️'];
+  let noClicks = 0;
+  $('noBtn').addEventListener('click', async ()=>{
+    if(noClicks >= noMsgs.length){
+      $('noMsg').textContent = "Koi baat nahi… main yahin hoon. 🤍";
+      $('noMsg').classList.add('show');
+      return;
+    }
+    $('noMsg').classList.remove('show');
+    await wait(150);
+    $('noMsg').textContent = noMsgs[noClicks];
+    $('noMsg').classList.add('show');
+    noClicks++;
+  });
+
+  /* ================= celebration ================= */
+  const celLines = [
+    'I knew it… ❤️',
+    'From random conversations…',
+    '…to becoming someone incredibly special.',
+    'Our story starts here. ❤️✨'
+  ];
+  let celStarted = false;
+  async function runCelebrate(){
+    if(celStarted) return; celStarted = true;
+    confetti(50);
+    const wrap = $('celLines');
+    for(const t of celLines){
+      const div = document.createElement('div'); div.className='cel-line'; div.textContent = t;
+      wrap.appendChild(div);
+      requestAnimationFrame(()=> div.classList.add('show'));
+      await wait(1000);
+    }
+    await wait(400);
+    $('musicToggle').classList.add('show');
+  }
+
+  /* simple audio-less "music" toggle — purely visual since no external files */
+  let musicOn = false;
+  $('musicToggle').addEventListener('click', ()=>{
+    musicOn = !musicOn;
+    $('musicToggle').classList.toggle('on', musicOn);
+    $('musicLabel').textContent = musicOn ? 'Playing for us ♪' : 'Play our song';
+  });
+})();
+</script>
+</body>
+</html>
