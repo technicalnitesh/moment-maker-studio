@@ -7,7 +7,7 @@ export const Route = createFileRoute('/api/blog/posts/id/$id')({
       GET: async ({ params }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const post = await (db as any)
@@ -50,7 +50,7 @@ export const Route = createFileRoute('/api/blog/posts/id/$id')({
       PUT: async ({ request, params }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const body = await request.json()
@@ -97,7 +97,7 @@ export const Route = createFileRoute('/api/blog/posts/id/$id')({
       DELETE: async ({ params }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         await (db as any).prepare('DELETE FROM blog_post_tags WHERE post_id = ?').bind(id).run()
