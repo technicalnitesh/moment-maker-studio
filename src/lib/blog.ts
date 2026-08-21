@@ -339,8 +339,9 @@ function mapApiPostToModel(apiPost: any): BlogPost {
       name: apiPost.author_name || "Anonymous",
       avatar: apiPost.author_avatar || ""
     },
-    featuredImage: apiPost.featured_image_url || "/placeholder.svg",
-    featuredImageId: apiPost.featured_image_id,
+    featuredImage: apiPost.featured_image_url || apiPost.featured_image || "/placeholder.svg",
+    featuredImageId: apiPost.featured_image_id || apiPost.featured_image,
+
     status: apiPost.status || 'published',
     publishedAt: apiPost.published_at,
     updatedAt: apiPost.updated_at || apiPost.published_at,

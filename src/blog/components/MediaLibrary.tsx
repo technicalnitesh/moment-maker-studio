@@ -91,18 +91,16 @@ export function MediaLibrary({ allowSelection, onSelect }: MediaLibraryProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
           <input
             type="text"
-            placeholder="Search media..."
+            placeholder="Search blog assets..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-black/40 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
           />
         </div>
         
-        <label className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-all shadow-lg shadow-primary/20">
-          {isUploading ? <Loader2 className="animate-spin" size={18} /> : <Upload size={18} />}
-          <span>Upload Media</span>
-          <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" disabled={isUploading} />
-        </label>
+        <div className="text-xs text-gray-500 italic bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+          Assets are managed via project files
+        </div>
       </div>
 
       {/* Grid */}
@@ -146,50 +144,13 @@ export function MediaLibrary({ allowSelection, onSelect }: MediaLibraryProps) {
                     <p className="text-xs font-medium text-gray-300 truncate flex-1" title={item.original_name}>
                       {item.original_name}
                     </p>
-                    <span className="text-[10px] text-gray-500 whitespace-nowrap">
-                      {formatSize(item.file_size)}
-                    </span>
                   </div>
 
-                  {editingId === item.id ? (
-                    <div className="flex gap-1">
-                      <input
-                        type="text"
-                        value={editAlt}
-                        onChange={(e) => setEditAlt(e.target.value)}
-                        className="flex-1 bg-black/60 border border-white/20 rounded px-2 py-1 text-[10px] text-white focus:outline-none focus:ring-1 focus:ring-primary"
-                        autoFocus
-                        placeholder="Alt text..."
-                      />
-                      <button 
-                        onClick={() => updateAltMutation.mutate({ id: item.id, alt: editAlt })}
-                        className="p-1 bg-green-500/20 text-green-500 rounded hover:bg-green-500/30 transition-colors"
-                      >
-                        <Check size={12} />
-                      </button>
-                      <button 
-                        onClick={() => setEditingId(null)}
-                        className="p-1 bg-red-500/20 text-red-500 rounded hover:bg-red-500/30 transition-colors"
-                      >
-                        <X size={12} />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between">
-                      <p className="text-[10px] text-gray-500 truncate italic">
-                        {item.alt_text || 'No alt text'}
-                      </p>
-                      <button 
-                        onClick={() => {
-                          setEditingId(item.id)
-                          setEditAlt(item.alt_text || '')
-                        }}
-                        className="p-1 text-gray-400 hover:text-white transition-colors"
-                      >
-                        <Edit2 size={12} />
-                      </button>
-                    </div>
-                  )}
+                  <div className="flex items-center justify-between">
+                    <p className="text-[10px] text-gray-500 truncate italic">
+                      Static Project Asset
+                    </p>
+                  </div>
 
                   <div className="flex items-center gap-1 pt-2 border-t border-white/5">
                     <button 
@@ -207,16 +168,6 @@ export function MediaLibrary({ allowSelection, onSelect }: MediaLibraryProps) {
                     >
                       <ExternalLink size={10} />
                     </a>
-                    <button 
-                      onClick={() => {
-                        if (confirm('Are you sure you want to delete this file?')) {
-                          deleteMutation.mutate(item.id)
-                        }
-                      }}
-                      className="p-1 text-red-400/60 hover:text-red-400 hover:bg-red-400/10 rounded transition-all"
-                    >
-                      <Trash2 size={10} />
-                    </button>
                   </div>
                 </div>
               </div>
