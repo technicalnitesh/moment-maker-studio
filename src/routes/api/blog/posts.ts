@@ -15,7 +15,7 @@ export const Route = createFileRoute('/api/blog/posts')({
         const offset = (page - 1) * limit
 
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         let query = `
@@ -79,7 +79,7 @@ export const Route = createFileRoute('/api/blog/posts')({
 
       POST: async ({ request }) => {
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const body = await request.json()

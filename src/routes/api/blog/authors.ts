@@ -6,7 +6,7 @@ export const Route = createFileRoute('/api/blog/authors')({
     handlers: {
       GET: async ({ request }) => {
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         try {
@@ -28,7 +28,7 @@ export const Route = createFileRoute('/api/blog/authors')({
       },
       POST: async ({ request }) => {
         // @ts-ignore
-        const db = process.env.DB
+        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         try {
