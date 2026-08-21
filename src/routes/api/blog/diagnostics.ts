@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/api/blog/diagnostics')({
   server: {
     handlers: {
-      GET: async ({ context, request }) => {
+      GET: async ({ context, request }: { context: any, request: Request }) => {
         const results: any = {
           timestamp: new Date().toISOString(),
           diagnostics: {
