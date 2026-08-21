@@ -3,65 +3,63 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/api/blog/admin/media/id/$id')({
   server: {
     handlers: {
-      DELETE: async ({ params, context }) => {
-        const env = (context as any).env || (globalThis as any)
-        const db = env.DB
-        const bucket = env.BLOG_MEDIA
-        
-        if (!db || !bucket) {
-          return new Response(JSON.stringify({ success: false, error: { message: 'Services missing' } }), { status: 500 })
-        }
+      PATCH: async ({ request, params }) => {
+        const { id } = params
+        // @ts-ignore
+        const db = process.env.DB
+        if (!db) return new Response('DB not bound', { status: 500 })
 
-        try {
-          // TODO: Auth check
-          const id = params.id
+        const { alt_text } = await request.json()
 
-          // Check if used in posts
-          const usage = await db.prepare("SELECT id FROM blog_posts WHERE featured_image_id = ? LIMIT 1").bind(id).first()
-          if (usage) {
-            return new Response(JSON.stringify({ 
-              success: false, 
-              error: { message: 'This image is currently used by one or more articles.' } 
-            }), { status: 400 })
-          }
+        await (db as any)
+          .prepare('UPDATE blog_media SET alt_text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+          .bind(alt_text, id)
+          .run()
 
-          // Get media info
-          const media = await db.prepare("SELECT storage_key FROM blog_media WHERE id = ?").bind(id).first()
-          if (!media) {
-            return new Response(JSON.stringify({ success: false, error: { message: 'Media not found' } }), { status: 404 })
-          }
-
-          // Delete from R2
-          await bucket.delete(media.storage_key)
-
-          // Delete from D1
-          await db.prepare("DELETE FROM blog_media WHERE id = ?").bind(id).run()
-
-          return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } })
-        } catch (e: any) {
-          return new Response(JSON.stringify({ success: false, error: { message: e.message } }), { status: 500 })
-        }
+        return Response.json({ success: true })
       },
-      PATCH: async ({ params, request, context }) => {
-        const env = (context as any).env || (globalThis as any)
-        const db = env.DB
-        
-        if (!db) {
-          return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
+
+      DELETE: async ({ params }) => {
+        const { id } = params
+        // @ts-ignore
+        const db = process.env.DB
+        // @ts-ignore
+        const bucket = process.env.BLOG_MEDIA
+        if (!db || !bucket) return new Response('Infrastructure not bound', { status: 500 })
+
+        // Check if media is used as featured image
+        const used = await (db as any)
+          .prepare('SELECT id, title FROM blog_posts WHERE featured_image_id = ?')
+          .bind(id)
+          .first()
+
+        if (used) {
+          return Response.json({ 
+            success: false, 
+            error: { message: `Cannot delete: Media is used as featured image in article "${used.title}"` } 
+          }, { status: 400 })
         }
 
-        try {
-          const id = params.id
-          const { alt_text } = await request.json()
-          
-          await db.prepare("UPDATE blog_media SET alt_text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?")
-            .bind(alt_text, id)
-            .run()
+        // Get storage key
+        const media = await (db as any)
+          .prepare('SELECT storage_key FROM blog_media WHERE id = ?')
+          .bind(id)
+          .first()
 
-          return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } })
-        } catch (e: any) {
-          return new Response(JSON.stringify({ success: false, error: { message: e.message } }), { status: 500 })
+        if (!media) {
+          return Response.json({ success: false, error: { message: 'Media not found' } }, { status: 404 })
         }
+
+        // Delete from R2
+        await (bucket as any).delete(media.storage_key)
+
+        // Delete from D1
+        await (db as any)
+          .prepare('DELETE FROM blog_media WHERE id = ?')
+          .bind(id)
+          .run()
+
+        return Response.json({ success: true })
       }
     }
   }
