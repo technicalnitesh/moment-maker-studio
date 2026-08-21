@@ -4,14 +4,14 @@ export const Route = createFileRoute('/api/blog/categories/$slug')({
   server: {
     handlers: {
       GET: async ({ params, context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
         const category = await db.prepare("SELECT * FROM blog_categories WHERE slug = ?").bind(params.slug).first()
         if (!category) return new Response(JSON.stringify({ success: false, error: { message: 'Not found' } }), { status: 404 })
         return new Response(JSON.stringify({ success: true, data: category }), { headers: { 'Content-Type': 'application/json' } })
       },
       PUT: async ({ params, request, context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
         try {
           const data = await request.json()
@@ -25,7 +25,7 @@ export const Route = createFileRoute('/api/blog/categories/$slug')({
         }
       },
       DELETE: async ({ params, context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
         await db.prepare("DELETE FROM blog_categories WHERE slug = ?").bind(params.slug).run()
         return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } })

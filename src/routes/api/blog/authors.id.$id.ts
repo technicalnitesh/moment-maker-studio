@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/api/blog/authors/id/$id')({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ params, context }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const author = await (db as any)
@@ -20,10 +20,10 @@ export const Route = createFileRoute('/api/blog/authors/id/$id')({
 
         return Response.json({ success: true, data: author })
       },
-      PUT: async ({ request, params }) => {
+      PUT: async ({ request, params, context }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const body = await request.json()
@@ -40,10 +40,10 @@ export const Route = createFileRoute('/api/blog/authors/id/$id')({
 
         return Response.json({ success: true })
       },
-      DELETE: async ({ params }) => {
+      DELETE: async ({ params, context }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         // Check if author has posts

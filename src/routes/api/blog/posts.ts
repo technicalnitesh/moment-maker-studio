@@ -4,7 +4,7 @@ import { z } from 'zod'
 export const Route = createFileRoute('/api/blog/posts')({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async ({ request, context }) => {
         const url = new URL(request.url)
         const category = url.searchParams.get('category')
         const tag = url.searchParams.get('tag')
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/api/blog/posts')({
         const offset = (page - 1) * limit
 
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         let query = `
@@ -77,9 +77,9 @@ export const Route = createFileRoute('/api/blog/posts')({
         })
       },
 
-      POST: async ({ request }) => {
+      POST: async ({ request, context }) => {
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const body = await request.json()

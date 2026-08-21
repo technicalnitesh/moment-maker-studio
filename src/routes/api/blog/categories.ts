@@ -5,13 +5,13 @@ export const Route = createFileRoute('/api/blog/categories')({
   server: {
     handlers: {
       GET: async ({ context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
         const { results } = await db.prepare("SELECT * FROM blog_categories ORDER BY name ASC").all()
         return new Response(JSON.stringify({ success: true, data: results }), { headers: { 'Content-Type': 'application/json' } })
       },
       POST: async ({ request, context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
         try {
           const data = await request.json()

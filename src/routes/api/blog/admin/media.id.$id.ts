@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/api/blog/admin/media/id/$id')({
   server: {
     handlers: {
-      PATCH: async ({ request, params }) => {
+      PATCH: async ({ request, params, context }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         const { alt_text } = await request.json()
@@ -19,12 +19,11 @@ export const Route = createFileRoute('/api/blog/admin/media/id/$id')({
         return Response.json({ success: true })
       },
 
-      DELETE: async ({ params }) => {
+      DELETE: async ({ params, context }) => {
         const { id } = params
         // @ts-ignore
-        const db = process.env.DB
-        // @ts-ignore
-        const bucket = process.env.BLOG_MEDIA
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
+        const bucket = (context as any).env?.BLOG_MEDIA || (process.env as any).BLOG_MEDIA || (globalThis as any).BLOG_MEDIA
         if (!db || !bucket) return new Response('Infrastructure not bound', { status: 500 })
 
         // Check if media is used as featured image

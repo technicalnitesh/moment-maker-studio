@@ -5,7 +5,7 @@ export const Route = createFileRoute('/api/blog/authors/$slug')({
     handlers: {
       GET: async ({ params, context }) => {
         const { slug } = params
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB missing', { status: 500 })
 
         try {
