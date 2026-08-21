@@ -34,6 +34,7 @@ export interface Product {
   sort_order: number;
   created_at: string;
   updated_at: string;
+  passcode?: string;
 }
 
 export interface Category {
