@@ -46,6 +46,7 @@ import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$s
 import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
 import { Route as AdminAdminBlogPostsIndexRouteImport } from './routes/_admin/admin/blog.posts.index'
 import { Route as AdminAdminBlogPostsNewRouteImport } from './routes/_admin/admin/blog.posts.new'
+import { Route as ApiBlogAuthorsIdIdRouteImport } from './routes/api/blog/authors.id.$id'
 import { Route as ApiBlogPostsIdIdRouteImport } from './routes/api/blog/posts.id.$id'
 import { Route as AdminAdminBlogPostsEditIdRouteImport } from './routes/_admin/admin/blog.posts.edit.$id'
 import { Route as ApiBlogAdminMediaIdIdRouteImport } from './routes/api/blog/admin/media.id.$id'
@@ -236,6 +237,11 @@ const AdminAdminBlogPostsNewRoute = AdminAdminBlogPostsNewRouteImport.update({
   path: '/admin/blog/posts/new',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiBlogAuthorsIdIdRoute = ApiBlogAuthorsIdIdRouteImport.update({
+  id: '/id/$id',
+  path: '/id/$id',
+  getParentRoute: () => ApiBlogAuthorsRoute,
+} as any)
 const ApiBlogPostsIdIdRoute = ApiBlogPostsIdIdRouteImport.update({
   id: '/id/$id',
   path: '/id/$id',
@@ -289,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/admin/blog/': typeof AdminAdminBlogIndexRoute
   '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
   '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
@@ -330,6 +337,7 @@ export interface FileRoutesByTo {
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/admin/blog': typeof AdminAdminBlogIndexRoute
   '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/admin/blog/posts': typeof AdminAdminBlogPostsIndexRoute
   '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
@@ -373,6 +381,7 @@ export interface FileRoutesById {
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/_admin/admin/blog/': typeof AdminAdminBlogIndexRoute
   '/_admin/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/_admin/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
   '/_admin/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
@@ -416,6 +425,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags/$slug'
     | '/admin/blog/'
     | '/admin/blog/posts/new'
+    | '/api/blog/authors/id/$id'
     | '/api/blog/posts/id/$id'
     | '/admin/blog/posts/'
     | '/admin/blog/posts/edit/$id'
@@ -457,6 +467,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags/$slug'
     | '/admin/blog'
     | '/admin/blog/posts/new'
+    | '/api/blog/authors/id/$id'
     | '/api/blog/posts/id/$id'
     | '/admin/blog/posts'
     | '/admin/blog/posts/edit/$id'
@@ -499,6 +510,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags/$slug'
     | '/_admin/admin/blog/'
     | '/_admin/admin/blog/posts/new'
+    | '/api/blog/authors/id/$id'
     | '/api/blog/posts/id/$id'
     | '/_admin/admin/blog/posts/'
     | '/_admin/admin/blog/posts/edit/$id'
@@ -795,6 +807,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminBlogPostsNewRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/blog/authors/id/$id': {
+      id: '/api/blog/authors/id/$id'
+      path: '/id/$id'
+      fullPath: '/api/blog/authors/id/$id'
+      preLoaderRoute: typeof ApiBlogAuthorsIdIdRouteImport
+      parentRoute: typeof ApiBlogAuthorsRoute
+    }
     '/api/blog/posts/id/$id': {
       id: '/api/blog/posts/id/$id'
       path: '/id/$id'
@@ -845,10 +864,12 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface ApiBlogAuthorsRouteChildren {
   ApiBlogAuthorsSlugRoute: typeof ApiBlogAuthorsSlugRoute
+  ApiBlogAuthorsIdIdRoute: typeof ApiBlogAuthorsIdIdRoute
 }
 
 const ApiBlogAuthorsRouteChildren: ApiBlogAuthorsRouteChildren = {
   ApiBlogAuthorsSlugRoute: ApiBlogAuthorsSlugRoute,
+  ApiBlogAuthorsIdIdRoute: ApiBlogAuthorsIdIdRoute,
 }
 
 const ApiBlogAuthorsRouteWithChildren = ApiBlogAuthorsRoute._addFileChildren(

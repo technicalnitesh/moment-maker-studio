@@ -287,6 +287,41 @@ export const updateMediaAlt = async (id: string, altText: string): Promise<boole
   }
 };
 
+// --- Author Admin ---
+export const getAuthors = async (): Promise<any[]> => {
+  return await fetchApi<any[]>("/authors");
+};
+
+export const createAuthor = async (data: any): Promise<any> => {
+  return await fetchApi<any>("/authors", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+};
+
+export const updateAuthor = async (id: string, data: any): Promise<boolean> => {
+  try {
+    await fetchApi<void>(`/authors/id/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const deleteAuthor = async (id: string): Promise<boolean> => {
+  try {
+    await fetchApi<void>(`/authors/id/${id}`, { method: "DELETE" });
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // --- Helpers ---
 
 function mapApiPostToModel(apiPost: any): BlogPost {
