@@ -1,12 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { getPosts } from "@/lib/blog";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { getPosts, getTagBySlug } from "@/lib/blog";
 import { PostCard } from "@/blog/components/PostCard";
 
 export const Route = createFileRoute("/blog/tag/$slug")({
   loader: async ({ params }) => {
+    const tagData = await getTagBySlug(params.slug);
+    if (!tagData) throw notFound();
     const posts = await getPosts({ tag: params.slug });
-    return { tag: params.slug, posts };
+    return { tag: tagData.name, posts };
   },
+
   head: ({ loaderData }) => ({
     meta: [
       { title: `Articles tagged #${loaderData?.tag} — Bhopali Mitra Blog` },

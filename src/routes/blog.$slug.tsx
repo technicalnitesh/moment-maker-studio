@@ -86,7 +86,7 @@ function PostDetail() {
         <section className="mt-24 pt-16 border-t border-border">
           <h2 className="text-3xl font-bold">Related Stories</h2>
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((p) => (
+            {related.map((p: any) => (
               <PostCard key={p.id} post={p} />
             ))}
           </div>
