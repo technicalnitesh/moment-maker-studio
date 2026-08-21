@@ -1,0 +1,9 @@
+name = "bhopalimitra"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = ".output/public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bhopalimitra_blog"
+database_id = "00000000-0000-0000-0000-000000000000" # Placeholder for local dev
+migrations_dir = "migrations"
