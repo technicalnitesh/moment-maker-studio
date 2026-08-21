@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -31,14 +32,26 @@ import { Route as ApiBlogSearchRouteImport } from './routes/api/blog/search'
 import { Route as ApiBlogTagsRouteImport } from './routes/api/blog/tags'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.category.$slug'
 import { Route as BlogTagSlugRouteImport } from './routes/blog.tag.$slug'
+import { Route as AdminAdminBlogIndexRouteImport } from './routes/_admin/admin/blog.index'
+import { Route as AdminAdminBlogAuthorsRouteImport } from './routes/_admin/admin/blog.authors'
+import { Route as AdminAdminBlogCategoriesRouteImport } from './routes/_admin/admin/blog.categories'
+import { Route as AdminAdminBlogTagsRouteImport } from './routes/_admin/admin/blog.tags'
 import { Route as ApiBlogAuthorsSlugRouteImport } from './routes/api/blog/authors.$slug'
 import { Route as ApiBlogCategoriesSlugRouteImport } from './routes/api/blog/categories.$slug'
 import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$slug'
 import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
+import { Route as AdminAdminBlogPostsIndexRouteImport } from './routes/_admin/admin/blog.posts.index'
+import { Route as AdminAdminBlogPostsNewRouteImport } from './routes/_admin/admin/blog.posts.new'
+import { Route as ApiBlogPostsIdIdRouteImport } from './routes/api/blog/posts.id.$id'
+import { Route as AdminAdminBlogPostsEditIdRouteImport } from './routes/_admin/admin/blog.posts.edit.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -146,6 +159,27 @@ const BlogTagSlugRoute = BlogTagSlugRouteImport.update({
   path: '/blog/tag/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAdminBlogIndexRoute = AdminAdminBlogIndexRouteImport.update({
+  id: '/admin/blog/',
+  path: '/admin/blog/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminBlogAuthorsRoute = AdminAdminBlogAuthorsRouteImport.update({
+  id: '/admin/blog/authors',
+  path: '/admin/blog/authors',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminBlogCategoriesRoute =
+  AdminAdminBlogCategoriesRouteImport.update({
+    id: '/admin/blog/categories',
+    path: '/admin/blog/categories',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAdminBlogTagsRoute = AdminAdminBlogTagsRouteImport.update({
+  id: '/admin/blog/tags',
+  path: '/admin/blog/tags',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiBlogAuthorsSlugRoute = ApiBlogAuthorsSlugRouteImport.update({
   id: '/api/blog/authors/$slug',
   path: '/api/blog/authors/$slug',
@@ -166,6 +200,28 @@ const ApiBlogTagsSlugRoute = ApiBlogTagsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ApiBlogTagsRoute,
 } as any)
+const AdminAdminBlogPostsIndexRoute =
+  AdminAdminBlogPostsIndexRouteImport.update({
+    id: '/admin/blog/posts/',
+    path: '/admin/blog/posts/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminAdminBlogPostsNewRoute = AdminAdminBlogPostsNewRouteImport.update({
+  id: '/admin/blog/posts/new',
+  path: '/admin/blog/posts/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ApiBlogPostsIdIdRoute = ApiBlogPostsIdIdRouteImport.update({
+  id: '/id/$id',
+  path: '/id/$id',
+  getParentRoute: () => ApiBlogPostsRoute,
+} as any)
+const AdminAdminBlogPostsEditIdRoute =
+  AdminAdminBlogPostsEditIdRouteImport.update({
+    id: '/admin/blog/posts/edit/$id',
+    path: '/admin/blog/posts/edit/$id',
+    getParentRoute: () => AdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -190,10 +246,18 @@ export interface FileRoutesByFullPath {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
+  '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
+  '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/admin/blog/': typeof AdminAdminBlogIndexRoute
+  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
+  '/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
+  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -218,14 +282,23 @@ export interface FileRoutesByTo {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
+  '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
+  '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/admin/blog': typeof AdminAdminBlogIndexRoute
+  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
+  '/admin/blog/posts': typeof AdminAdminBlogPostsIndexRoute
+  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -247,10 +320,18 @@ export interface FileRoutesById {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/_admin/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
+  '/_admin/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
+  '/_admin/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/_admin/admin/blog/': typeof AdminAdminBlogIndexRoute
+  '/_admin/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
+  '/_admin/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
+  '/_admin/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -277,10 +358,18 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/admin/blog/authors'
+    | '/admin/blog/categories'
+    | '/admin/blog/tags'
     | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/admin/blog/'
+    | '/admin/blog/posts/new'
+    | '/api/blog/posts/id/$id'
+    | '/admin/blog/posts/'
+    | '/admin/blog/posts/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -305,13 +394,22 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/admin/blog/authors'
+    | '/admin/blog/categories'
+    | '/admin/blog/tags'
     | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/admin/blog'
+    | '/admin/blog/posts/new'
+    | '/api/blog/posts/id/$id'
+    | '/admin/blog/posts'
+    | '/admin/blog/posts/edit/$id'
   id:
     | '__root__'
     | '/'
+    | '/_admin'
     | '/about'
     | '/categories'
     | '/contact'
@@ -333,14 +431,23 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/_admin/admin/blog/authors'
+    | '/_admin/admin/blog/categories'
+    | '/_admin/admin/blog/tags'
     | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/_admin/admin/blog/'
+    | '/_admin/admin/blog/posts/new'
+    | '/api/blog/posts/id/$id'
+    | '/_admin/admin/blog/posts/'
+    | '/_admin/admin/blog/posts/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
@@ -372,6 +479,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -521,6 +635,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogTagSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_admin/admin/blog/': {
+      id: '/_admin/admin/blog/'
+      path: '/admin/blog'
+      fullPath: '/admin/blog/'
+      preLoaderRoute: typeof AdminAdminBlogIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/blog/authors': {
+      id: '/_admin/admin/blog/authors'
+      path: '/admin/blog/authors'
+      fullPath: '/admin/blog/authors'
+      preLoaderRoute: typeof AdminAdminBlogAuthorsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/blog/categories': {
+      id: '/_admin/admin/blog/categories'
+      path: '/admin/blog/categories'
+      fullPath: '/admin/blog/categories'
+      preLoaderRoute: typeof AdminAdminBlogCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/blog/tags': {
+      id: '/_admin/admin/blog/tags'
+      path: '/admin/blog/tags'
+      fullPath: '/admin/blog/tags'
+      preLoaderRoute: typeof AdminAdminBlogTagsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/blog/authors/$slug': {
       id: '/api/blog/authors/$slug'
       path: '/api/blog/authors/$slug'
@@ -549,8 +691,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBlogTagsSlugRouteImport
       parentRoute: typeof ApiBlogTagsRoute
     }
+    '/_admin/admin/blog/posts/': {
+      id: '/_admin/admin/blog/posts/'
+      path: '/admin/blog/posts'
+      fullPath: '/admin/blog/posts/'
+      preLoaderRoute: typeof AdminAdminBlogPostsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/blog/posts/new': {
+      id: '/_admin/admin/blog/posts/new'
+      path: '/admin/blog/posts/new'
+      fullPath: '/admin/blog/posts/new'
+      preLoaderRoute: typeof AdminAdminBlogPostsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/api/blog/posts/id/$id': {
+      id: '/api/blog/posts/id/$id'
+      path: '/id/$id'
+      fullPath: '/api/blog/posts/id/$id'
+      preLoaderRoute: typeof ApiBlogPostsIdIdRouteImport
+      parentRoute: typeof ApiBlogPostsRoute
+    }
+    '/_admin/admin/blog/posts/edit/$id': {
+      id: '/_admin/admin/blog/posts/edit/$id'
+      path: '/admin/blog/posts/edit/$id'
+      fullPath: '/admin/blog/posts/edit/$id'
+      preLoaderRoute: typeof AdminAdminBlogPostsEditIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminAdminBlogAuthorsRoute: typeof AdminAdminBlogAuthorsRoute
+  AdminAdminBlogCategoriesRoute: typeof AdminAdminBlogCategoriesRoute
+  AdminAdminBlogTagsRoute: typeof AdminAdminBlogTagsRoute
+  AdminAdminBlogIndexRoute: typeof AdminAdminBlogIndexRoute
+  AdminAdminBlogPostsNewRoute: typeof AdminAdminBlogPostsNewRoute
+  AdminAdminBlogPostsIndexRoute: typeof AdminAdminBlogPostsIndexRoute
+  AdminAdminBlogPostsEditIdRoute: typeof AdminAdminBlogPostsEditIdRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminBlogAuthorsRoute: AdminAdminBlogAuthorsRoute,
+  AdminAdminBlogCategoriesRoute: AdminAdminBlogCategoriesRoute,
+  AdminAdminBlogTagsRoute: AdminAdminBlogTagsRoute,
+  AdminAdminBlogIndexRoute: AdminAdminBlogIndexRoute,
+  AdminAdminBlogPostsNewRoute: AdminAdminBlogPostsNewRoute,
+  AdminAdminBlogPostsIndexRoute: AdminAdminBlogPostsIndexRoute,
+  AdminAdminBlogPostsEditIdRoute: AdminAdminBlogPostsEditIdRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface ApiBlogCategoriesRouteChildren {
   ApiBlogCategoriesSlugRoute: typeof ApiBlogCategoriesSlugRoute
@@ -565,10 +757,12 @@ const ApiBlogCategoriesRouteWithChildren =
 
 interface ApiBlogPostsRouteChildren {
   ApiBlogPostsSlugRoute: typeof ApiBlogPostsSlugRoute
+  ApiBlogPostsIdIdRoute: typeof ApiBlogPostsIdIdRoute
 }
 
 const ApiBlogPostsRouteChildren: ApiBlogPostsRouteChildren = {
   ApiBlogPostsSlugRoute: ApiBlogPostsSlugRoute,
+  ApiBlogPostsIdIdRoute: ApiBlogPostsIdIdRoute,
 }
 
 const ApiBlogPostsRouteWithChildren = ApiBlogPostsRoute._addFileChildren(
@@ -589,6 +783,7 @@ const ApiBlogTagsRouteWithChildren = ApiBlogTagsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
