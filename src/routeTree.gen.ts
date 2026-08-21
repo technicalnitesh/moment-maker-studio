@@ -35,6 +35,7 @@ import { Route as ApiBlogAuthorsSlugRouteImport } from './routes/api/blog/author
 import { Route as ApiBlogCategoriesSlugRouteImport } from './routes/api/blog/categories.$slug'
 import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$slug'
 import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
+import { Route as ApiBlogPostsIdIdRouteImport } from './routes/api/blog/posts.id.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -166,6 +167,11 @@ const ApiBlogTagsSlugRoute = ApiBlogTagsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ApiBlogTagsRoute,
 } as any)
+const ApiBlogPostsIdIdRoute = ApiBlogPostsIdIdRouteImport.update({
+  id: '/id/$id',
+  path: '/id/$id',
+  getParentRoute: () => ApiBlogPostsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -194,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByTo {
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
+  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -281,6 +290,7 @@ export interface FileRouteTypes {
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/api/blog/posts/id/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/api/blog/posts/id/$id'
   id:
     | '__root__'
     | '/'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
+    | '/api/blog/posts/id/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -549,6 +561,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBlogTagsSlugRouteImport
       parentRoute: typeof ApiBlogTagsRoute
     }
+    '/api/blog/posts/id/$id': {
+      id: '/api/blog/posts/id/$id'
+      path: '/id/$id'
+      fullPath: '/api/blog/posts/id/$id'
+      preLoaderRoute: typeof ApiBlogPostsIdIdRouteImport
+      parentRoute: typeof ApiBlogPostsRoute
+    }
   }
 }
 
@@ -565,10 +584,12 @@ const ApiBlogCategoriesRouteWithChildren =
 
 interface ApiBlogPostsRouteChildren {
   ApiBlogPostsSlugRoute: typeof ApiBlogPostsSlugRoute
+  ApiBlogPostsIdIdRoute: typeof ApiBlogPostsIdIdRoute
 }
 
 const ApiBlogPostsRouteChildren: ApiBlogPostsRouteChildren = {
   ApiBlogPostsSlugRoute: ApiBlogPostsSlugRoute,
+  ApiBlogPostsIdIdRoute: ApiBlogPostsIdIdRoute,
 }
 
 const ApiBlogPostsRouteWithChildren = ApiBlogPostsRoute._addFileChildren(
