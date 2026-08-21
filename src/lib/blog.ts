@@ -128,4 +128,14 @@ export const getCategoryBySlug = async (slug: string): Promise<BlogCategory | nu
   }
 };
 
+export const getTagBySlug = async (slug: string): Promise<any | null> => {
+  try {
+    return await fetchApi<any | null>(`/tags/\${slug}`);
+  } catch (error) {
+    console.error(`Error fetching tag \${slug}:`, error);
+    return null;
+  }
+};
+
+
 
