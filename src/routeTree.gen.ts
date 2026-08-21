@@ -29,6 +29,7 @@ import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
 import { Route as ApiBlogAuthorsRouteImport } from './routes/api/blog/authors'
 import { Route as ApiBlogCategoriesRouteImport } from './routes/api/blog/categories'
+import { Route as ApiBlogDiagnosticsRouteImport } from './routes/api/blog/diagnostics'
 import { Route as ApiBlogPostsRouteImport } from './routes/api/blog/posts'
 import { Route as ApiBlogSearchRouteImport } from './routes/api/blog/search'
 import { Route as ApiBlogTagsRouteImport } from './routes/api/blog/tags'
@@ -148,6 +149,11 @@ const ApiBlogAuthorsRoute = ApiBlogAuthorsRouteImport.update({
 const ApiBlogCategoriesRoute = ApiBlogCategoriesRouteImport.update({
   id: '/api/blog/categories',
   path: '/api/blog/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBlogDiagnosticsRoute = ApiBlogDiagnosticsRouteImport.update({
+  id: '/api/blog/diagnostics',
+  path: '/api/blog/diagnostics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBlogPostsRoute = ApiBlogPostsRouteImport.update({
@@ -279,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
+  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
@@ -321,6 +328,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
+  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
@@ -365,6 +373,7 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
+  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
@@ -409,6 +418,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/api/blog/authors'
     | '/api/blog/categories'
+    | '/api/blog/diagnostics'
     | '/api/blog/posts'
     | '/api/blog/search'
     | '/api/blog/tags'
@@ -451,6 +461,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/api/blog/authors'
     | '/api/blog/categories'
+    | '/api/blog/diagnostics'
     | '/api/blog/posts'
     | '/api/blog/search'
     | '/api/blog/tags'
@@ -494,6 +505,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/api/blog/authors'
     | '/api/blog/categories'
+    | '/api/blog/diagnostics'
     | '/api/blog/posts'
     | '/api/blog/search'
     | '/api/blog/tags'
@@ -538,6 +550,7 @@ export interface RootRouteChildren {
   BlogIndexRoute: typeof BlogIndexRoute
   ApiBlogAuthorsRoute: typeof ApiBlogAuthorsRouteWithChildren
   ApiBlogCategoriesRoute: typeof ApiBlogCategoriesRouteWithChildren
+  ApiBlogDiagnosticsRoute: typeof ApiBlogDiagnosticsRoute
   ApiBlogPostsRoute: typeof ApiBlogPostsRouteWithChildren
   ApiBlogSearchRoute: typeof ApiBlogSearchRoute
   ApiBlogTagsRoute: typeof ApiBlogTagsRouteWithChildren
@@ -686,6 +699,13 @@ declare module '@tanstack/react-router' {
       path: '/api/blog/categories'
       fullPath: '/api/blog/categories'
       preLoaderRoute: typeof ApiBlogCategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/blog/diagnostics': {
+      id: '/api/blog/diagnostics'
+      path: '/api/blog/diagnostics'
+      fullPath: '/api/blog/diagnostics'
+      preLoaderRoute: typeof ApiBlogDiagnosticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/blog/posts': {
@@ -945,6 +965,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogIndexRoute: BlogIndexRoute,
   ApiBlogAuthorsRoute: ApiBlogAuthorsRouteWithChildren,
   ApiBlogCategoriesRoute: ApiBlogCategoriesRouteWithChildren,
+  ApiBlogDiagnosticsRoute: ApiBlogDiagnosticsRoute,
   ApiBlogPostsRoute: ApiBlogPostsRouteWithChildren,
   ApiBlogSearchRoute: ApiBlogSearchRoute,
   ApiBlogTagsRoute: ApiBlogTagsRouteWithChildren,
