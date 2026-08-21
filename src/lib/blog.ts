@@ -289,7 +289,6 @@ export const updateMediaAlt = async (id: string, altText: string): Promise<boole
 
 // --- Helpers ---
 
-
 function mapApiPostToModel(apiPost: any): BlogPost {
   return {
     id: apiPost.id,
@@ -306,6 +305,7 @@ function mapApiPostToModel(apiPost: any): BlogPost {
       avatar: apiPost.author_avatar || ""
     },
     featuredImage: apiPost.featured_image_url || "/placeholder.svg",
+    featuredImageId: apiPost.featured_image_id,
     status: apiPost.status || 'published',
     publishedAt: apiPost.published_at,
     updatedAt: apiPost.updated_at || apiPost.published_at,
@@ -324,6 +324,7 @@ function mapModelToApiPost(model: Partial<BlogPost>): any {
     content: model.content,
     category_id: model.categoryId || model.category, // Handle both
     author_id: model.author?.id,
+    featured_image_id: model.featuredImageId || (model as any).featured_image_id,
     status: model.status,
     published_at: model.publishedAt,
     reading_time: model.readingTime,
@@ -344,7 +345,3 @@ export const getRelatedPosts = async (post: BlogPost, limit = 3): Promise<BlogPo
     return [];
   }
 };
-
-
-
-
