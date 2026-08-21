@@ -128,12 +128,13 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
             <div className="flex-1 bg-gray-900 rounded-lg border border-white/10 overflow-hidden">
               <ReactQuill
                 theme="snow"
-                value={formData.content}
+                value={formData.content || ''}
                 onChange={handleContentChange}
                 modules={modules}
                 className="h-full min-h-[350px] text-white"
               />
             </div>
+
           </div>
         </div>
       </div>
