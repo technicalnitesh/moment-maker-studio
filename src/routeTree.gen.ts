@@ -28,8 +28,10 @@ import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
 import { Route as ApiBlogCategoriesRouteImport } from './routes/api/blog/categories'
 import { Route as ApiBlogPostsRouteImport } from './routes/api/blog/posts'
 import { Route as ApiBlogSearchRouteImport } from './routes/api/blog/search'
+import { Route as ApiBlogTagsRouteImport } from './routes/api/blog/tags'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.category.$slug'
 import { Route as BlogTagSlugRouteImport } from './routes/blog.tag.$slug'
+import { Route as ApiBlogAuthorsSlugRouteImport } from './routes/api/blog/authors.$slug'
 import { Route as ApiBlogCategoriesSlugRouteImport } from './routes/api/blog/categories.$slug'
 import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$slug'
 import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
@@ -129,6 +131,11 @@ const ApiBlogSearchRoute = ApiBlogSearchRouteImport.update({
   path: '/api/blog/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBlogTagsRoute = ApiBlogTagsRouteImport.update({
+  id: '/api/blog/tags',
+  path: '/api/blog/tags',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
   id: '/blog/category/$slug',
   path: '/blog/category/$slug',
@@ -137,6 +144,11 @@ const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
 const BlogTagSlugRoute = BlogTagSlugRouteImport.update({
   id: '/blog/tag/$slug',
   path: '/blog/tag/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBlogAuthorsSlugRoute = ApiBlogAuthorsSlugRouteImport.update({
+  id: '/api/blog/authors/$slug',
+  path: '/api/blog/authors/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBlogCategoriesSlugRoute = ApiBlogCategoriesSlugRouteImport.update({
@@ -150,9 +162,9 @@ const ApiBlogPostsSlugRoute = ApiBlogPostsSlugRouteImport.update({
   getParentRoute: () => ApiBlogPostsRoute,
 } as any)
 const ApiBlogTagsSlugRoute = ApiBlogTagsSlugRouteImport.update({
-  id: '/api/blog/tags/$slug',
-  path: '/api/blog/tags/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ApiBlogTagsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -175,8 +187,10 @@ export interface FileRoutesByFullPath {
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
+  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
@@ -201,8 +215,10 @@ export interface FileRoutesByTo {
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
+  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
@@ -228,8 +244,10 @@ export interface FileRoutesById {
   '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
   '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
   '/api/blog/search': typeof ApiBlogSearchRoute
+  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
   '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
@@ -256,8 +274,10 @@ export interface FileRouteTypes {
     | '/api/blog/categories'
     | '/api/blog/posts'
     | '/api/blog/search'
+    | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
@@ -282,8 +302,10 @@ export interface FileRouteTypes {
     | '/api/blog/categories'
     | '/api/blog/posts'
     | '/api/blog/search'
+    | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
@@ -308,8 +330,10 @@ export interface FileRouteTypes {
     | '/api/blog/categories'
     | '/api/blog/posts'
     | '/api/blog/search'
+    | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/api/blog/authors/$slug'
     | '/api/blog/categories/$slug'
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
@@ -335,9 +359,10 @@ export interface RootRouteChildren {
   ApiBlogCategoriesRoute: typeof ApiBlogCategoriesRouteWithChildren
   ApiBlogPostsRoute: typeof ApiBlogPostsRouteWithChildren
   ApiBlogSearchRoute: typeof ApiBlogSearchRoute
+  ApiBlogTagsRoute: typeof ApiBlogTagsRouteWithChildren
   BlogCategorySlugRoute: typeof BlogCategorySlugRoute
   BlogTagSlugRoute: typeof BlogTagSlugRoute
-  ApiBlogTagsSlugRoute: typeof ApiBlogTagsSlugRoute
+  ApiBlogAuthorsSlugRoute: typeof ApiBlogAuthorsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -475,6 +500,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBlogSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/blog/tags': {
+      id: '/api/blog/tags'
+      path: '/api/blog/tags'
+      fullPath: '/api/blog/tags'
+      preLoaderRoute: typeof ApiBlogTagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/category/$slug': {
       id: '/blog/category/$slug'
       path: '/blog/category/$slug'
@@ -487,6 +519,13 @@ declare module '@tanstack/react-router' {
       path: '/blog/tag/$slug'
       fullPath: '/blog/tag/$slug'
       preLoaderRoute: typeof BlogTagSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/blog/authors/$slug': {
+      id: '/api/blog/authors/$slug'
+      path: '/api/blog/authors/$slug'
+      fullPath: '/api/blog/authors/$slug'
+      preLoaderRoute: typeof ApiBlogAuthorsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/blog/categories/$slug': {
@@ -505,10 +544,10 @@ declare module '@tanstack/react-router' {
     }
     '/api/blog/tags/$slug': {
       id: '/api/blog/tags/$slug'
-      path: '/api/blog/tags/$slug'
+      path: '/$slug'
       fullPath: '/api/blog/tags/$slug'
       preLoaderRoute: typeof ApiBlogTagsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ApiBlogTagsRoute
     }
   }
 }
@@ -536,6 +575,18 @@ const ApiBlogPostsRouteWithChildren = ApiBlogPostsRoute._addFileChildren(
   ApiBlogPostsRouteChildren,
 )
 
+interface ApiBlogTagsRouteChildren {
+  ApiBlogTagsSlugRoute: typeof ApiBlogTagsSlugRoute
+}
+
+const ApiBlogTagsRouteChildren: ApiBlogTagsRouteChildren = {
+  ApiBlogTagsSlugRoute: ApiBlogTagsSlugRoute,
+}
+
+const ApiBlogTagsRouteWithChildren = ApiBlogTagsRoute._addFileChildren(
+  ApiBlogTagsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -556,9 +607,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiBlogCategoriesRoute: ApiBlogCategoriesRouteWithChildren,
   ApiBlogPostsRoute: ApiBlogPostsRouteWithChildren,
   ApiBlogSearchRoute: ApiBlogSearchRoute,
+  ApiBlogTagsRoute: ApiBlogTagsRouteWithChildren,
   BlogCategorySlugRoute: BlogCategorySlugRoute,
   BlogTagSlugRoute: BlogTagSlugRoute,
-  ApiBlogTagsSlugRoute: ApiBlogTagsSlugRoute,
+  ApiBlogAuthorsSlugRoute: ApiBlogAuthorsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
