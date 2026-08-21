@@ -232,7 +232,63 @@ export const deleteTag = async (slug: string): Promise<boolean> => {
   }
 };
 
+// --- Media Admin ---
+
+export interface BlogMedia {
+  id: string;
+  filename: string;
+  original_name: string;
+  mime_type: string;
+  file_size: number;
+  width?: number;
+  height?: number;
+  storage_provider: string;
+  storage_key: string;
+  url: string;
+  alt_text?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export const getMedia = async (): Promise<BlogMedia[]> => {
+  return await fetchApi<BlogMedia[]>("/admin/media");
+};
+
+export const uploadMedia = async (file: File, altText?: string): Promise<BlogMedia> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  if (altText) formData.append("altText", altText);
+
+  return await fetchApi<BlogMedia>("/admin/media", {
+    method: "POST",
+    body: formData
+  });
+};
+
+export const deleteMedia = async (id: string): Promise<boolean> => {
+  try {
+    await fetchApi<void>(`/admin/media/id/${id}`, { method: "DELETE" });
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateMediaAlt = async (id: string, altText: string): Promise<boolean> => {
+  try {
+    await fetchApi<void>(`/admin/media/id/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ alt_text: altText })
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 // --- Helpers ---
+
 
 function mapApiPostToModel(apiPost: any): BlogPost {
   return {

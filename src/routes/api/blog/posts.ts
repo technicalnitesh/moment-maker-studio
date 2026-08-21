@@ -21,12 +21,13 @@ const postBodySchema = z.object({
   content: z.string().min(1),
   category_id: z.string(),
   author_id: z.string().optional(),
+  featured_image_id: z.string().nullable().optional(),
   status: z.enum(['draft', 'published', 'scheduled', 'archived']).default('draft'),
-  published_at: z.string().optional(),
+  published_at: z.string().nullable().optional(),
   reading_time: z.number().optional(),
-  seo_title: z.string().optional(),
-  seo_description: z.string().optional(),
-  canonical_url: z.string().optional(),
+  seo_title: z.string().nullable().optional(),
+  seo_description: z.string().nullable().optional(),
+  canonical_url: z.string().nullable().optional(),
   tags: z.array(z.string()).optional()
 })
 
@@ -37,7 +38,8 @@ export const Route = createFileRoute('/api/blog/posts')({
         const url = new URL(request.url)
         const params = querySchema.parse(Object.fromEntries(url.searchParams))
         
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const env = (context as any).env || (globalThis as any)
+        const db = env.DB
         
         if (!db) {
           return new Response(JSON.stringify({ 
@@ -49,10 +51,12 @@ export const Route = createFileRoute('/api/blog/posts')({
         try {
           // TODO: Check auth if params.admin is true
           
-          let query = `SELECT p.*, a.name as author_name, c.name as category_name 
+          let query = `SELECT p.*, a.name as author_name, a.avatar as author_avatar, 
+                       c.name as category_name, m.url as featured_image_url, m.alt_text as featured_image_alt
                        FROM blog_posts p
-                       JOIN blog_authors a ON p.author_id = a.id
-                       JOIN blog_categories c ON p.category_id = c.id
+                       LEFT JOIN blog_authors a ON p.author_id = a.id
+                       LEFT JOIN blog_categories c ON p.category_id = c.id
+                       LEFT JOIN blog_media m ON p.featured_image_id = m.id
                        WHERE 1=1`
           const args: any[] = []
 
@@ -109,7 +113,8 @@ export const Route = createFileRoute('/api/blog/posts')({
         }
       },
       POST: async ({ request, context }) => {
-        const db = (context as any).env?.DB || (globalThis as any).DB
+        const env = (context as any).env || (globalThis as any)
+        const db = env.DB
         if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
 
         try {
@@ -135,12 +140,12 @@ export const Route = createFileRoute('/api/blog/posts')({
           await db.prepare(`
             INSERT INTO blog_posts (
               id, author_id, category_id, title, slug, excerpt, content, 
-              status, published_at, reading_time, seo_title, seo_description, canonical_url,
+              featured_image_id, status, published_at, reading_time, seo_title, seo_description, canonical_url,
               created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `).bind(
             id, author_id, data.category_id, data.title, data.slug, data.excerpt || '', data.content,
-            data.status, data.status === 'published' ? (data.published_at || now) : null,
+            data.featured_image_id || null, data.status, data.status === 'published' ? (data.published_at || now) : null,
             data.reading_time || 5, data.seo_title || null, data.seo_description || null, data.canonical_url || null,
             now, now
           ).run()
