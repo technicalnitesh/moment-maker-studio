@@ -1,99 +1,93 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { nanoid } from 'nanoid'
-
-const uploadSchema = z.object({
-  altText: z.string().optional()
-})
+import { v4 as uuidv4 } from 'uuid'
 
 export const Route = createFileRoute('/api/blog/admin/media')({
   server: {
     handlers: {
-      GET: async ({ request, context }) => {
-        const env = (context as any).env || (globalThis as any)
-        const db = env.DB
-        
-        if (!db) {
-          return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
-        }
+      GET: async ({ request }) => {
+        // @ts-ignore
+        const db = process.env.DB
+        if (!db) return new Response('DB not bound', { status: 500 })
 
-        try {
-          // TODO: Auth check
-          const { results } = await db.prepare("SELECT * FROM blog_media ORDER BY created_at DESC").all()
-          
-          return new Response(JSON.stringify({
-            success: true,
-            data: results
-          }), { headers: { 'Content-Type': 'application/json' } })
-        } catch (e: any) {
-          return new Response(JSON.stringify({ success: false, error: { message: e.message } }), { status: 500 })
-        }
+        const { results } = await (db as any)
+          .prepare('SELECT * FROM blog_media ORDER BY created_at DESC')
+          .all()
+
+        const media = results.map((m: any) => ({
+          ...m,
+          url: `/blog-media/${m.storage_key}`
+        }))
+
+        return Response.json({ success: true, data: media })
       },
-      POST: async ({ request, context }) => {
-        const env = (context as any).env || (globalThis as any)
-        const db = env.DB
-        const bucket = env.BLOG_MEDIA
+
+      POST: async ({ request }) => {
+        // @ts-ignore
+        const db = process.env.DB
+        // @ts-ignore
+        const bucket = process.env.BLOG_MEDIA
         
-        if (!db || !bucket) {
-          return new Response(JSON.stringify({ success: false, error: { message: 'Services missing' } }), { status: 500 })
+        if (!db || !bucket) return new Response('Infrastructure not bound', { status: 500 })
+
+        const formData = await request.formData()
+        const file = formData.get('file') as File
+        const altText = formData.get('altText') as string || ''
+
+        if (!file) {
+          return Response.json({ success: false, error: { message: 'No file uploaded' } }, { status: 400 })
         }
 
-        try {
-          // TODO: Auth check
-          
-          const formData = await request.formData()
-          const file = formData.get('file') as File
-          const altText = formData.get('altText') as string || ''
+        // Validate file type and size (5MB limit)
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml']
+        if (!allowedTypes.includes(file.type)) {
+          return Response.json({ success: false, error: { message: 'Invalid file type' } }, { status: 400 })
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          return Response.json({ success: false, error: { message: 'File too large (max 5MB)' } }, { status: 400 })
+        }
 
-          if (!file) {
-            return new Response(JSON.stringify({ success: false, error: { message: 'No file uploaded' } }), { status: 400 })
-          }
+        const id = uuidv4()
+        const extension = file.name.split('.').pop()
+        const now = new Date()
+        const year = now.getFullYear()
+        const month = String(now.getMonth() + 1).padStart(2, '0')
+        const storageKey = `blog/${year}/${month}/${id}.${extension}`
 
-          // Validation
-          const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
-          if (!allowedTypes.includes(file.type)) {
-            return new Response(JSON.stringify({ success: false, error: { message: 'Unsupported file type' } }), { status: 400 })
-          }
+        // Upload to R2
+        await (bucket as any).put(storageKey, file.stream(), {
+          httpMetadata: { contentType: file.type }
+        })
 
-          if (file.size > 5 * 1024 * 1024) { // 5MB limit
-            return new Response(JSON.stringify({ success: false, error: { message: 'File too large (max 5MB)' } }), { status: 400 })
-          }
-
-          const id = nanoid()
-          const now = new Date()
-          const year = now.getFullYear()
-          const month = String(now.getMonth() + 1).padStart(2, '0')
-          const extension = file.name.split('.').pop()
-          const storageKey = `blog/${year}/${month}/${id}.${extension}`
-
-          // Upload to R2
-          await bucket.put(storageKey, file.stream(), {
-            httpMetadata: { contentType: file.type }
-          })
-
-          const publicUrl = `/blog-media/${storageKey}`
-
-          // Record in D1
-          await db.prepare(`
+        // Save to D1
+        await (db as any)
+          .prepare(`
             INSERT INTO blog_media (
               id, filename, original_name, mime_type, file_size, 
-              storage_provider, storage_key, url, alt_text, 
-              created_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-          `).bind(
-            id, `${id}.${extension}`, file.name, file.type, file.size,
-            'r2', storageKey, publicUrl, altText
-          ).run()
+              storage_provider, storage_key, alt_text
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          `)
+          .bind(
+            id, file.name, file.name, file.type, file.size,
+            'r2', storageKey, altText
+          )
+          .run()
 
-          const newMedia = await db.prepare("SELECT * FROM blog_media WHERE id = ?").bind(id).first()
-          
-          return new Response(JSON.stringify({
-            success: true,
-            data: newMedia
-          }), { headers: { 'Content-Type': 'application/json' } })
-        } catch (e: any) {
-          return new Response(JSON.stringify({ success: false, error: { message: e.message } }), { status: 500 })
+        const newMedia = {
+          id,
+          filename: file.name,
+          original_name: file.name,
+          mime_type: file.type,
+          file_size: file.size,
+          storage_provider: 'r2',
+          storage_key: storageKey,
+          alt_text: altText,
+          url: `/blog-media/${storageKey}`,
+          created_at: now.toISOString(),
+          updated_at: now.toISOString()
         }
+
+        return Response.json({ success: true, data: newMedia })
       }
     }
   }
