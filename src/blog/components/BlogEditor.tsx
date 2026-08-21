@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { BlogPost } from '@/blog/types/blog'
 import { getCategories, getTags, BlogMedia } from '@/lib/blog'
 import { useQuery } from '@tanstack/react-query'
@@ -25,6 +25,7 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
     status: 'draft',
     readingTime: 5,
     featuredImage: '',
+    featuredImageId: '',
     seoTitle: '',
     seoDescription: '',
     canonicalUrl: ''
@@ -80,10 +81,8 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
       setFormData(prev => ({
         ...prev,
         featuredImage: media.url,
+        featuredImageId: media.id
       }))
-      // In the API mapping, we use featured_image_id if available.
-      // We can pass it as a custom property that mapModelToApiPost will pick up.
-      (formData as any).featured_image_id = media.id
     } else {
       const quill = quillRef.current?.getEditor()
       if (quill) {
@@ -98,7 +97,7 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
   const handleSaveDraft = () => onSubmit({ ...formData, status: 'draft' })
   const handlePublish = () => onSubmit({ ...formData, status: 'published' })
 
-  const modules = {
+  const modules = useMemo(() => ({
     toolbar: {
       container: [
         [{ 'header': [1, 2, 3, false] }],
@@ -114,7 +113,7 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
         }
       }
     }
-  }
+  }), [])
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -216,7 +215,7 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
                   <button 
                     onClick={(e) => {
                       e.stopPropagation()
-                      setFormData(prev => ({ ...prev, featuredImage: '' }))
+                      setFormData(prev => ({ ...prev, featuredImage: '', featuredImageId: '' }))
                     }}
                     className="absolute top-2 right-2 p-1 bg-black/60 rounded-full text-white/60 hover:text-white"
                   >
