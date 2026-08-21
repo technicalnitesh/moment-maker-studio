@@ -72,9 +72,10 @@ export const blogPosts: BlogPost[] = [
       name: "Aditi Sharma",
     },
     featuredImage: "https://images.unsplash.com/photo-1530103862676-fa8c91abe178?auto=format&fit=crop&q=80&w=1200",
+    status: 'published',
     publishedAt: "2026-08-15T10:00:00Z",
     updatedAt: "2026-08-15T10:00:00Z",
-    readingTime: "4 min",
+    readingTime: 4,
     isFeatured: true,
   },
   {
@@ -103,9 +104,10 @@ export const blogPosts: BlogPost[] = [
       name: "Rahul Verma",
     },
     featuredImage: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1200",
+    status: 'published',
     publishedAt: "2026-08-10T14:30:00Z",
     updatedAt: "2026-08-12T09:00:00Z",
-    readingTime: "5 min",
+    readingTime: 5,
   },
   {
     id: "3",
@@ -133,9 +135,10 @@ export const blogPosts: BlogPost[] = [
       name: "Aditi Sharma",
     },
     featuredImage: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=1200",
+    status: 'published',
     publishedAt: "2026-08-05T08:00:00Z",
     updatedAt: "2026-08-05T08:00:00Z",
-    readingTime: "3 min",
+    readingTime: 3,
   },
   {
     id: "4",
@@ -146,7 +149,7 @@ export const blogPosts: BlogPost[] = [
     content: `
       <p>Anniversaries are the perfect time to reflect on your journey as a couple. While traditional gifts like paper, wood, or tin have their place, more and more couples are opting for "experiential" gifts that they can enjoy together.</p>
       
-      <h3>Digital Memory Lane</h3>
+      <h3>Anniversary Memory Lane</h3>
       <p>Create a digital timeline of your past year. Include the big moments and the small ones—the morning coffee dates, the late-night laughs, and the challenges you overcame together.</p>
       
       <h3>The Surprise Reveal</h3>
@@ -163,8 +166,9 @@ export const blogPosts: BlogPost[] = [
       name: "Rahul Verma",
     },
     featuredImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1200",
+    status: 'published',
     publishedAt: "2026-07-28T16:00:00Z",
     updatedAt: "2026-07-28T16:00:00Z",
-    readingTime: "4 min",
+    readingTime: 4,
   },
 ];
