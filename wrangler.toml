@@ -4,7 +4,7 @@ pages_build_output_dir = ".output/public"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "blog"
+database_name = "bhopalimitra_blog"
 database_id = "56836796-864b-4f03-ba28-e66d526e4ccf"
 migrations_dir = "migrations"
 
