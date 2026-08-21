@@ -102,7 +102,30 @@ function mapApiPostToModel(apiPost: any): BlogPost {
     },
     featuredImage: apiPost.featured_image_url || "/placeholder.svg",
     publishedAt: apiPost.published_at,
+    updatedAt: apiPost.updated_at || apiPost.published_at,
     readingTime: apiPost.reading_time || 5
   };
 }
+
+export const getRelatedPosts = async (post: BlogPost, limit = 3): Promise<BlogPost[]> => {
+  try {
+    const rawPosts = await fetchApi<any[]>(`/posts/\${post.slug}`);
+    // The detail API returns 'related' field
+    const data = (rawPosts as any).related || [];
+    return data.map(mapApiPostToModel);
+  } catch (error) {
+    console.error("Error fetching related posts:", error);
+    return [];
+  }
+};
+
+export const getCategoryBySlug = async (slug: string): Promise<BlogCategory | null> => {
+  try {
+    return await fetchApi<BlogCategory | null>(`/categories/\${slug}`);
+  } catch (error) {
+    console.error(`Error fetching category \${slug}:`, error);
+    return null;
+  }
+};
+
 
