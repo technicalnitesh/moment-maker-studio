@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { BlogPost } from '@/blog/types/blog'
-import { getCategories, getTags, BlogMedia } from '@/lib/blog'
+import { getCategories, getTags, BlogMedia, getAuthors } from '@/lib/blog'
 import { useQuery } from '@tanstack/react-query'
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
@@ -43,6 +43,11 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
   const { data: tags = [] } = useQuery({
     queryKey: ['blog-tags'],
     queryFn: getTags
+  })
+
+  const { data: authors = [] } = useQuery({
+    queryKey: ['blog-authors'],
+    queryFn: getAuthors
   })
 
   // Auto-generate slug from title
@@ -264,6 +269,25 @@ export function BlogEditor({ initialData, onSubmit, isEditing }: BlogEditorProps
                   </button>
                 ))}
               </div>
+            </div>
+            <div className="pt-4">
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">Author</label>
+              <select
+                name="author_id"
+                value={formData.author?.id || (formData as any).author_id || ''}
+                onChange={(e) => {
+                  const val = e.target.value
+                  setFormData(prev => ({ ...prev, author: { ...prev.author!, id: val } }))
+                  // Also set it as a root property for the API mapping
+                  ;(formData as any).author_id = val
+                }}
+                className="w-full bg-gray-800 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Select Author</option>
+                {authors.map((a: any) => (
+                  <option key={a.id} value={a.id}>{a.name}</option>
+                ))}
+              </select>
             </div>
           </div>
 
