@@ -21,6 +21,7 @@ import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
 
@@ -84,6 +85,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
   id: '/category/$slug',
   path: '/category/$slug',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
+    | '/blog/$slug'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog/'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
+    | '/blog/$slug'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
+    | '/blog/$slug'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog/'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   RefundPolicyRoute: typeof RefundPolicyRoute
   TermsRoute: typeof TermsRoute
   TrendingRoute: typeof TrendingRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
   ProjectSlugRoute: typeof ProjectSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug': {
       id: '/category/$slug'
       path: '/category/$slug'
@@ -327,6 +347,7 @@ const rootRouteChildren: RootRouteChildren = {
   RefundPolicyRoute: RefundPolicyRoute,
   TermsRoute: TermsRoute,
   TrendingRoute: TrendingRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
   ProjectSlugRoute: ProjectSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
