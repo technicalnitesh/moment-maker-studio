@@ -14,9 +14,11 @@ export const Route = createFileRoute('/api/blog/posts/id/$id')({
           .prepare(`
             SELECT p.*, 
                    c.name as category_name, c.slug as category_slug,
+                   a.name as author_name, a.avatar as author_avatar,
                    m.storage_key as featured_image_key
             FROM blog_posts p
             LEFT JOIN blog_categories c ON p.category_id = c.id
+            LEFT JOIN blog_authors a ON p.author_id = a.id
             LEFT JOIN blog_media m ON p.featured_image_id = m.id
             WHERE p.id = ?
           `)
@@ -59,14 +61,14 @@ export const Route = createFileRoute('/api/blog/posts/id/$id')({
           .prepare(`
             UPDATE blog_posts SET
               title = ?, slug = ?, excerpt = ?, content = ?, category_id = ?, 
-              featured_image_id = ?, status = ?, reading_time = ?,
+              author_id = ?, featured_image_id = ?, status = ?, reading_time = ?,
               seo_title = ?, seo_description = ?, canonical_url = ?,
               updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
           `)
           .bind(
             body.title, body.slug, body.excerpt, body.content, body.category_id,
-            body.featured_image_id || null, body.status, body.reading_time,
+            body.author_id, body.featured_image_id || null, body.status, body.reading_time,
             body.seo_title, body.seo_description, body.canonical_url,
             id
           )

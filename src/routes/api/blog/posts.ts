@@ -87,8 +87,6 @@ export const Route = createFileRoute('/api/blog/posts')({
         const body = await request.json()
         const id = crypto.randomUUID()
 
-        // Default author if none provided (simplified for now)
-        const authorId = body.author_id || 'author-1'
 
         await (db as any)
           .prepare(`
@@ -99,7 +97,7 @@ export const Route = createFileRoute('/api/blog/posts')({
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `)
           .bind(
-            id, body.title, body.slug, body.excerpt, body.content, body.category_id, authorId,
+            id, body.title, body.slug, body.excerpt, body.content, body.category_id, body.author_id,
             body.featured_image_id || null, body.status || 'draft', 
             body.published_at || new Date().toISOString(),
             body.reading_time || 5, body.seo_title, body.seo_description, body.canonical_url
