@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
-import { LayoutDashboard, FileText, FolderTree, Tag, User, Globe, ArrowLeft, Plus } from 'lucide-react'
+import { LayoutDashboard, FileText, FolderTree, Tag, User, Globe, ArrowLeft, Plus, Image as ImageIcon } from 'lucide-react'
 import { Toaster } from 'sonner'
 
 export const Route = createFileRoute('/_admin')({
@@ -25,6 +25,7 @@ function AdminLayout() {
             <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Main</h3>
             <AdminNavLink to="/admin/blog" icon={<LayoutDashboard size={18} />}>Dashboard</AdminNavLink>
             <AdminNavLink to="/admin/blog/posts" icon={<FileText size={18} />}>Posts</AdminNavLink>
+            <AdminNavLink to="/admin/blog/media" icon={<ImageIcon size={18} />}>Media Library</AdminNavLink>
           </div>
           
           <div className="pb-4 border-t border-white/5 pt-4">

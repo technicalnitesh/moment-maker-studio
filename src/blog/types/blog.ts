@@ -13,6 +13,7 @@ export interface BlogPost {
     avatar?: string;
   };
   featuredImage: string;
+  featuredImageId?: string;
   status: 'draft' | 'published' | 'scheduled' | 'archived';
   publishedAt: string;
   updatedAt: string;
@@ -38,4 +39,3 @@ export interface BlogTag {
   name: string;
   slug: string;
 }
-

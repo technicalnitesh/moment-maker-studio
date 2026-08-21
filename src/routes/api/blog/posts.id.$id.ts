@@ -1,99 +1,108 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-const postBodySchema = z.object({
-  title: z.string().min(1),
-  slug: z.string().min(1),
-  excerpt: z.string().optional(),
-  content: z.string().min(1),
-  category_id: z.string(),
-  author_id: z.string().optional(),
-  status: z.enum(['draft', 'published', 'scheduled', 'archived']).default('draft'),
-  published_at: z.string().optional(),
-  reading_time: z.number().optional(),
-  seo_title: z.string().optional(),
-  seo_description: z.string().optional(),
-  canonical_url: z.string().optional(),
-  tags: z.array(z.string()).optional()
-})
-
 export const Route = createFileRoute('/api/blog/posts/id/$id')({
   server: {
     handlers: {
-      GET: async ({ params, context }) => {
+      GET: async ({ params }) => {
         const { id } = params
-        const db = (context as any).env?.DB || (globalThis as any).DB
-        if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
+        // @ts-ignore
+        const db = process.env.DB
+        if (!db) return new Response('DB not bound', { status: 500 })
 
-        const post = await db.prepare(`
-          SELECT p.*, a.name as author_name, c.name as category_name
-          FROM blog_posts p
-          JOIN blog_authors a ON p.author_id = a.id
-          JOIN blog_categories c ON p.category_id = c.id
-          WHERE p.id = ?
-        `).bind(id).first()
+        const post = await (db as any)
+          .prepare(`
+            SELECT p.*, 
+                   c.name as category_name, c.slug as category_slug,
+                   m.storage_key as featured_image_key
+            FROM blog_posts p
+            LEFT JOIN blog_categories c ON p.category_id = c.id
+            LEFT JOIN blog_media m ON p.featured_image_id = m.id
+            WHERE p.id = ?
+          `)
+          .bind(id)
+          .first()
 
-        if (!post) return new Response(JSON.stringify({ success: false, error: { message: 'Not found' } }), { status: 404 })
-
-        const { results: tags } = await db.prepare(`
-          SELECT t.* FROM blog_tags t JOIN blog_post_tags pt ON t.id = pt.tag_id WHERE pt.post_id = ?
-        `).bind(id).all()
-
-        return new Response(JSON.stringify({ success: true, data: { ...post, tags } }), { headers: { 'Content-Type': 'application/json' } })
-      },
-      PUT: async ({ params, request, context }) => {
-        const { id } = params
-        const db = (context as any).env?.DB || (globalThis as any).DB
-        if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
-
-        try {
-          const body = await request.json()
-          const data = postBodySchema.parse(body)
-          const now = new Date().toISOString()
-
-          await db.prepare(`
-            UPDATE blog_posts SET 
-              title = ?, slug = ?, excerpt = ?, content = ?, category_id = ?, 
-              status = ?, published_at = ?, reading_time = ?, 
-              seo_title = ?, seo_description = ?, canonical_url = ?, updated_at = ?
-            WHERE id = ?
-          `).bind(
-            data.title, data.slug, data.excerpt || '', data.content, data.category_id,
-            data.status, data.status === 'published' ? (data.published_at || now) : null,
-            data.reading_time || 5, data.seo_title || null, data.seo_description || null, data.canonical_url || null,
-            now, id
-          ).run()
-
-          // Sync tags (delete all then re-insert)
-          await db.prepare("DELETE FROM blog_post_tags WHERE post_id = ?").bind(id).run()
-          if (data.tags) {
-            for (const tagName of data.tags) {
-              const tagSlug = tagName.toLowerCase().replace(/ /g, '-')
-              let tag = await db.prepare("SELECT id FROM blog_tags WHERE slug = ?").bind(tagSlug).first()
-              if (!tag) {
-                const { nanoid } = await import('nanoid')
-                const tagId = nanoid()
-                await db.prepare("INSERT INTO blog_tags (id, name, slug) VALUES (?, ?, ?)").bind(tagId, tagName, tagSlug).run()
-                tag = { id: tagId }
-              }
-              await db.prepare("INSERT INTO blog_post_tags (post_id, tag_id) VALUES (?, ?)").bind(id, tag.id).run()
-            }
-          }
-
-          const updated = await db.prepare("SELECT * FROM blog_posts WHERE id = ?").bind(id).first()
-          return new Response(JSON.stringify({ success: true, data: updated }), { headers: { 'Content-Type': 'application/json' } })
-        } catch (e: any) {
-          return new Response(JSON.stringify({ success: false, error: { message: e.message } }), { status: 500 })
+        if (!post) {
+          return Response.json({ success: false, error: { message: 'Post not found' } }, { status: 404 })
         }
-      },
-      DELETE: async ({ params, context }) => {
-        const { id } = params
-        const db = (context as any).env?.DB || (globalThis as any).DB
-        if (!db) return new Response(JSON.stringify({ success: false, error: { message: 'DB missing' } }), { status: 500 })
 
-        await db.prepare("DELETE FROM blog_post_tags WHERE post_id = ?").bind(id).run()
-        await db.prepare("DELETE FROM blog_posts WHERE id = ?").bind(id).run()
-        return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } })
+        const { results: tags } = await (db as any)
+          .prepare(`
+            SELECT t.name, t.slug 
+            FROM blog_tags t 
+            JOIN blog_post_tags pt ON t.id = pt.tag_id 
+            WHERE pt.post_id = ?
+          `)
+          .bind(id)
+          .all()
+
+        return Response.json({
+          success: true,
+          data: {
+            ...post,
+            tags,
+            featured_image_url: post.featured_image_key ? `/blog-media/${post.featured_image_key}` : null
+          }
+        })
+      },
+
+      PUT: async ({ request, params }) => {
+        const { id } = params
+        // @ts-ignore
+        const db = process.env.DB
+        if (!db) return new Response('DB not bound', { status: 500 })
+
+        const body = await request.json()
+
+        await (db as any)
+          .prepare(`
+            UPDATE blog_posts SET
+              title = ?, slug = ?, excerpt = ?, content = ?, category_id = ?, 
+              featured_image_id = ?, status = ?, reading_time = ?,
+              seo_title = ?, seo_description = ?, canonical_url = ?,
+              updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+          `)
+          .bind(
+            body.title, body.slug, body.excerpt, body.content, body.category_id,
+            body.featured_image_id || null, body.status, body.reading_time,
+            body.seo_title, body.seo_description, body.canonical_url,
+            id
+          )
+          .run()
+
+        // Sync tags: Delete existing and re-add
+        await (db as any).prepare('DELETE FROM blog_post_tags WHERE post_id = ?').bind(id).run()
+
+        if (body.tags && Array.isArray(body.tags)) {
+          for (const tagName of body.tags) {
+            const tagSlug = tagName.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            let tag = await (db as any).prepare('SELECT id FROM blog_tags WHERE name = ?').bind(tagName).first()
+            
+            if (!tag) {
+              const tagId = crypto.randomUUID()
+              await (db as any).prepare('INSERT INTO blog_tags (id, name, slug) VALUES (?, ?, ?)').bind(tagId, tagName, tagSlug).run()
+              tag = { id: tagId }
+            }
+
+            await (db as any).prepare('INSERT INTO blog_post_tags (post_id, tag_id) VALUES (?, ?)').bind(id, tag.id).run()
+          }
+        }
+
+        return Response.json({ success: true })
+      },
+
+      DELETE: async ({ params }) => {
+        const { id } = params
+        // @ts-ignore
+        const db = process.env.DB
+        if (!db) return new Response('DB not bound', { status: 500 })
+
+        await (db as any).prepare('DELETE FROM blog_post_tags WHERE post_id = ?').bind(id).run()
+        await (db as any).prepare('DELETE FROM blog_posts WHERE id = ?').bind(id).run()
+
+        return Response.json({ success: true })
       }
     }
   }
