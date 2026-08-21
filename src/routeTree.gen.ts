@@ -33,6 +33,7 @@ import { Route as ApiBlogTagsRouteImport } from './routes/api/blog/tags'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.category.$slug'
 import { Route as BlogTagSlugRouteImport } from './routes/blog.tag.$slug'
 import { Route as AdminAdminBlogIndexRouteImport } from './routes/_admin/admin/blog.index'
+import { Route as AdminAdminBlogAuthorsRouteImport } from './routes/_admin/admin/blog.authors'
 import { Route as AdminAdminBlogCategoriesRouteImport } from './routes/_admin/admin/blog.categories'
 import { Route as AdminAdminBlogTagsRouteImport } from './routes/_admin/admin/blog.tags'
 import { Route as ApiBlogAuthorsSlugRouteImport } from './routes/api/blog/authors.$slug'
@@ -163,6 +164,11 @@ const AdminAdminBlogIndexRoute = AdminAdminBlogIndexRouteImport.update({
   path: '/admin/blog/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAdminBlogAuthorsRoute = AdminAdminBlogAuthorsRouteImport.update({
+  id: '/admin/blog/authors',
+  path: '/admin/blog/authors',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAdminBlogCategoriesRoute =
   AdminAdminBlogCategoriesRouteImport.update({
     id: '/admin/blog/categories',
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
   '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
   '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByTo {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
   '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
   '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
   '/blog/category/$slug': typeof BlogCategorySlugRoute
   '/blog/tag/$slug': typeof BlogTagSlugRoute
+  '/_admin/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
   '/_admin/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
   '/_admin/admin/blog/tags': typeof AdminAdminBlogTagsRoute
   '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/admin/blog/authors'
     | '/admin/blog/categories'
     | '/admin/blog/tags'
     | '/api/blog/authors/$slug'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/admin/blog/authors'
     | '/admin/blog/categories'
     | '/admin/blog/tags'
     | '/api/blog/authors/$slug'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/api/blog/tags'
     | '/blog/category/$slug'
     | '/blog/tag/$slug'
+    | '/_admin/admin/blog/authors'
     | '/_admin/admin/blog/categories'
     | '/_admin/admin/blog/tags'
     | '/api/blog/authors/$slug'
@@ -630,6 +642,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminBlogIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/admin/blog/authors': {
+      id: '/_admin/admin/blog/authors'
+      path: '/admin/blog/authors'
+      fullPath: '/admin/blog/authors'
+      preLoaderRoute: typeof AdminAdminBlogAuthorsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_admin/admin/blog/categories': {
       id: '/_admin/admin/blog/categories'
       path: '/admin/blog/categories'
@@ -704,6 +723,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAdminBlogAuthorsRoute: typeof AdminAdminBlogAuthorsRoute
   AdminAdminBlogCategoriesRoute: typeof AdminAdminBlogCategoriesRoute
   AdminAdminBlogTagsRoute: typeof AdminAdminBlogTagsRoute
   AdminAdminBlogIndexRoute: typeof AdminAdminBlogIndexRoute
@@ -713,6 +733,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminBlogAuthorsRoute: AdminAdminBlogAuthorsRoute,
   AdminAdminBlogCategoriesRoute: AdminAdminBlogCategoriesRoute,
   AdminAdminBlogTagsRoute: AdminAdminBlogTagsRoute,
   AdminAdminBlogIndexRoute: AdminAdminBlogIndexRoute,
