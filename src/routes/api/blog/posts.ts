@@ -21,12 +21,10 @@ export const Route = createFileRoute('/api/blog/posts')({
         let query = `
           SELECT p.*, 
                  c.name as category_name, c.slug as category_slug,
-                 a.name as author_name, a.avatar as author_avatar,
-                 m.storage_key as featured_image_key
+                 a.name as author_name, a.avatar as author_avatar
           FROM blog_posts p
           LEFT JOIN blog_categories c ON p.category_id = c.id
           LEFT JOIN blog_authors a ON p.author_id = a.id
-          LEFT JOIN blog_media m ON p.featured_image_id = m.id
           WHERE 1=1
         `
         const params: any[] = []
@@ -68,7 +66,7 @@ export const Route = createFileRoute('/api/blog/posts')({
           return {
             ...post,
             tags,
-            featured_image_url: post.featured_image_key ? `/blog-media/${post.featured_image_key}` : null
+            featured_image_url: post.featured_image || post.featured_image_url || "/placeholder.svg"
           }
         }))
 
@@ -87,18 +85,17 @@ export const Route = createFileRoute('/api/blog/posts')({
         const body = await request.json()
         const id = crypto.randomUUID()
 
-
         await (db as any)
           .prepare(`
             INSERT INTO blog_posts (
               id, title, slug, excerpt, content, category_id, author_id, 
-              featured_image_id, status, published_at, reading_time,
+              featured_image, status, published_at, reading_time,
               seo_title, seo_description, canonical_url
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `)
           .bind(
             id, body.title, body.slug, body.excerpt, body.content, body.category_id, body.author_id,
-            body.featured_image_id || null, body.status || 'draft', 
+            body.featured_image || body.featured_image_id || null, body.status || 'draft', 
             body.published_at || new Date().toISOString(),
             body.reading_time || 5, body.seo_title, body.seo_description, body.canonical_url
           )
