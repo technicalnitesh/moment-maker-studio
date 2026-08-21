@@ -20,6 +20,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
 
@@ -78,6 +79,11 @@ const TrendingRoute = TrendingRouteImport.update({
   path: '/trending',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
   id: '/category/$slug',
   path: '/category/$slug',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/trending': typeof TrendingRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/trending': typeof TrendingRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/trending': typeof TrendingRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/category/$slug'
     | '/project/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/category/$slug'
     | '/project/$slug'
+    | '/blog'
   id:
     | '__root__'
     | '/'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/category/$slug'
     | '/project/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   TrendingRoute: typeof TrendingRoute
   CategorySlugRoute: typeof CategorySlugRoute
   ProjectSlugRoute: typeof ProjectSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrendingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug': {
       id: '/category/$slug'
       path: '/category/$slug'
@@ -309,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrendingRoute: TrendingRoute,
   CategorySlugRoute: CategorySlugRoute,
   ProjectSlugRoute: ProjectSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

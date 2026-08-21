@@ -3,7 +3,7 @@ import { getLatestPosts, getCategories } from "@/lib/blog";
 import { PostCard } from "@/blog/components/PostCard";
 import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   loader: async () => {
     const [posts, categories] = await Promise.all([
       getLatestPosts(10),
