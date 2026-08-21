@@ -109,12 +109,13 @@ function AdminPostsPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <Link to={`/blog/${post.slug}`} target="_blank" className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                      <Link to="/blog/$slug" params={{ slug: post.slug }} target="_blank" className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
                         <Eye size={18} />
                       </Link>
-                      <Link to={`/admin/blog/posts/edit/${post.id}`} className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                      <Link to="/admin/blog/posts/edit/$id" params={{ id: post.id }} className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
                         <Edit size={18} />
                       </Link>
+
                       <button className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors">
                         <Trash2 size={18} />
                       </button>
