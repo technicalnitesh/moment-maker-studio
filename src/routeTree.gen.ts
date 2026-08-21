@@ -38,7 +38,9 @@ import { Route as ApiBlogCategoriesSlugRouteImport } from './routes/api/blog/cat
 import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$slug'
 import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
 import { Route as AdminAdminBlogPostsIndexRouteImport } from './routes/_admin/admin/blog.posts.index'
+import { Route as AdminAdminBlogPostsNewRouteImport } from './routes/_admin/admin/blog.posts.new'
 import { Route as ApiBlogPostsIdIdRouteImport } from './routes/api/blog/posts.id.$id'
+import { Route as AdminAdminBlogPostsEditIdRouteImport } from './routes/_admin/admin/blog.posts.edit.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -185,11 +187,22 @@ const AdminAdminBlogPostsIndexRoute =
     path: '/admin/blog/posts/',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminAdminBlogPostsNewRoute = AdminAdminBlogPostsNewRouteImport.update({
+  id: '/admin/blog/posts/new',
+  path: '/admin/blog/posts/new',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ApiBlogPostsIdIdRoute = ApiBlogPostsIdIdRouteImport.update({
   id: '/id/$id',
   path: '/id/$id',
   getParentRoute: () => ApiBlogPostsRoute,
 } as any)
+const AdminAdminBlogPostsEditIdRoute =
+  AdminAdminBlogPostsEditIdRouteImport.update({
+    id: '/admin/blog/posts/edit/$id',
+    path: '/admin/blog/posts/edit/$id',
+    getParentRoute: () => AdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -219,8 +232,10 @@ export interface FileRoutesByFullPath {
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/admin/blog/': typeof AdminAdminBlogIndexRoute
+  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
+  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -250,8 +265,10 @@ export interface FileRoutesByTo {
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/admin/blog': typeof AdminAdminBlogIndexRoute
+  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/admin/blog/posts': typeof AdminAdminBlogPostsIndexRoute
+  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -283,8 +300,10 @@ export interface FileRoutesById {
   '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
   '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
   '/_admin/admin/blog/': typeof AdminAdminBlogIndexRoute
+  '/_admin/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
   '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
   '/_admin/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
+  '/_admin/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -316,8 +335,10 @@ export interface FileRouteTypes {
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
     | '/admin/blog/'
+    | '/admin/blog/posts/new'
     | '/api/blog/posts/id/$id'
     | '/admin/blog/posts/'
+    | '/admin/blog/posts/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -347,8 +368,10 @@ export interface FileRouteTypes {
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
     | '/admin/blog'
+    | '/admin/blog/posts/new'
     | '/api/blog/posts/id/$id'
     | '/admin/blog/posts'
+    | '/admin/blog/posts/edit/$id'
   id:
     | '__root__'
     | '/'
@@ -379,8 +402,10 @@ export interface FileRouteTypes {
     | '/api/blog/posts/$slug'
     | '/api/blog/tags/$slug'
     | '/_admin/admin/blog/'
+    | '/_admin/admin/blog/posts/new'
     | '/api/blog/posts/id/$id'
     | '/_admin/admin/blog/posts/'
+    | '/_admin/admin/blog/posts/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -615,6 +640,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminBlogPostsIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/admin/blog/posts/new': {
+      id: '/_admin/admin/blog/posts/new'
+      path: '/admin/blog/posts/new'
+      fullPath: '/admin/blog/posts/new'
+      preLoaderRoute: typeof AdminAdminBlogPostsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/api/blog/posts/id/$id': {
       id: '/api/blog/posts/id/$id'
       path: '/id/$id'
@@ -622,17 +654,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBlogPostsIdIdRouteImport
       parentRoute: typeof ApiBlogPostsRoute
     }
+    '/_admin/admin/blog/posts/edit/$id': {
+      id: '/_admin/admin/blog/posts/edit/$id'
+      path: '/admin/blog/posts/edit/$id'
+      fullPath: '/admin/blog/posts/edit/$id'
+      preLoaderRoute: typeof AdminAdminBlogPostsEditIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminAdminBlogIndexRoute: typeof AdminAdminBlogIndexRoute
+  AdminAdminBlogPostsNewRoute: typeof AdminAdminBlogPostsNewRoute
   AdminAdminBlogPostsIndexRoute: typeof AdminAdminBlogPostsIndexRoute
+  AdminAdminBlogPostsEditIdRoute: typeof AdminAdminBlogPostsEditIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAdminBlogIndexRoute: AdminAdminBlogIndexRoute,
+  AdminAdminBlogPostsNewRoute: AdminAdminBlogPostsNewRoute,
   AdminAdminBlogPostsIndexRoute: AdminAdminBlogPostsIndexRoute,
+  AdminAdminBlogPostsEditIdRoute: AdminAdminBlogPostsEditIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
