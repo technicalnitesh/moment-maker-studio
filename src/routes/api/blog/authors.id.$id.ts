@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/api/blog/authors/id/$id')({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ params, context }) => {
         const { id } = params
         // @ts-ignore
         const db = process.env.DB
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/api/blog/authors/id/$id')({
 
         return Response.json({ success: true, data: author })
       },
-      PUT: async ({ request, params }) => {
+      PUT: async ({ request, params, context }) => {
         const { id } = params
         // @ts-ignore
         const db = process.env.DB
@@ -40,7 +40,7 @@ export const Route = createFileRoute('/api/blog/authors/id/$id')({
 
         return Response.json({ success: true })
       },
-      DELETE: async ({ params }) => {
+      DELETE: async ({ params, context }) => {
         const { id } = params
         // @ts-ignore
         const db = process.env.DB

@@ -4,9 +4,9 @@ import { z } from 'zod'
 export const Route = createFileRoute('/api/blog/authors')({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async ({ request, context }) => {
         // @ts-ignore
-        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         try {
@@ -26,9 +26,9 @@ export const Route = createFileRoute('/api/blog/authors')({
           })
         }
       },
-      POST: async ({ request }) => {
+      POST: async ({ request, context }) => {
         // @ts-ignore
-        const db = (request as any).context?.env?.DB || (process.env as any).DB || (globalThis as any).DB
+        const db = (context as any).env?.DB || (process.env as any).DB || (globalThis as any).DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
         try {
