@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/blog-media/$')({
   loader: async ({ params, context }) => {
     // This runs on the server (Worker)
-    const key = params['_']
+    const key = params['_splat']
     
     // @ts-ignore - The BLOG_MEDIA binding is available in the Worker environment
     const bucket = process.env.BLOG_MEDIA
