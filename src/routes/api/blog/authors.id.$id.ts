@@ -31,11 +31,11 @@ export const Route = createFileRoute('/api/blog/authors/id/$id')({
         await (db as any)
           .prepare(`
             UPDATE blog_authors SET
-              name = ?, avatar = ?, bio = ?, twitter = ?, github = ?, website = ?, role = ?,
+              name = ?, avatar = ?, bio = ?, website = ?, role = ?,
               updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
           `)
-          .bind(body.name, body.avatar, body.bio, body.twitter, body.github, body.website, body.role, id)
+          .bind(body.name, body.avatar, body.bio, body.website, body.role, id)
           .run()
 
         return Response.json({ success: true })
