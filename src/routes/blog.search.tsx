@@ -8,7 +8,7 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/blog/search")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
-      q: (search.q as string) || "",
+      q: (search['q'] as string) || "",
     };
   },
   head: () => ({

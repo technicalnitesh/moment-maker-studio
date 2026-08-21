@@ -22,6 +22,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BlogSearchRouteImport } from './routes/blog.search'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
 import { Route as BlogCategorySlugRouteImport } from './routes/blog.category.$slug'
@@ -92,6 +93,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSearchRoute = BlogSearchRouteImport.update({
+  id: '/blog/search',
+  path: '/blog/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
   id: '/category/$slug',
   path: '/category/$slug',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/trending'
     | '/blog/$slug'
+    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog/'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/trending'
     | '/blog/$slug'
+    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/trending'
     | '/blog/$slug'
+    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
     | '/blog/'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   TrendingRoute: typeof TrendingRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  BlogSearchRoute: typeof BlogSearchRoute
   CategorySlugRoute: typeof CategorySlugRoute
   ProjectSlugRoute: typeof ProjectSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/search': {
+      id: '/blog/search'
+      path: '/blog/search'
+      fullPath: '/blog/search'
+      preLoaderRoute: typeof BlogSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug': {
       id: '/category/$slug'
       path: '/category/$slug'
@@ -388,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   TrendingRoute: TrendingRoute,
   BlogSlugRoute: BlogSlugRoute,
+  BlogSearchRoute: BlogSearchRoute,
   CategorySlugRoute: CategorySlugRoute,
   ProjectSlugRoute: ProjectSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
