@@ -8,29 +8,46 @@ export const Route = createFileRoute('/api/blog/authors')({
         const db = process.env.DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
-        const { results } = await (db as any)
-          .prepare('SELECT id, name, avatar, bio, twitter, github, website, role FROM blog_authors ORDER BY name ASC')
-          .all()
+        try {
+          const { results } = await (db as any)
+            .prepare('SELECT id, name, avatar, bio, website, role FROM blog_authors ORDER BY name ASC')
+            .all()
 
-        return Response.json({ success: true, data: results })
+          return Response.json({ success: true, data: results })
+        } catch (error: any) {
+          console.error('Error fetching authors:', error)
+          return new Response(JSON.stringify({ error: error.message }), { 
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
       },
       POST: async ({ request }) => {
         // @ts-ignore
         const db = process.env.DB
         if (!db) return new Response('DB not bound', { status: 500 })
 
-        const body = await request.json()
-        const id = crypto.randomUUID()
+        try {
+          const body = await request.json()
+          const id = crypto.randomUUID()
+          const slug = body.name.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
 
-        await (db as any)
-          .prepare(`
-            INSERT INTO blog_authors (id, name, avatar, bio, twitter, github, website, role)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-          `)
-          .bind(id, body.name, body.avatar || '', body.bio || '', body.twitter || '', body.github || '', body.website || '', body.role || 'Contributor')
-          .run()
+          await (db as any)
+            .prepare(`
+              INSERT INTO blog_authors (id, name, slug, avatar, bio, website, role)
+              VALUES (?, ?, ?, ?, ?, ?, ?)
+            `)
+            .bind(id, body.name, slug, body.avatar || '', body.bio || '', body.website || '', body.role || 'Contributor')
+            .run()
 
-        return Response.json({ success: true, data: { id } })
+          return Response.json({ success: true, data: { id } })
+        } catch (error: any) {
+          console.error('Error creating author:', error)
+          return new Response(JSON.stringify({ error: error.message }), { 
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          })
+        }
       }
     }
   }
