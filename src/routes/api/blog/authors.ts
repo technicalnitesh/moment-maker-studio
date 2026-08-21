@@ -10,13 +10,16 @@ export const Route = createFileRoute('/api/blog/authors')({
 
         try {
           const { results } = await (db as any)
-            .prepare('SELECT id, name, avatar, bio, website, role FROM blog_authors ORDER BY name ASC')
+            .prepare('SELECT id, name, slug, avatar, bio, website, role FROM blog_authors ORDER BY name ASC')
             .all()
 
           return Response.json({ success: true, data: results })
         } catch (error: any) {
           console.error('Error fetching authors:', error)
-          return new Response(JSON.stringify({ error: error.message }), { 
+          return new Response(JSON.stringify({ 
+            success: false, 
+            error: { message: error.message } 
+          }), { 
             status: 500,
             headers: { 'Content-Type': 'application/json' }
           })
@@ -43,7 +46,10 @@ export const Route = createFileRoute('/api/blog/authors')({
           return Response.json({ success: true, data: { id } })
         } catch (error: any) {
           console.error('Error creating author:', error)
-          return new Response(JSON.stringify({ error: error.message }), { 
+          return new Response(JSON.stringify({ 
+            success: false, 
+            error: { message: error.message } 
+          }), { 
             status: 500,
             headers: { 'Content-Type': 'application/json' }
           })
@@ -52,3 +58,4 @@ export const Route = createFileRoute('/api/blog/authors')({
     }
   }
 })
+
