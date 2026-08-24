@@ -378,6 +378,38 @@ export const products: Product[] = [
   created_at: now,
   updated_at: now,
 },
+{
+    id: "bm-013",
+    slug: "i-love-you-proposal",
+    name: "I Love You Proposal",
+    short_description: "A heartfelt romantic proposal card to ask the big question.",
+    description:
+      "A magical interactive card featuring a romantic 'I Love You' reveal, background soundtrack, smooth heart animations, and personalized photos to make your proposal unforgettable.",
+    category: "proposal",
+    occasion: "Proposal",
+    thumbnail_url: digiProposal,
+    preview_url: `${DEMO_PREVIEW_BASE}/iloveyou`,
+    download_url: `${DEMO_DOWNLOAD_BASE}/iloveyou.html`,
+    grab_code: "BM-CODE",
+    social_tag: "#GRABPROJECT",
+    features: [
+      "💖 Romantic proposal reveal",
+      "✨ Interactive heart animations",
+      "🎵 Background love soundtrack",
+      "📸 Personalized photo integration",
+    ],
+    perfect_for: ["Proposals", "Confessions", "Valentine's Day"],
+    tags: ["iloveyou", "proposal", "love", "romantic", "valentine"],
+    is_free: true,
+    is_featured: true,
+    is_trending: true,
+    is_new: true,
+    status: "published",
+    sort_order: 7,
+    created_at: now,
+    updated_at: now,
+}
+
   // {
   //   id: "bm-008",
   //   slug: "valentine-surprise",
