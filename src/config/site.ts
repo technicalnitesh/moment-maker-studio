@@ -17,7 +17,7 @@ export const DOWNLOAD_LABEL = "Download Project";
 
 export const DEFAULT_META_TITLE = `${BRAND_NAME} — ${BRAND_TAGLINE}`;
 export const DEFAULT_META_DESCRIPTION =
-  "Discover beautiful interactive digital surprises for birthdays, anniversaries, proposals, love, memories and every special moment. Preview live, then grab it free.";
+  "Discover beautiful interactive digital surprises for birthdays, proposals, love, memories and every special moment. Preview live, then grab it free.";
 
 export const SOCIAL_HASHTAGS = ["#GRABPROJECT", "#BhopaliMitra"];
 export const PRIMARY_SOCIAL_TAG = "#GRABPROJECT";
