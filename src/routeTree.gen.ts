@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -21,44 +20,12 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrendingRouteImport } from './routes/trending'
-import { Route as BlogMediaSplatRouteImport } from './routes/blog-media.$'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as BlogSearchRouteImport } from './routes/blog.search'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
-import { Route as ApiBlogAuthorsRouteImport } from './routes/api/blog/authors'
-import { Route as ApiBlogCategoriesRouteImport } from './routes/api/blog/categories'
-import { Route as ApiBlogDiagnosticsRouteImport } from './routes/api/blog/diagnostics'
-import { Route as ApiBlogPostsRouteImport } from './routes/api/blog/posts'
-import { Route as ApiBlogSearchRouteImport } from './routes/api/blog/search'
-import { Route as ApiBlogTagsRouteImport } from './routes/api/blog/tags'
-import { Route as BlogCategorySlugRouteImport } from './routes/blog.category.$slug'
-import { Route as BlogTagSlugRouteImport } from './routes/blog.tag.$slug'
-import { Route as AdminAdminBlogIndexRouteImport } from './routes/_admin/admin/blog.index'
-import { Route as AdminAdminBlogAuthorsRouteImport } from './routes/_admin/admin/blog.authors'
-import { Route as AdminAdminBlogCategoriesRouteImport } from './routes/_admin/admin/blog.categories'
-import { Route as AdminAdminBlogMediaRouteImport } from './routes/_admin/admin/blog.media'
-import { Route as AdminAdminBlogTagsRouteImport } from './routes/_admin/admin/blog.tags'
-import { Route as ApiBlogAdminMediaRouteImport } from './routes/api/blog/admin/media'
-import { Route as ApiBlogAuthorsSlugRouteImport } from './routes/api/blog/authors.$slug'
-import { Route as ApiBlogCategoriesSlugRouteImport } from './routes/api/blog/categories.$slug'
-import { Route as ApiBlogPostsSlugRouteImport } from './routes/api/blog/posts.$slug'
-import { Route as ApiBlogTagsSlugRouteImport } from './routes/api/blog/tags.$slug'
-import { Route as AdminAdminBlogPostsIndexRouteImport } from './routes/_admin/admin/blog.posts.index'
-import { Route as AdminAdminBlogPostsNewRouteImport } from './routes/_admin/admin/blog.posts.new'
-import { Route as ApiBlogAuthorsIdIdRouteImport } from './routes/api/blog/authors.id.$id'
-import { Route as ApiBlogPostsIdIdRouteImport } from './routes/api/blog/posts.id.$id'
-import { Route as AdminAdminBlogPostsEditIdRouteImport } from './routes/_admin/admin/blog.posts.edit.$id'
-import { Route as ApiBlogAdminMediaIdIdRouteImport } from './routes/api/blog/admin/media.id.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -111,26 +78,6 @@ const TrendingRoute = TrendingRouteImport.update({
   path: '/trending',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogMediaSplatRoute = BlogMediaSplatRouteImport.update({
-  id: '/blog-media/$',
-  path: '/blog-media/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSearchRoute = BlogSearchRouteImport.update({
-  id: '/blog/search',
-  path: '/blog/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
   id: '/category/$slug',
   path: '/category/$slug',
@@ -140,129 +87,6 @@ const ProjectSlugRoute = ProjectSlugRouteImport.update({
   id: '/project/$slug',
   path: '/project/$slug',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogAuthorsRoute = ApiBlogAuthorsRouteImport.update({
-  id: '/api/blog/authors',
-  path: '/api/blog/authors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogCategoriesRoute = ApiBlogCategoriesRouteImport.update({
-  id: '/api/blog/categories',
-  path: '/api/blog/categories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogDiagnosticsRoute = ApiBlogDiagnosticsRouteImport.update({
-  id: '/api/blog/diagnostics',
-  path: '/api/blog/diagnostics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogPostsRoute = ApiBlogPostsRouteImport.update({
-  id: '/api/blog/posts',
-  path: '/api/blog/posts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogSearchRoute = ApiBlogSearchRouteImport.update({
-  id: '/api/blog/search',
-  path: '/api/blog/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogTagsRoute = ApiBlogTagsRouteImport.update({
-  id: '/api/blog/tags',
-  path: '/api/blog/tags',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogCategorySlugRoute = BlogCategorySlugRouteImport.update({
-  id: '/blog/category/$slug',
-  path: '/blog/category/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogTagSlugRoute = BlogTagSlugRouteImport.update({
-  id: '/blog/tag/$slug',
-  path: '/blog/tag/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAdminBlogIndexRoute = AdminAdminBlogIndexRouteImport.update({
-  id: '/admin/blog/',
-  path: '/admin/blog/',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminBlogAuthorsRoute = AdminAdminBlogAuthorsRouteImport.update({
-  id: '/admin/blog/authors',
-  path: '/admin/blog/authors',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminBlogCategoriesRoute =
-  AdminAdminBlogCategoriesRouteImport.update({
-    id: '/admin/blog/categories',
-    path: '/admin/blog/categories',
-    getParentRoute: () => AdminRoute,
-  } as any)
-const AdminAdminBlogMediaRoute = AdminAdminBlogMediaRouteImport.update({
-  id: '/admin/blog/media',
-  path: '/admin/blog/media',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAdminBlogTagsRoute = AdminAdminBlogTagsRouteImport.update({
-  id: '/admin/blog/tags',
-  path: '/admin/blog/tags',
-  getParentRoute: () => AdminRoute,
-} as any)
-const ApiBlogAdminMediaRoute = ApiBlogAdminMediaRouteImport.update({
-  id: '/api/blog/admin/media',
-  path: '/api/blog/admin/media',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiBlogAuthorsSlugRoute = ApiBlogAuthorsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ApiBlogAuthorsRoute,
-} as any)
-const ApiBlogCategoriesSlugRoute = ApiBlogCategoriesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ApiBlogCategoriesRoute,
-} as any)
-const ApiBlogPostsSlugRoute = ApiBlogPostsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ApiBlogPostsRoute,
-} as any)
-const ApiBlogTagsSlugRoute = ApiBlogTagsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ApiBlogTagsRoute,
-} as any)
-const AdminAdminBlogPostsIndexRoute =
-  AdminAdminBlogPostsIndexRouteImport.update({
-    id: '/admin/blog/posts/',
-    path: '/admin/blog/posts/',
-    getParentRoute: () => AdminRoute,
-  } as any)
-const AdminAdminBlogPostsNewRoute = AdminAdminBlogPostsNewRouteImport.update({
-  id: '/admin/blog/posts/new',
-  path: '/admin/blog/posts/new',
-  getParentRoute: () => AdminRoute,
-} as any)
-const ApiBlogAuthorsIdIdRoute = ApiBlogAuthorsIdIdRouteImport.update({
-  id: '/id/$id',
-  path: '/id/$id',
-  getParentRoute: () => ApiBlogAuthorsRoute,
-} as any)
-const ApiBlogPostsIdIdRoute = ApiBlogPostsIdIdRouteImport.update({
-  id: '/id/$id',
-  path: '/id/$id',
-  getParentRoute: () => ApiBlogPostsRoute,
-} as any)
-const AdminAdminBlogPostsEditIdRoute =
-  AdminAdminBlogPostsEditIdRouteImport.update({
-    id: '/admin/blog/posts/edit/$id',
-    path: '/admin/blog/posts/edit/$id',
-    getParentRoute: () => AdminRoute,
-  } as any)
-const ApiBlogAdminMediaIdIdRoute = ApiBlogAdminMediaIdIdRouteImport.update({
-  id: '/id/$id',
-  path: '/id/$id',
-  getParentRoute: () => ApiBlogAdminMediaRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -277,36 +101,8 @@ export interface FileRoutesByFullPath {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
-  '/blog-media/$': typeof BlogMediaSplatRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
-  '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
-  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
-  '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
-  '/api/blog/search': typeof ApiBlogSearchRoute
-  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
-  '/blog/category/$slug': typeof BlogCategorySlugRoute
-  '/blog/tag/$slug': typeof BlogTagSlugRoute
-  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
-  '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
-  '/admin/blog/media': typeof AdminAdminBlogMediaRoute
-  '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
-  '/api/blog/admin/media': typeof ApiBlogAdminMediaRouteWithChildren
-  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
-  '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
-  '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
-  '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
-  '/admin/blog/': typeof AdminAdminBlogIndexRoute
-  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
-  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
-  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
-  '/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
-  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
-  '/api/blog/admin/media/id/$id': typeof ApiBlogAdminMediaIdIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -320,41 +116,12 @@ export interface FileRoutesByTo {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
-  '/blog-media/$': typeof BlogMediaSplatRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
-  '/blog': typeof BlogIndexRoute
-  '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
-  '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
-  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
-  '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
-  '/api/blog/search': typeof ApiBlogSearchRoute
-  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
-  '/blog/category/$slug': typeof BlogCategorySlugRoute
-  '/blog/tag/$slug': typeof BlogTagSlugRoute
-  '/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
-  '/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
-  '/admin/blog/media': typeof AdminAdminBlogMediaRoute
-  '/admin/blog/tags': typeof AdminAdminBlogTagsRoute
-  '/api/blog/admin/media': typeof ApiBlogAdminMediaRouteWithChildren
-  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
-  '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
-  '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
-  '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
-  '/admin/blog': typeof AdminAdminBlogIndexRoute
-  '/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
-  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
-  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
-  '/admin/blog/posts': typeof AdminAdminBlogPostsIndexRoute
-  '/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
-  '/api/blog/admin/media/id/$id': typeof ApiBlogAdminMediaIdIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_admin': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/categories': typeof CategoriesRoute
   '/contact': typeof ContactRoute
@@ -365,36 +132,8 @@ export interface FileRoutesById {
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
-  '/blog-media/$': typeof BlogMediaSplatRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/search': typeof BlogSearchRoute
   '/category/$slug': typeof CategorySlugRoute
   '/project/$slug': typeof ProjectSlugRoute
-  '/blog/': typeof BlogIndexRoute
-  '/api/blog/authors': typeof ApiBlogAuthorsRouteWithChildren
-  '/api/blog/categories': typeof ApiBlogCategoriesRouteWithChildren
-  '/api/blog/diagnostics': typeof ApiBlogDiagnosticsRoute
-  '/api/blog/posts': typeof ApiBlogPostsRouteWithChildren
-  '/api/blog/search': typeof ApiBlogSearchRoute
-  '/api/blog/tags': typeof ApiBlogTagsRouteWithChildren
-  '/blog/category/$slug': typeof BlogCategorySlugRoute
-  '/blog/tag/$slug': typeof BlogTagSlugRoute
-  '/_admin/admin/blog/authors': typeof AdminAdminBlogAuthorsRoute
-  '/_admin/admin/blog/categories': typeof AdminAdminBlogCategoriesRoute
-  '/_admin/admin/blog/media': typeof AdminAdminBlogMediaRoute
-  '/_admin/admin/blog/tags': typeof AdminAdminBlogTagsRoute
-  '/api/blog/admin/media': typeof ApiBlogAdminMediaRouteWithChildren
-  '/api/blog/authors/$slug': typeof ApiBlogAuthorsSlugRoute
-  '/api/blog/categories/$slug': typeof ApiBlogCategoriesSlugRoute
-  '/api/blog/posts/$slug': typeof ApiBlogPostsSlugRoute
-  '/api/blog/tags/$slug': typeof ApiBlogTagsSlugRoute
-  '/_admin/admin/blog/': typeof AdminAdminBlogIndexRoute
-  '/_admin/admin/blog/posts/new': typeof AdminAdminBlogPostsNewRoute
-  '/api/blog/authors/id/$id': typeof ApiBlogAuthorsIdIdRoute
-  '/api/blog/posts/id/$id': typeof ApiBlogPostsIdIdRoute
-  '/_admin/admin/blog/posts/': typeof AdminAdminBlogPostsIndexRoute
-  '/_admin/admin/blog/posts/edit/$id': typeof AdminAdminBlogPostsEditIdRoute
-  '/api/blog/admin/media/id/$id': typeof ApiBlogAdminMediaIdIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -410,36 +149,8 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
-    | '/blog-media/$'
-    | '/blog/$slug'
-    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
-    | '/blog/'
-    | '/api/blog/authors'
-    | '/api/blog/categories'
-    | '/api/blog/diagnostics'
-    | '/api/blog/posts'
-    | '/api/blog/search'
-    | '/api/blog/tags'
-    | '/blog/category/$slug'
-    | '/blog/tag/$slug'
-    | '/admin/blog/authors'
-    | '/admin/blog/categories'
-    | '/admin/blog/media'
-    | '/admin/blog/tags'
-    | '/api/blog/admin/media'
-    | '/api/blog/authors/$slug'
-    | '/api/blog/categories/$slug'
-    | '/api/blog/posts/$slug'
-    | '/api/blog/tags/$slug'
-    | '/admin/blog/'
-    | '/admin/blog/posts/new'
-    | '/api/blog/authors/id/$id'
-    | '/api/blog/posts/id/$id'
-    | '/admin/blog/posts/'
-    | '/admin/blog/posts/edit/$id'
-    | '/api/blog/admin/media/id/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -453,40 +164,11 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
-    | '/blog-media/$'
-    | '/blog/$slug'
-    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
-    | '/blog'
-    | '/api/blog/authors'
-    | '/api/blog/categories'
-    | '/api/blog/diagnostics'
-    | '/api/blog/posts'
-    | '/api/blog/search'
-    | '/api/blog/tags'
-    | '/blog/category/$slug'
-    | '/blog/tag/$slug'
-    | '/admin/blog/authors'
-    | '/admin/blog/categories'
-    | '/admin/blog/media'
-    | '/admin/blog/tags'
-    | '/api/blog/admin/media'
-    | '/api/blog/authors/$slug'
-    | '/api/blog/categories/$slug'
-    | '/api/blog/posts/$slug'
-    | '/api/blog/tags/$slug'
-    | '/admin/blog'
-    | '/admin/blog/posts/new'
-    | '/api/blog/authors/id/$id'
-    | '/api/blog/posts/id/$id'
-    | '/admin/blog/posts'
-    | '/admin/blog/posts/edit/$id'
-    | '/api/blog/admin/media/id/$id'
   id:
     | '__root__'
     | '/'
-    | '/_admin'
     | '/about'
     | '/categories'
     | '/contact'
@@ -497,41 +179,12 @@ export interface FileRouteTypes {
     | '/refund-policy'
     | '/terms'
     | '/trending'
-    | '/blog-media/$'
-    | '/blog/$slug'
-    | '/blog/search'
     | '/category/$slug'
     | '/project/$slug'
-    | '/blog/'
-    | '/api/blog/authors'
-    | '/api/blog/categories'
-    | '/api/blog/diagnostics'
-    | '/api/blog/posts'
-    | '/api/blog/search'
-    | '/api/blog/tags'
-    | '/blog/category/$slug'
-    | '/blog/tag/$slug'
-    | '/_admin/admin/blog/authors'
-    | '/_admin/admin/blog/categories'
-    | '/_admin/admin/blog/media'
-    | '/_admin/admin/blog/tags'
-    | '/api/blog/admin/media'
-    | '/api/blog/authors/$slug'
-    | '/api/blog/categories/$slug'
-    | '/api/blog/posts/$slug'
-    | '/api/blog/tags/$slug'
-    | '/_admin/admin/blog/'
-    | '/_admin/admin/blog/posts/new'
-    | '/api/blog/authors/id/$id'
-    | '/api/blog/posts/id/$id'
-    | '/_admin/admin/blog/posts/'
-    | '/_admin/admin/blog/posts/edit/$id'
-    | '/api/blog/admin/media/id/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
   CategoriesRoute: typeof CategoriesRoute
   ContactRoute: typeof ContactRoute
@@ -542,21 +195,8 @@ export interface RootRouteChildren {
   RefundPolicyRoute: typeof RefundPolicyRoute
   TermsRoute: typeof TermsRoute
   TrendingRoute: typeof TrendingRoute
-  BlogMediaSplatRoute: typeof BlogMediaSplatRoute
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogSearchRoute: typeof BlogSearchRoute
   CategorySlugRoute: typeof CategorySlugRoute
   ProjectSlugRoute: typeof ProjectSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-  ApiBlogAuthorsRoute: typeof ApiBlogAuthorsRouteWithChildren
-  ApiBlogCategoriesRoute: typeof ApiBlogCategoriesRouteWithChildren
-  ApiBlogDiagnosticsRoute: typeof ApiBlogDiagnosticsRoute
-  ApiBlogPostsRoute: typeof ApiBlogPostsRouteWithChildren
-  ApiBlogSearchRoute: typeof ApiBlogSearchRoute
-  ApiBlogTagsRoute: typeof ApiBlogTagsRouteWithChildren
-  BlogCategorySlugRoute: typeof BlogCategorySlugRoute
-  BlogTagSlugRoute: typeof BlogTagSlugRoute
-  ApiBlogAdminMediaRoute: typeof ApiBlogAdminMediaRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -566,13 +206,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_admin': {
-      id: '/_admin'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -645,34 +278,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrendingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog-media/$': {
-      id: '/blog-media/$'
-      path: '/blog-media/$'
-      fullPath: '/blog-media/$'
-      preLoaderRoute: typeof BlogMediaSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/search': {
-      id: '/blog/search'
-      path: '/blog/search'
-      fullPath: '/blog/search'
-      preLoaderRoute: typeof BlogSearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/category/$slug': {
       id: '/category/$slug'
       path: '/category/$slug'
@@ -687,266 +292,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/blog/authors': {
-      id: '/api/blog/authors'
-      path: '/api/blog/authors'
-      fullPath: '/api/blog/authors'
-      preLoaderRoute: typeof ApiBlogAuthorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/categories': {
-      id: '/api/blog/categories'
-      path: '/api/blog/categories'
-      fullPath: '/api/blog/categories'
-      preLoaderRoute: typeof ApiBlogCategoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/diagnostics': {
-      id: '/api/blog/diagnostics'
-      path: '/api/blog/diagnostics'
-      fullPath: '/api/blog/diagnostics'
-      preLoaderRoute: typeof ApiBlogDiagnosticsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/posts': {
-      id: '/api/blog/posts'
-      path: '/api/blog/posts'
-      fullPath: '/api/blog/posts'
-      preLoaderRoute: typeof ApiBlogPostsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/search': {
-      id: '/api/blog/search'
-      path: '/api/blog/search'
-      fullPath: '/api/blog/search'
-      preLoaderRoute: typeof ApiBlogSearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/tags': {
-      id: '/api/blog/tags'
-      path: '/api/blog/tags'
-      fullPath: '/api/blog/tags'
-      preLoaderRoute: typeof ApiBlogTagsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/category/$slug': {
-      id: '/blog/category/$slug'
-      path: '/blog/category/$slug'
-      fullPath: '/blog/category/$slug'
-      preLoaderRoute: typeof BlogCategorySlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/tag/$slug': {
-      id: '/blog/tag/$slug'
-      path: '/blog/tag/$slug'
-      fullPath: '/blog/tag/$slug'
-      preLoaderRoute: typeof BlogTagSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_admin/admin/blog/': {
-      id: '/_admin/admin/blog/'
-      path: '/admin/blog'
-      fullPath: '/admin/blog/'
-      preLoaderRoute: typeof AdminAdminBlogIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/blog/authors': {
-      id: '/_admin/admin/blog/authors'
-      path: '/admin/blog/authors'
-      fullPath: '/admin/blog/authors'
-      preLoaderRoute: typeof AdminAdminBlogAuthorsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/blog/categories': {
-      id: '/_admin/admin/blog/categories'
-      path: '/admin/blog/categories'
-      fullPath: '/admin/blog/categories'
-      preLoaderRoute: typeof AdminAdminBlogCategoriesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/blog/media': {
-      id: '/_admin/admin/blog/media'
-      path: '/admin/blog/media'
-      fullPath: '/admin/blog/media'
-      preLoaderRoute: typeof AdminAdminBlogMediaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/blog/tags': {
-      id: '/_admin/admin/blog/tags'
-      path: '/admin/blog/tags'
-      fullPath: '/admin/blog/tags'
-      preLoaderRoute: typeof AdminAdminBlogTagsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/api/blog/admin/media': {
-      id: '/api/blog/admin/media'
-      path: '/api/blog/admin/media'
-      fullPath: '/api/blog/admin/media'
-      preLoaderRoute: typeof ApiBlogAdminMediaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/blog/authors/$slug': {
-      id: '/api/blog/authors/$slug'
-      path: '/$slug'
-      fullPath: '/api/blog/authors/$slug'
-      preLoaderRoute: typeof ApiBlogAuthorsSlugRouteImport
-      parentRoute: typeof ApiBlogAuthorsRoute
-    }
-    '/api/blog/categories/$slug': {
-      id: '/api/blog/categories/$slug'
-      path: '/$slug'
-      fullPath: '/api/blog/categories/$slug'
-      preLoaderRoute: typeof ApiBlogCategoriesSlugRouteImport
-      parentRoute: typeof ApiBlogCategoriesRoute
-    }
-    '/api/blog/posts/$slug': {
-      id: '/api/blog/posts/$slug'
-      path: '/$slug'
-      fullPath: '/api/blog/posts/$slug'
-      preLoaderRoute: typeof ApiBlogPostsSlugRouteImport
-      parentRoute: typeof ApiBlogPostsRoute
-    }
-    '/api/blog/tags/$slug': {
-      id: '/api/blog/tags/$slug'
-      path: '/$slug'
-      fullPath: '/api/blog/tags/$slug'
-      preLoaderRoute: typeof ApiBlogTagsSlugRouteImport
-      parentRoute: typeof ApiBlogTagsRoute
-    }
-    '/_admin/admin/blog/posts/': {
-      id: '/_admin/admin/blog/posts/'
-      path: '/admin/blog/posts'
-      fullPath: '/admin/blog/posts/'
-      preLoaderRoute: typeof AdminAdminBlogPostsIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/_admin/admin/blog/posts/new': {
-      id: '/_admin/admin/blog/posts/new'
-      path: '/admin/blog/posts/new'
-      fullPath: '/admin/blog/posts/new'
-      preLoaderRoute: typeof AdminAdminBlogPostsNewRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/api/blog/authors/id/$id': {
-      id: '/api/blog/authors/id/$id'
-      path: '/id/$id'
-      fullPath: '/api/blog/authors/id/$id'
-      preLoaderRoute: typeof ApiBlogAuthorsIdIdRouteImport
-      parentRoute: typeof ApiBlogAuthorsRoute
-    }
-    '/api/blog/posts/id/$id': {
-      id: '/api/blog/posts/id/$id'
-      path: '/id/$id'
-      fullPath: '/api/blog/posts/id/$id'
-      preLoaderRoute: typeof ApiBlogPostsIdIdRouteImport
-      parentRoute: typeof ApiBlogPostsRoute
-    }
-    '/_admin/admin/blog/posts/edit/$id': {
-      id: '/_admin/admin/blog/posts/edit/$id'
-      path: '/admin/blog/posts/edit/$id'
-      fullPath: '/admin/blog/posts/edit/$id'
-      preLoaderRoute: typeof AdminAdminBlogPostsEditIdRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/api/blog/admin/media/id/$id': {
-      id: '/api/blog/admin/media/id/$id'
-      path: '/id/$id'
-      fullPath: '/api/blog/admin/media/id/$id'
-      preLoaderRoute: typeof ApiBlogAdminMediaIdIdRouteImport
-      parentRoute: typeof ApiBlogAdminMediaRoute
-    }
   }
 }
 
-interface AdminRouteChildren {
-  AdminAdminBlogAuthorsRoute: typeof AdminAdminBlogAuthorsRoute
-  AdminAdminBlogCategoriesRoute: typeof AdminAdminBlogCategoriesRoute
-  AdminAdminBlogMediaRoute: typeof AdminAdminBlogMediaRoute
-  AdminAdminBlogTagsRoute: typeof AdminAdminBlogTagsRoute
-  AdminAdminBlogIndexRoute: typeof AdminAdminBlogIndexRoute
-  AdminAdminBlogPostsNewRoute: typeof AdminAdminBlogPostsNewRoute
-  AdminAdminBlogPostsIndexRoute: typeof AdminAdminBlogPostsIndexRoute
-  AdminAdminBlogPostsEditIdRoute: typeof AdminAdminBlogPostsEditIdRoute
-}
-
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminBlogAuthorsRoute: AdminAdminBlogAuthorsRoute,
-  AdminAdminBlogCategoriesRoute: AdminAdminBlogCategoriesRoute,
-  AdminAdminBlogMediaRoute: AdminAdminBlogMediaRoute,
-  AdminAdminBlogTagsRoute: AdminAdminBlogTagsRoute,
-  AdminAdminBlogIndexRoute: AdminAdminBlogIndexRoute,
-  AdminAdminBlogPostsNewRoute: AdminAdminBlogPostsNewRoute,
-  AdminAdminBlogPostsIndexRoute: AdminAdminBlogPostsIndexRoute,
-  AdminAdminBlogPostsEditIdRoute: AdminAdminBlogPostsEditIdRoute,
-}
-
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
-
-interface ApiBlogAuthorsRouteChildren {
-  ApiBlogAuthorsSlugRoute: typeof ApiBlogAuthorsSlugRoute
-  ApiBlogAuthorsIdIdRoute: typeof ApiBlogAuthorsIdIdRoute
-}
-
-const ApiBlogAuthorsRouteChildren: ApiBlogAuthorsRouteChildren = {
-  ApiBlogAuthorsSlugRoute: ApiBlogAuthorsSlugRoute,
-  ApiBlogAuthorsIdIdRoute: ApiBlogAuthorsIdIdRoute,
-}
-
-const ApiBlogAuthorsRouteWithChildren = ApiBlogAuthorsRoute._addFileChildren(
-  ApiBlogAuthorsRouteChildren,
-)
-
-interface ApiBlogCategoriesRouteChildren {
-  ApiBlogCategoriesSlugRoute: typeof ApiBlogCategoriesSlugRoute
-}
-
-const ApiBlogCategoriesRouteChildren: ApiBlogCategoriesRouteChildren = {
-  ApiBlogCategoriesSlugRoute: ApiBlogCategoriesSlugRoute,
-}
-
-const ApiBlogCategoriesRouteWithChildren =
-  ApiBlogCategoriesRoute._addFileChildren(ApiBlogCategoriesRouteChildren)
-
-interface ApiBlogPostsRouteChildren {
-  ApiBlogPostsSlugRoute: typeof ApiBlogPostsSlugRoute
-  ApiBlogPostsIdIdRoute: typeof ApiBlogPostsIdIdRoute
-}
-
-const ApiBlogPostsRouteChildren: ApiBlogPostsRouteChildren = {
-  ApiBlogPostsSlugRoute: ApiBlogPostsSlugRoute,
-  ApiBlogPostsIdIdRoute: ApiBlogPostsIdIdRoute,
-}
-
-const ApiBlogPostsRouteWithChildren = ApiBlogPostsRoute._addFileChildren(
-  ApiBlogPostsRouteChildren,
-)
-
-interface ApiBlogTagsRouteChildren {
-  ApiBlogTagsSlugRoute: typeof ApiBlogTagsSlugRoute
-}
-
-const ApiBlogTagsRouteChildren: ApiBlogTagsRouteChildren = {
-  ApiBlogTagsSlugRoute: ApiBlogTagsSlugRoute,
-}
-
-const ApiBlogTagsRouteWithChildren = ApiBlogTagsRoute._addFileChildren(
-  ApiBlogTagsRouteChildren,
-)
-
-interface ApiBlogAdminMediaRouteChildren {
-  ApiBlogAdminMediaIdIdRoute: typeof ApiBlogAdminMediaIdIdRoute
-}
-
-const ApiBlogAdminMediaRouteChildren: ApiBlogAdminMediaRouteChildren = {
-  ApiBlogAdminMediaIdIdRoute: ApiBlogAdminMediaIdIdRoute,
-}
-
-const ApiBlogAdminMediaRouteWithChildren =
-  ApiBlogAdminMediaRoute._addFileChildren(ApiBlogAdminMediaRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
   CategoriesRoute: CategoriesRoute,
   ContactRoute: ContactRoute,
@@ -957,21 +307,8 @@ const rootRouteChildren: RootRouteChildren = {
   RefundPolicyRoute: RefundPolicyRoute,
   TermsRoute: TermsRoute,
   TrendingRoute: TrendingRoute,
-  BlogMediaSplatRoute: BlogMediaSplatRoute,
-  BlogSlugRoute: BlogSlugRoute,
-  BlogSearchRoute: BlogSearchRoute,
   CategorySlugRoute: CategorySlugRoute,
   ProjectSlugRoute: ProjectSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-  ApiBlogAuthorsRoute: ApiBlogAuthorsRouteWithChildren,
-  ApiBlogCategoriesRoute: ApiBlogCategoriesRouteWithChildren,
-  ApiBlogDiagnosticsRoute: ApiBlogDiagnosticsRoute,
-  ApiBlogPostsRoute: ApiBlogPostsRouteWithChildren,
-  ApiBlogSearchRoute: ApiBlogSearchRoute,
-  ApiBlogTagsRoute: ApiBlogTagsRouteWithChildren,
-  BlogCategorySlugRoute: BlogCategorySlugRoute,
-  BlogTagSlugRoute: BlogTagSlugRoute,
-  ApiBlogAdminMediaRoute: ApiBlogAdminMediaRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
