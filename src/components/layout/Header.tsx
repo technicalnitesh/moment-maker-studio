@@ -128,15 +128,6 @@ export function Header() {
                 </Link>
               </li>
             ))}
-            <li style={{ transitionDelay: `${NAV_LINKS.length * 40}ms` }}>
-              <Link
-                to="/admin/blog"
-                onClick={() => setMenuOpen(false)}
-                className="focus-ring block rounded-2xl px-4 py-3 text-base font-semibold text-muted-foreground/60 transition-colors duration-200 hover:bg-secondary/60 hover:text-foreground"
-              >
-                Admin CMS
-              </Link>
-            </li>
           </ul>
 
           <Button variant="hero" size="xl" asChild className="mt-3 w-full">
