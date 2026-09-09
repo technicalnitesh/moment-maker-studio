@@ -53,7 +53,6 @@ export const NAV_LINKS = [
   { label: "Categories", to: "/categories" },
   { label: "Trending", to: "/trending" },
   { label: "About", to: "/about" },
-  { label: "Blog", to: "/blog" },
 ] as const;
 
 export const LEGAL_LINKS = [
